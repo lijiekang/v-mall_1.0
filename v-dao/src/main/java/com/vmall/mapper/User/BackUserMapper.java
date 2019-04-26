@@ -1,4 +1,4 @@
-package com.vmall.dao;
+package com.vmall.mapper.User;
 
 import com.vmall.pojo.VUesr;
 import org.apache.ibatis.annotations.Mapper;

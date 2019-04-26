@@ -16,4 +16,12 @@
         insert into v_uesr(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_sex,v_usercode,v_salt)
         values (#{v_username},#{v_password},#{v_mail},#{v_phone},#{v_headPath},#{v_isActive},1,#{v_sex},#{v_usercode},#{v_salt})
     </insert>
+    <update id="updateUserByGrade">
+        update v_uesr set v_grade=v_grade+#{grade}
+            where v_userId=#{v_userId}
+    </update>
+
+    <select id="getUserIdByUserName" resultType="com.vmall.pojo.VUesr">
+        select v_userId from v_uesr where v_username=#{userName}
+    </select>
 </mapper>

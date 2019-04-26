@@ -1,12 +1,10 @@
 package com.vmall.vauth.service;
 
-import com.vmall.dao.BackUserMapper;
+import com.vmall.mapper.User.BackUserMapper;
 import com.vmall.pojo.VUesr;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service
