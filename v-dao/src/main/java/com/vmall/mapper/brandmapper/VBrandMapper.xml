@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.brandmapper.VBrandMapper">
+    <insert id="vbrandadd">
+        INSERT INTO v_brand (v_brandName) VALUES(#{v_brandName})
+    </insert>
+    <delete id="vbranddel">
+        DELETE FROM v_brand WHERE v_brandId =#{id}
+    </delete>
+    <select id="vbrandlist" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand WHERE v_brandId=#{id}
+    </select>
+    <update id="vbrandupd">
+        UPDATE v_brand
+        <trim prefix="set" suffixOverrides="," suffix="where v_brandId=#{id}">
+            <if test="v_brandName != null">v_brandName=#{v_brandNamehn},</if>
+        </trim>
+    </update>
+</mapper>
