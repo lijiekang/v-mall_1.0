@@ -107,4 +107,8 @@ public class LoginController {
         }
         return "验证码已发送";
     }
+
+    public void test(){
+
+    }
 }
