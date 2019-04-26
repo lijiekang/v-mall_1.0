@@ -18,7 +18,6 @@ public class VOrderService {
     }//根据序列化订单号查询订单
 
     public Integer addVOrder(VOrder vOrder){
-
         return vOrderMapper.addVOrder(vOrder);
     }//新增订单
 

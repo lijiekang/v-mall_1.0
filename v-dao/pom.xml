@@ -23,7 +23,7 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**/dao/*Mapper.xml</include>
+                    <include>**/*.xml</include>
                 </includes>
             </resource>
             <resource>

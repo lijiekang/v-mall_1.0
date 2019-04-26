@@ -288,10 +288,10 @@
               <!--</tr><br>-->
             </table>
             <a th:href="@{'/vorder/toIndex?no='+1}">首页</a>
-            <a th:href="@{'/vorder/toIndex?no='+${session.page.currPage-1}}">上一页</a>
+            <a th:href="@{'/vorder/toIndex?no='+${session.page.currentPageNo-1}}">上一页</a>
 
-            <a th:href="@{'/vorder/toIndex?no='+${session.page.currPage+1}}">下一页</a>
-            <a th:href="@{'/vorder/toIndex?no='+${session.page.sumPage}}">尾页</a>
+            <a th:href="@{'/vorder/toIndex?no='+${session.page.currentPageNo+1}}">下一页</a>
+            <a th:href="@{'/vorder/toIndex?no='+${session.page.totalPageCount}}">尾页</a>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
