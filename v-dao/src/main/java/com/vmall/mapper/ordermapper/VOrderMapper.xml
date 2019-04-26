@@ -7,9 +7,9 @@
         select * from v_order where v_serialNumber=#{vSerialNumber}
     </select>
 
-    <insert id="addVOrder">
-        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_statusId,v_payNum,v_orderDetailId,v_productId)
-          values (#{v_userId},#{v_username},#{v_userAddress},#{v_createTime},#{v_cost},#{v_serialNumber},#{v_statusId},#{v_payNum},#{v_orderDetailId},#{v_productId})
+    <insert id="addVOrder" useGeneratedKeys="true" keyProperty="vOrderId">
+        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_productId)
+          values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId})
     </insert>
     <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
         <association property="vUesr" javaType="com.vmall.pojo.VUesr">

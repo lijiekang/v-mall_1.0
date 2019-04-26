@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.productmapper.VProductMapper">
     <update id="updateVProductStoreByProductId">
-        update v_product set v_store=#{v_store}-#{num}
-                where v_productId=#{v_productId}
+        update v_product set v_store=v_store-#{num}
+                where v_productId=#{productId}
     </update>
 
     <select id="getVProductIdByProductName" resultType="com.vmall.pojo.VProduct">
