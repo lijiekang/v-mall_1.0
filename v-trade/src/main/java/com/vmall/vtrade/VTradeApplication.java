@@ -11,5 +11,4 @@ public class VTradeApplication {
     public static void main(String[] args) {
         SpringApplication.run(VTradeApplication.class, args);
     }
-
 }
