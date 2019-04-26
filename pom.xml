@@ -11,12 +11,12 @@
     <modules>
         <module>v-beans</module>
         <module>v-dao</module>
-        <module>v-trade</module>
         <module>v-utils</module>
         <module>v-commons</module>
         <module>v-products</module>
         <module>v-auth</module>
         <module>v-seckill</module>
+        <module>v-trade</module>
     </modules>
 
     <dependencies>

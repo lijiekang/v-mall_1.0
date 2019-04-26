@@ -60,11 +60,11 @@ public class VOrderController {
         Integer pageSize=1;
         Page page=new Page();
         Integer count=vOrderService.allCount();
-        page.setPageCount(count);
+        page.setTotalCount(count);
         if(no!=null) {
             curr=Integer.parseInt(no);
-            if(curr>page.getSumPage()){
-                curr=page.getSumPage();
+            if(curr>page.getTotalPageCount()){
+                curr=page.getTotalPageCount();
             }
             if(curr<1){
                 curr=1;
@@ -73,7 +73,7 @@ public class VOrderController {
         if(size!=null){
             pageSize=Integer.parseInt(size);
         }
-        page.setCurrPage(curr);
+        page.setCurrentPageNo(curr);
         page.setPageSize(pageSize);
         List<VOrder> vOrderList=vOrderService.getAllVOrderByUserName(curr,pageSize,usernames);
         session.setAttribute("vOrderList",vOrderList);
