@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.seckill.SeckillOrderMapper">
+
+
+    <insert id="insertSeckillOrder" parameterType="com.vmall.pojo.VSeckillOrder"
+            useGeneratedKeys="true" keyProperty="vSeckillOrderId">
+        insert into v_seckill_order
+        (
+          v_seckill_productId, v_seckill_userId, v_seckill_createDate, v_seckill_serialNumber
+        )
+        values (
+          #{vSeckillProductId},#{vSeckillUserId},#{vSeckillCreateDate},#{vSeckillSerialNumber}
+        )
+    </insert>
+
+
+    <select id="getSeckillOrderByConditions" resultType="VSeckillOrder">
+        select
+          v_seckill_orderId, v_seckill_productId, v_seckill_userId, v_seckill_createDate, v_seckill_serialNumber, v_seckill_payNum
+        from
+            v_seckill_order
+        where
+        v_seckill_userId=#{userId} and v_seckill_productId=#{productId} and v_seckill_status=0
+    </select>
+</mapper>

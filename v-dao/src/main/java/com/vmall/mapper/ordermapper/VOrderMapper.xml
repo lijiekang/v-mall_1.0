@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.ordermapper.VOrderMapper">
+    <select id="getVOrderByvSerialNumber" resultType="com.vmall.pojo.VOrder">
+        select * from v_order where v_serialNumber=#{vSerialNumber}
+    </select>
+
+    <insert id="addVOrder">
+        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_statusId,v_payNum,v_orderDetailId,v_productId)
+          values (#{v_userId},#{v_username},#{v_userAddress},#{v_createTime},#{v_cost},#{v_serialNumber},#{v_statusId},#{v_payNum},#{v_orderDetailId},#{v_productId})
+    </insert>
+    <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
+        <association property="vUesr" javaType="com.vmall.pojo.VUesr">
+            <result property="vUsername" column="v_usernames"/>
+        </association>
+        <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+            <result property="vProductName" column="v_productNames"/>
+        </association>
+        <association property="vOrderStatus" javaType="com.vmall.pojo.VOrderStatus">
+            <result property="vStatusName" column="v_statusNames"/>
+        </association>
+    </resultMap>
+    <select id="getAllVOrderByUserName" resultMap="BaseResult">
+        SELECT o.*,
+        (SELECT u.v_username FROM v_uesr u WHERE o.v_userId=u.v_userId) AS v_usernames,
+        (SELECT p.v_productName FROM v_product p WHERE o.v_productId=p.v_productId) AS v_productNames,
+        (SELECT s.v_statusName FROM v_order_status s WHERE o.v_statusId=s.v_statusId) AS v_statusNames
+        FROM v_order o
+        WHERE 1=1
+        <if test="usernames!=null and usernames!=''">
+           and o.v_userId=(SELECT v_userId FROM v_uesr WHERE v_username like concat ('%',#{usernames},'%'))
+        </if>
+        limit #{no},#{size}
+    </select>
+
+    <select id="allCount" resultType="Integer">
+        select count(*) from v_order
+    </select>
+</mapper>

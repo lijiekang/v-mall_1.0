@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.productmapper.VProductMapper">
+    <update id="updateVProductStoreByProductId">
+        update v_product set v_store=#{v_store}-#{num}
+                where v_productId=#{v_productId}
+    </update>
+
+    <select id="getVProductIdByProductName" resultType="com.vmall.pojo.VProduct">
+        select v_productId,v_grade from v_product where v_productName=#{vProductName}
+    </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.seckill.SeckillProductMapper">
+
+
+    <insert id="insertSeckillProduct" parameterType="com.vmall.pojo.VSeckillProduct">
+        insert into v_seckill_product
+        (
+          v_seckill_productId, v_seckill_quantity, v_seckill_price, v_seckill_startDate, v_seckill_endDate
+        )
+        values (
+          #{vSeckillProductId},#{vSeckillQuantity},#{vSeckillPrice},#{vSeckillStartDate},#{vSeckillEndDate}
+        )
+    </insert>
+
+
+    <resultMap id="productMap" type="com.vmall.pojo.VSeckillProduct">
+        <id property="vSeckillId" column="v_seckill_id"/>
+        <association property="vProductId" javaType="com.vmall.pojo.VProduct">
+            <id property="vProductId" column="v_productId"/>
+        </association>
+    </resultMap>
+    <select id="listSeckillProducts" resultMap="productMap">
+        select
+              v_seckill_id,v_seckill_productId,v_seckill_quantity,v_seckill_price,v_seckill_startDate,v_seckill_endDate,
+              v_productId,v_productName
+        from v_seckill_product
+        left join v_product on v_seckill_product.v_seckill_productId = v_product.v_productId
+    </select>
+
+
+    <update id="updateSeckillProduct" parameterType="com.vmall.pojo.VSeckillProduct">
+        update v_seckill_product set
+        v_seckill_quantity=v_seckill_quantity-1
+        where v_seckill_id=#{vSeckillId} and v_seckill_productId>0
+    </update>
+
+    <select id="getSeckillProductRemain" resultType="int">
+        select v_seckill_quantity from v_seckill_product where v_seckill_productId=#{_parameter}
+    </select>
+</mapper>
