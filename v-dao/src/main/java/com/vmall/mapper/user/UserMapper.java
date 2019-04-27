@@ -8,5 +8,6 @@ public interface UserMapper {
     public VUesr findEmail(@Param("email") String email);
     public int findPassword(@Param("id") long id, @Param("password") String password, @Param("salt") String salt);
     public int register(VUesr vUesr);
+    public int add();
     public VUesr getVUesrById(@Param("userId") long id);
 }
