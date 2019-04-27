@@ -1,4 +1,4 @@
-package com.vmall.vauth.service;
+package com.vmall.vauth.service.tool;
 
 import com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage;
 import org.springframework.data.redis.core.RedisTemplate;

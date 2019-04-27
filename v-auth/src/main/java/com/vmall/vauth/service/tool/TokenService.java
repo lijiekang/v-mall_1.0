@@ -1,4 +1,4 @@
-package com.vmall.vauth.service;
+package com.vmall.vauth.service.tool;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -6,6 +6,8 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -17,12 +19,14 @@ public class TokenService {
     RedisTemplate redisTemplate;
     @Resource
     StringRedisTemplate stringRedisTemplate;
-    public void set(Object obj){
+    public String set(Object obj){
         StringBuilder token=new StringBuilder();
         token.append("token:");
         token.append(new SimpleDateFormat("yyMMddHHmmSS").format(new Date())+"-"+Math.random()*100000);
         ValueOperations<String,Object> operations=redisTemplate.opsForValue();
         operations.set(token.toString(),obj);
+        redisTemplate.expire(token.toString(),15,TimeUnit.MINUTES);
+        return token.toString();
     }
     public void setCode(String token,Object obj){
         ValueOperations<String,Object> operations=redisTemplate.opsForValue();
@@ -36,5 +40,8 @@ public class TokenService {
     }
     public long getexpire(String token){
         return redisTemplate.getExpire(token);
+    }
+    public void del(String token){
+        redisTemplate.delete(token);
     }
 }

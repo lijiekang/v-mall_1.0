@@ -21,6 +21,33 @@ public class VUesr implements Serializable {
   private String vIdentity; //用户身份证号
   private String vUsercode; //用户登录名
   private String vSalt;  //用户加密盐值
+  private Integer s1;//订单状态数量1
+  private Integer s2;//订单状态数量2
+  private Integer s3;//订单状态数量3
+
+  public Integer getS1() {
+    return s1;
+  }
+
+  public void setS1(Integer s1) {
+    this.s1 = s1;
+  }
+
+  public Integer getS2() {
+    return s2;
+  }
+
+  public void setS2(Integer s2) {
+    this.s2 = s2;
+  }
+
+  public Integer getS3() {
+    return s3;
+  }
+
+  public void setS3(Integer s3) {
+    this.s3 = s3;
+  }
 
   public long getvUserId() {
     return vUserId;
