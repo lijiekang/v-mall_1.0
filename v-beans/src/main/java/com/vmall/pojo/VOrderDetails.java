@@ -11,6 +11,16 @@ public class VOrderDetails implements Serializable {
   private double vCost;
   private VProduct vProduct;
 
+  private long vOrderId;
+
+  public long getvOrderId() {
+    return vOrderId;
+  }
+
+  public void setvOrderId(long vOrderId) {
+    this.vOrderId = vOrderId;
+  }
+
   public long getvOrderDetailId() {
     return vOrderDetailId;
   }

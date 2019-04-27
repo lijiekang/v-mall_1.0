@@ -4,11 +4,88 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.productmapper.VProductMapper">
     <update id="updateVProductStoreByProductId">
-        update v_product set v_store=#{v_store}-#{num}
-                where v_productId=#{v_productId}
+        update v_product set v_store=v_store-#{num}
+                where v_productId=#{productId}
     </update>
 
     <select id="getVProductIdByProductName" resultType="com.vmall.pojo.VProduct">
         select v_productId,v_grade from v_product where v_productName=#{vProductName}
     </select>
+    <resultMap id="sss" type="com.vmall.pojo.VProduct">
+        <id property="vProductId" column="v_productId"/>
+        <result property="vProductName" column="v_productName"/>
+        <result property="cateName1" column="v_categoryName1"/>
+        <result property="cateName2" column="v_categoryName2"/>
+        <result property="cateName3" column="v_categoryName3"/>
+        <result property="vStore" column="v_store"/>
+        <result property="vPrice" column="v_price"/>
+        <result property="vImgUrl" column="v_imgUrl"/>
+        <result property="vGrade" column="v_grade"/>
+        <result property="vIsDelete" column="v_isDelete"/>
+        <result property="brandName" column="v_brandName"/>
+    </resultMap>
+    <select id="listProduct" resultMap="sss">
+        SELECT p.v_productId,p.v_productName,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel1) v_categoryName1,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel2) v_categoryName2,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel3) v_categoryName3,
+        p.v_store,
+        p.v_price,
+        p.v_imgUrl,
+        p.v_grade,
+        p.v_isDelete,
+        (SELECT b.v_brandName FROM v_brand AS b WHERE b.v_brandId=p.v_brandId)v_brandName
+        FROM v_product AS p
+        where 1=1
+        <if test="vProductName!=null and vProductName!=''">
+            and v_productName like concat('%',#{vProductName},'%')
+        </if>
+        LIMIT #{PageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM v_product
+        where 1=1
+        <if test="vProductName!=null and vProductName!=''">
+            and v_productName like concat('%',#{vProductName},'%')
+        </if>
+    </select>
+    <select id="chakanvproduct" resultMap="sss">
+       SELECT p.v_productId,p.v_productName,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel1) v_categoryName1,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel2) v_categoryName2,
+        (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel3) v_categoryName3,
+        p.v_store,
+        p.v_price,
+        p.v_imgUrl,
+        p.v_grade,
+        p.v_isDelete,
+        (SELECT b.v_brandName FROM v_brand AS b WHERE b.v_brandId=p.v_brandId)v_brandName
+        FROM v_product AS p
+         WHERE v_productId=#{id}
+    </select>
+    <select id="productid" resultType="com.vmall.pojo.VProduct">
+    SELECT * FROM v_product WHERE v_productId=#{id}
+  </select>
+    <update id="upd">
+        UPDATE v_product
+        <trim prefix="set" suffixOverrides="," suffix="where v_productId=#{vProductId}">
+            <if test="vProductName != null">v_productName=#{vProductName},</if>
+            <if test="vCategoryLevel1 != null">v_categoryLevel1=#{vCategoryLevel1},</if>
+            <if test="vCategoryLevel2 != null">v_categoryLevel2=#{vCategoryLevel2},</if>
+            <if test="vCategoryLevel3 != null">v_categoryLevel3=#{vCategoryLevel3},</if>
+            <if test="vStore != null">v_store=#{vStore},</if>
+            <if test="vPrice != null">v_price=#{vPrice},</if>
+            <if test="vImgUrl != null">v_imgUrl=#{vImgUrl},</if>
+            <if test="vGrade != null">v_grade=#{vGrade},</if>
+            <if test="vIsDelete != null">v_isDelete=#{vIsDelete},</if>
+            <if test="vBrandId!=null">v_brandId=#{vBrandId},</if>
+        </trim>
+    </update>
+    <insert id="add">
+    INSERT INTO v_product (v_productName,v_categoryLevel1,v_categoryLevel2,v_categoryLevel3,v_store,v_price,v_imgUrl, v_grade,v_isDelete,v_brandId)
+    VALUES(#{vProductName},#{vCategoryLevel1},#{vCategoryLevel2},#{vCategoryLevel3},#{vStore},#{vPrice},#{vImgUrl},#{vGrade},#{vIsDelete},#{vBrandId})
+  </insert>
+    <delete id="del">
+    DELETE FROM v_product WHERE v_productId = #{id}
+  </delete>
 </mapper>

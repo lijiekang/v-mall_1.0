@@ -19,8 +19,8 @@ public class VOrder implements Serializable {
   private String vSerialNumber; //序列化的订单号
   private long vStatusId; //订单状态
   private String vPayNum; //交易号
-  private long vOrderDetailId; //订单详情
   private long vProductId;//商品id
+
 
   private VUesr vUesr;
   private VProduct vProduct;
@@ -130,11 +130,4 @@ public class VOrder implements Serializable {
     this.vPayNum = vPayNum;
   }
 
-  public long getvOrderDetailId() {
-    return vOrderDetailId;
-  }
-
-  public void setvOrderDetailId(long vOrderDetailId) {
-    this.vOrderDetailId = vOrderDetailId;
-  }
 }

@@ -2,6 +2,7 @@ package com.vmall.pojo;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 商品类
@@ -19,7 +20,42 @@ public class VProduct implements Serializable {
   private double vGrade; //商品积分
   private long vIsDelete; //是否上下架(0上架 1下架)
   private long vBrandId; //品牌id
+  private String cateName1;
+  private String cateName2;
+  private String cateName3;
+  private String brandName;
 
+  public String getCateName1() {
+    return cateName1;
+  }
+
+  public void setCateName1(String cateName1) {
+    this.cateName1 = cateName1;
+  }
+
+  public String getCateName2() {
+    return cateName2;
+  }
+
+  public void setCateName2(String cateName2) {
+    this.cateName2 = cateName2;
+  }
+
+  public String getCateName3() {
+    return cateName3;
+  }
+
+  public void setCateName3(String cateName3) {
+    this.cateName3 = cateName3;
+  }
+
+  public String getBrandName() {
+    return brandName;
+  }
+
+  public void setBrandName(String brandName) {
+    this.brandName = brandName;
+  }
 
 
   public long getvProductId() {
