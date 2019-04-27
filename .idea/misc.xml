@@ -8,11 +8,11 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/v-trade/pom.xml" />
         <option value="$PROJECT_DIR$/v-products/pom.xml" />
         <option value="$PROJECT_DIR$/v-auth/pom.xml" />
         <option value="$PROJECT_DIR$/v-commons/pom.xml" />
         <option value="$PROJECT_DIR$/v-seckill/pom.xml" />
+        <option value="$PROJECT_DIR$/v-trade/pom.xml" />
       </list>
     </option>
   </component>

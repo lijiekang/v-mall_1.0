@@ -1,8 +1,8 @@
 package com.vmall.vauth.service.dev;
 
-import com.vmall.mapper.User.UserMapper;
 import com.vmall.mapper.questionmapper.QuesUserMapper;
 import com.vmall.mapper.questionmapper.QuestionMapper;
+import com.vmall.mapper.user.UserMapper;
 import com.vmall.pojo.VQuestion;
 import com.vmall.pojo.VUesr;
 import com.vmall.vauth.service.tool.TokenService;

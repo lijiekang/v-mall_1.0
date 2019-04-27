@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vmall.mapper.User.BackUserMapper">
+<mapper namespace="com.vmall.mapper.user.BackUserMapper">
     <select id="getUserByAll" resultType="com.vmall.pojo.VUesr">
         SELECT * FROM v_uesr WHERE v_usercode like  concat('%',#{vUserCode},'%') LIMIT #{currentPage},3
     </select>
