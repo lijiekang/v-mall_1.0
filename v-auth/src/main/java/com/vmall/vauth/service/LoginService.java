@@ -1,17 +1,13 @@
 package com.vmall.vauth.service;
 
-import com.vmall.mapper.User.UserMapper;
+import com.vmall.mapper.user.UserMapper;
 import com.vmall.pojo.VUesr;
-import com.vmall.vutil.SMSCode;
-import jdk.nashorn.internal.parser.Token;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import com.vmall.vauth.service.tool.TokenService;
+import com.vmall.vutil.MD5Utils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Random;
 
 @Service
 public class LoginService {
@@ -19,36 +15,48 @@ public class LoginService {
     UserMapper userMapper;
     @Resource
     TokenService tokenService;
-    public boolean login(String userCode,String password){
-        VUesr uesr=userMapper.login(userCode,password);
-        if (uesr!=null){
-            tokenService.set(uesr);
-            return true;
+    public String login(String userCode,String password){
+        VUesr uesr=userMapper.login(userCode);
+        String pwd=MD5Utils.twoEncryption(MD5Utils.oneEncryption(password),uesr.getvSalt());
+        if (pwd.equals(uesr.getvPassword())&&uesr!=null){
+            return tokenService.set(uesr);
         }
-        return false;
+        return "false";
     }
     public VUesr findEmail(String email){
         return userMapper.findEmail(email);
     }
     public boolean findPassword(String code,String email,String password){
-        String obj=(String)tokenService.get(email);
-        if(obj==code&&obj!=null){
+        Object obj=tokenService.get(email);
+        if(String.valueOf(obj).equals(code)&&obj!=null){
             VUesr uesr=userMapper.findEmail(email);
-            userMapper.findPassword(uesr.getvUserId(),password);
+            String onePwd=MD5Utils.oneEncryption(password);
+            String salt = "";
+            for (int i = 0;i<3;i++){
+                salt = salt+ (char)(Math.random()*26+'A');
+            }
+            salt+=new Random().nextInt(1000);
+            String towPwd=MD5Utils.twoEncryption(onePwd,salt);
+            userMapper.findPassword(uesr.getvUserId(),towPwd,salt);
             return true;
         }else {
-//            long timeout=tokenService.getexpire(code);
-//            if (timeout<1){
-//                return "验证码已过期";
-//            }
             return false;
         }
     }
     public boolean register(VUesr vUesr,String phonecode){
-        String code=(String)tokenService.get(vUesr.getvPhone());
+        Object code= tokenService.get(vUesr.getvPhone());
         if(phonecode!=""&&phonecode!=null){
-            if(code!=null&&code==phonecode){
+            if(code!=null&&phonecode.equals(String.valueOf(code))){
                 vUesr.setvIsActive(1);
+                String onePwd=MD5Utils.oneEncryption(vUesr.getvPassword());
+                String salt = "";
+                for (int i = 0;i<3;i++){
+                    salt = salt+ (char)(Math.random()*26+'A');
+                }
+                salt+=new Random().nextInt(1000);
+                String towPwd=MD5Utils.twoEncryption(onePwd,salt);
+                vUesr.setvPassword(towPwd);
+                vUesr.setvSalt(salt);
                 userMapper.register(vUesr);
             }else {
                 return false;

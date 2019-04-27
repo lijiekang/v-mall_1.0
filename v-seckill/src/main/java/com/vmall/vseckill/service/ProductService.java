@@ -36,4 +36,11 @@ public interface ProductService {
      * @return
      */
     boolean haveRemain(Integer seckillProductId);
+
+    /**
+     * 根据商品id获取商品数量
+     * @param productId
+     * @return
+     */
+    long getProductQuantityByProductId(Integer productId);
 }
