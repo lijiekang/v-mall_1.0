@@ -8,9 +8,9 @@ import java.util.Date;
  */
 public class FormatUtil {
 
-    private static final SimpleDateFormat DF=new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat DF=new SimpleDateFormat("yyyy-MM-dd");
 
-
+    public static final SimpleDateFormat DF_HMS=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     /**
      * 将格式转为yyyy-MM-dd
      * @param date

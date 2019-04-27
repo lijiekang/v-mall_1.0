@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vmall.mapper.User.UserMapper">
+<mapper namespace="com.vmall.mapper.user.UserMapper">
     <select id="login" resultType="com.vmall.pojo.VUesr">
         select * from v_uesr where v_usercode=#{userCode} and v_password=#{password}
     </select>

@@ -21,6 +21,7 @@ public class VProduct implements Serializable {
   private long vBrandId; //品牌id
 
 
+
   public long getvProductId() {
     return vProductId;
   }

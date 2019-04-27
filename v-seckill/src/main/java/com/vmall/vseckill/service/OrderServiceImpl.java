@@ -4,6 +4,7 @@ import com.vmall.mapper.seckill.SeckillOrderMapper;
 import com.vmall.pojo.VSeckillOrder;
 import com.vmall.pojo.VSeckillProduct;
 import com.vmall.vutil.GenerateNumUtil;
+import com.vmall.vutil.exception.StoreNotEnoughException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +23,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public boolean SeckillProduct(Integer userId, Integer seckillProductId) {
+    public boolean SeckillProduct(Integer userId, Integer seckillProductId) throws StoreNotEnoughException,Exception {
         //减少库存
-        productService.modifyProduct(new VSeckillProduct(seckillProductId));
+        if(!productService.modifyProduct(new VSeckillProduct(seckillProductId))){
+            //库存不足，则抛出异常
+            throw new StoreNotEnoughException();
+        }
         //生成订单号
         String serialNum= GenerateNumUtil.generateOrderNumber(userId,seckillProductId);
         //创建秒杀订单
-        VSeckillOrder vSeckillOrder=new VSeckillOrder(userId,seckillProductId,new Timestamp(System.currentTimeMillis()),serialNum);
+        VSeckillOrder vSeckillOrder=new VSeckillOrder(seckillProductId,userId,new Timestamp(System.currentTimeMillis()),serialNum);
 
         //写入秒杀订单
         seckillOrderMapper.insertSeckillOrder(vSeckillOrder);
