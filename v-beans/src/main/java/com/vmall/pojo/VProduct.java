@@ -57,6 +57,7 @@ public class VProduct implements Serializable {
     this.brandName = brandName;
   }
 
+
   public long getvProductId() {
     return vProductId;
   }

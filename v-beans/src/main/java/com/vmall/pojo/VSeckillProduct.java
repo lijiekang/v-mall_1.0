@@ -15,8 +15,10 @@ public class VSeckillProduct implements Serializable {
   private VProduct vProduct;
 
 
-  public VSeckillProduct(long vSeckillId) {
-    this.vSeckillId = vSeckillId;
+
+
+  public VSeckillProduct(long vSeckillProductId) {
+    this.vSeckillProductId = vSeckillProductId;
   }
 
   public VSeckillProduct() {

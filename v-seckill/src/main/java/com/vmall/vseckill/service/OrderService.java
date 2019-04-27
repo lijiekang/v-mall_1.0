@@ -1,6 +1,6 @@
 package com.vmall.vseckill.service;
 
-import com.vmall.pojo.VSeckillOrder;
+import com.vmall.vutil.exception.StoreNotEnoughException;
 
 public interface OrderService {
 
@@ -10,7 +10,7 @@ public interface OrderService {
      * @param seckillProductId
      * @return
      */
-    boolean SeckillProduct(Integer userId,Integer seckillProductId);
+    boolean SeckillProduct(Integer userId,Integer seckillProductId) throws StoreNotEnoughException,Exception;
 
 
     /**
