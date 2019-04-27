@@ -4,7 +4,9 @@ package com.vmall.vproducts.controller.vproduct;
 import com.alibaba.fastjson.JSONArray;
 
 import com.vmall.pojo.Pages;
+import com.vmall.pojo.VCategory;
 import com.vmall.pojo.VProduct;
+import com.vmall.vproducts.service.vcategory.VCategoryService;
 import com.vmall.vproducts.service.vproduct.VProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +31,8 @@ import java.util.UUID;
 public class VProductController {
     @Autowired
     VProductService vProductService;
+    @Autowired
+    VCategoryService vCategoryService;
     @RequestMapping("/index")
     public String toindex(){
         return "index";
@@ -43,7 +49,7 @@ public class VProductController {
     /*@ApiOperation(value = "搜索商品")
     @ApiImplicitParam(paramType = "path",required = true)*/
     @RequestMapping("/getproduct")
-    public String getproduct(@RequestParam(value = "vProductName",required = false) String vProductName, @RequestParam(value = "pageNo",defaultValue = "1",required = false) String pageNo, Model model){
+    public String getproduct(@RequestParam(value = "vProductName",required = false) String vProductName, @RequestParam(value = "pageNo",defaultValue = "1",required = false) String pageNo, Model model, HttpSession session){
        int count=vProductService.count(vProductName);
        int pageno=0;
        if(pageNo!=""){
@@ -53,10 +59,12 @@ public class VProductController {
        page.setPageNo(pageno);
         page.setPagetiao(count);
         List<VProduct>listproduct=vProductService.listProduct(vProductName,page);
+        List<VCategory>vclevel=vCategoryService.getcategorylist();
         model.addAttribute("vProductName",vProductName);
         model.addAttribute("page",page.getPageNo());
         model.addAttribute("listproduct",listproduct);
         model.addAttribute("totalCount",page.getPageye());
+        session.setAttribute("vclevel",vclevel);
         return "tables";
     }
     /*@ApiOperation(value = "查看商品",notes = "通过id查看商品")
@@ -85,8 +93,47 @@ public class VProductController {
         }
         return JSONArray.toJSONString(flag);
     }
-    @ApiOperation(value = "添加商品",notes = "添加一个商品")
-    @PostMapping(value = "/addproduct",consumes = "multipart/*",headers = "content-type=multipart/form-data" )
+    @RequestMapping(value="categorylevellist",produces="application/json;charset=UTF-8")
+    @ResponseBody
+    public Object categorylevellist(HttpServletRequest request){
+        int id=Integer.parseInt(request.getParameter("queryCategoryLevel1"));
+        List<VCategory>categoryList=vCategoryService.getcategoryName(id);
+        return JSONArray.toJSONString(categoryList);
+    }
+@RequestMapping(value = "toadd",method = RequestMethod.GET)
+    public String toadd(Model model){
+      /*  List<VCategory>categoryList=vCategoryService.getcategoryName(Integer.valueOf(vProductId));
+        model.addAttribute("categoryList",categoryList);*/
+    List<VCategory>vclevel=vCategoryService.getcategorylist();
+    model.addAttribute("vclevel",vclevel);
+        return "add";
+    }
+
+    @RequestMapping("/add")
+    public String add(MultipartFile multipartFile,VProduct vProduct){
+        File file1=new File("E:\\tu");
+        try {
+            String filekey=UUID.randomUUID().toString();
+            String fileName=multipartFile.getOriginalFilename();
+            String suffix=fileName.substring(fileName.indexOf("."));
+            multipartFile.transferTo(new File(file1,filekey+suffix));
+            if(".png".equals(suffix)||".jpg".equals(suffix)){
+                //上传文件
+                vProduct.setvImgUrl(filekey+suffix);
+            }else{
+                return "文件格式错误";
+            }
+            int vp=vProductService.add(vProduct);
+            if (vp>0){
+                return "redirect:/getproduct";
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return "add";
+    }
+    /*@ApiOperation(value = "添加商品",notes = "添加一个商品")
+    @PostMapping(value = "/add",consumes = "multipart/*",headers = "content-type=multipart/form-data" )
     public Object addproduct(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, @ModelAttribute("vProduct") VProduct vProduct){
         HashMap<String, String> resultMap = new HashMap<String, String>();
         File file1=new File("E:\\tu");
@@ -139,5 +186,5 @@ public class VProductController {
            e.printStackTrace();
        }
         return resultMap;
-    }
+    }*/
 }
