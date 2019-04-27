@@ -6,6 +6,8 @@ import com.vmall.pojo.VSeckillProduct;
 import com.vmall.vutil.GenerateNumUtil;
 import com.vmall.vutil.exception.StoreNotEnoughException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,11 @@ public class OrderServiceImpl implements OrderService {
     private SeckillOrderMapper seckillOrderMapper;
     @Autowired
     private ProductService productService;
+
+    private ValueOperations valueOperations;
+    public OrderServiceImpl(RedisTemplate redisTemplate) {
+        valueOperations=redisTemplate.opsForValue();
+    }
 
 
 
@@ -37,12 +44,16 @@ public class OrderServiceImpl implements OrderService {
         //写入秒杀订单
         seckillOrderMapper.insertSeckillOrder(vSeckillOrder);
         //将该条秒杀订单存入redis
+        valueOperations.set("seckill_order_"+userId,vSeckillOrder);
+
 
         return true;
     }
 
     @Override
     public boolean isSeckilled(long userId, Integer productId) {
-        return seckillOrderMapper.getSeckillOrderByConditions(userId,productId)!=null?true:false;
+//        return seckillOrderMapper.getSeckillOrderByConditions(userId,productId)!=null?true:false;
+        //从redis里获取订单
+        return valueOperations.get("seckill_order_"+userId)!=null?true:false;
     }
 }
