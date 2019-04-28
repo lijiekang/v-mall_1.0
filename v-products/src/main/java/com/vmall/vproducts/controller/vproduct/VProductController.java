@@ -100,7 +100,7 @@ public class VProductController {
         List<VCategory>categoryList=vCategoryService.getcategoryName(id);
         return JSONArray.toJSONString(categoryList);
     }
-@RequestMapping(value = "toadd",method = RequestMethod.GET)
+    @RequestMapping(value = "toadd",method = RequestMethod.GET)
     public String toadd(Model model){
       /*  List<VCategory>categoryList=vCategoryService.getcategoryName(Integer.valueOf(vProductId));
         model.addAttribute("categoryList",categoryList);*/
@@ -131,6 +131,37 @@ public class VProductController {
             e.printStackTrace();
         }
         return "add";
+    }
+    @RequestMapping("/toupd")
+    public String toupd(String vProductId,Model model){
+        VProduct vproduct=vProductService.chakanvproduct(Integer.valueOf(vProductId));
+        List<VCategory>vclevel=vCategoryService.getcategorylist();
+        model.addAttribute("vclevel",vclevel);
+        model.addAttribute("vproduct",vproduct);
+        return "upd";
+    }
+    @RequestMapping("upd")
+    public String upd(MultipartFile multipartFile,VProduct vProduct){
+        File file1=new File("E:\\tu");
+        try {
+            String filekey=UUID.randomUUID().toString();
+            String fileName=multipartFile.getOriginalFilename();
+            String suffix=fileName.substring(fileName.indexOf("."));
+            multipartFile.transferTo(new File(file1,filekey+suffix));
+            if(".png".equals(suffix)||".jpg".equals(suffix)){
+                //上传文件
+                vProduct.setvImgUrl(filekey+suffix);
+            }else{
+                return "文件格式错误";
+            }
+            int vp=vProductService.upd(vProduct);
+            if (vp>0){
+                return "redirect:/getproduct";
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return "upd";
     }
     /*@ApiOperation(value = "添加商品",notes = "添加一个商品")
     @PostMapping(value = "/add",consumes = "multipart/*",headers = "content-type=multipart/form-data" )

@@ -19,6 +19,9 @@ public class VCategoryService {
     public int count(String vCategoryName){
         return vCategoryMapper.count(vCategoryName);
     }
+    public VCategory chakancategory(Integer id){
+        return vCategoryMapper.chakancategory(id);
+    }
     public List<VCategory>categoryid(Integer id){
         return vCategoryMapper.categoryid(id);
     }
