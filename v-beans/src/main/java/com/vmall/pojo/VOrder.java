@@ -21,10 +21,27 @@ public class VOrder implements Serializable {
   private String vPayNum; //交易号
   private long vProductId;//商品id
 
-
+  private String vPhone;//收货人电话
   private VUesr vUesr;
   private VProduct vProduct;
   private VOrderStatus vOrderStatus;
+  private VOrderDetails vOrderDetails;
+
+  public VOrderDetails getvOrderDetails() {
+    return vOrderDetails;
+  }
+
+  public void setvOrderDetails(VOrderDetails vOrderDetails) {
+    this.vOrderDetails = vOrderDetails;
+  }
+
+  public String getvPhone() {
+    return vPhone;
+  }
+
+  public void setvPhone(String vPhone) {
+    this.vPhone = vPhone;
+  }
 
   public void setvProduct(VProduct vProduct) {
     this.vProduct = vProduct;

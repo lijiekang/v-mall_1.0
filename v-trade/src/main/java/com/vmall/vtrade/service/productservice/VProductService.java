@@ -17,4 +17,8 @@ public class VProductService {
     public VProduct getVProductIdByProductName(String vProductName){
         return vProductMapper.getVProductIdByProductName(vProductName);
     }//根据商品名称查询商品id
+
+    public VProduct getVProductNameByProductId(String productId){
+        return vProductMapper.getVProductNameByProductId(productId);
+    }//根据商品id查询商品名称
 }

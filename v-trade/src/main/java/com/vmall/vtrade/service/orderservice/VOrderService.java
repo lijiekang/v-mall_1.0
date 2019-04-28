@@ -29,4 +29,11 @@ public class VOrderService {
         return vOrderMapper.allCount();
     }//查询总记录数
 
+    public Integer updateVOrderByorderId(VOrder vOrder){
+        return vOrderMapper.updateVOrderByorderId(vOrder);
+    }//修改订单(收件人，收货地址,收货人电话)
+    public VOrder getVOrderByorderId(Integer vOrderId){
+        return vOrderMapper.getVOrderByorderId(vOrderId);
+    }//根据订单id获取订单详细信息
+
 }

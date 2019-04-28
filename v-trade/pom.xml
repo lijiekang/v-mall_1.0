@@ -19,15 +19,13 @@
     </properties>
 
     <dependencies>
-
-
-
-
         <dependency>
             <groupId>com.v-mall</groupId>
             <artifactId>v-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -37,6 +35,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <!--thymeleaf-->
         <dependency>

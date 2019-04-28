@@ -11,4 +11,8 @@
     <select id="getVProductIdByProductName" resultType="com.vmall.pojo.VProduct">
         select v_productId,v_grade from v_product where v_productName=#{vProductName}
     </select>
+
+    <select id="getVProductNameByProductId" resultType="com.vmall.pojo.VProduct">
+        select v_productName from v_product where v_productId=#{productId}
+    </select>
 </mapper>

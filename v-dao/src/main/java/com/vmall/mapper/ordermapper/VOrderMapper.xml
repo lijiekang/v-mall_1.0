@@ -8,8 +8,8 @@
     </select>
 
     <insert id="addVOrder" useGeneratedKeys="true" keyProperty="vOrderId">
-        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_productId)
-          values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId})
+        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_productId,v_phone)
+          values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId},#{vPhone})
     </insert>
     <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
         <association property="vUesr" javaType="com.vmall.pojo.VUesr">
@@ -20,6 +20,9 @@
         </association>
         <association property="vOrderStatus" javaType="com.vmall.pojo.VOrderStatus">
             <result property="vStatusName" column="v_statusNames"/>
+        </association>
+        <association property="vOrderDetails" javaType="com.vmall.pojo.VOrderDetails">
+            <result property="vQuantity" column="vQuantitys"/>
         </association>
     </resultMap>
     <select id="getAllVOrderByUserName" resultMap="BaseResult">
@@ -38,4 +41,16 @@
     <select id="allCount" resultType="Integer">
         select count(*) from v_order
     </select>
+    <select id="getVOrderByorderId" resultMap="BaseResult">
+         SELECT v.*,
+	    (SELECT d.v_quantity FROM v_order_details d WHERE v.v_orderId=d.v_orderId) AS vQuantitys,
+	    (SELECT u.v_username FROM v_uesr u WHERE v.v_userId=u.v_userId) AS v_usernames,
+	    (SELECT p.v_productName FROM v_product p WHERE v.v_productId=p.`v_productId`) AS v_productNames
+        FROM v_order v
+        where v.v_orderId=#{vOrderId}
+    </select>
+    <update id="updateVOrderByorderId">
+        update v_order set v_username=#{vUsername},v_userAddress=#{vUserAddress},v_phone=#{vPhone}
+              where v_orderId=#{vOrderId}
+    </update>
 </mapper>

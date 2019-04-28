@@ -7,4 +7,5 @@ public interface VProductMapper {
 
     Integer updateVProductStoreByProductId(@Param("productId") long productId, @Param("num") long num);//库存减少
     VProduct getVProductIdByProductName(String vProductName);//根据商品名称查询商品id
+    VProduct getVProductNameByProductId(String productId);//根据商品id查询商品名称
 }

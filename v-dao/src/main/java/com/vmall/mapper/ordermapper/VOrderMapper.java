@@ -11,4 +11,6 @@ public interface VOrderMapper {
     Integer addVOrder(VOrder vOrder);//新增订单
     List<VOrder> getAllVOrderByUserName(@Param("no")Integer no,@Param("size")Integer size,@Param("usernames")String usernames);//根据名字查询订单
     Integer allCount();//查询总记录数
+    Integer updateVOrderByorderId(VOrder vOrder);//修改订单(收件人，收货地址,收货人电话)
+    VOrder getVOrderByorderId(Integer vOrderId);//根据订单id获取订单详细信息
 }
