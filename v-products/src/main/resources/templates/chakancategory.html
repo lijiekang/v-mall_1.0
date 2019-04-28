@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -9,31 +9,13 @@
   <meta name="author" content="">
   <title>SB Admin - Start Bootstrap Template</title>
   <!-- Bootstrap core CSS-->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
-  <link th:href="@{vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin.css}" rel="stylesheet">
-  <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-  <script type="text/javascript">
-      $(function () {
-          $("[name=del]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              $.getJSON("del","vCategoryId="+id,function (data) {
-
-                  if(data=="true"){
-                      alert("删除成功!");
-                      jie.parents("tr").remove();
-                  }else{
-                      alert("删除失败!");
-                  }
-              })
-          })
-      })
-  </script>
+  <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -62,14 +44,6 @@
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponent">
-            <li>
-              <a href="commodity.html">Navbar</a>
-            </li>
-            <li>
-              <a href="cards.html">Cards</a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
@@ -112,7 +86,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="tocommodity">商品分类</a>
+              <a href="#">Second Level Item</a>
             </li>
             <li>
               <a href="#">Second Level Item</a>
@@ -259,44 +233,35 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> 商品分类</div>
+          <i class="fa fa-table"></i> 查看商品分类</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form method="post" action="/commodity">
-              <input type="hidden" name="page" th:value="${page}"/>
-
-              <input type="text" name="vCategoryName" th:value="${vCategoryName}">
-              <input type="submit" value="查询">
-              <a href="toaddfenlei">添加</a>
+            <form action="/chakancategory" method="post">
+              <input type="hidden" name="vProductId" th:value="${vCategory.vCategoryId}">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <tr>
+                  <td>分类名</td>
+                  <td><input readonly="readonly" name="vProductName" th:value="${vCategory.vCategoryName}"></td>
+                </tr>
+                <tr>
+                  <td>父级分类id</td>
+                  <td><input readonly="readonly" name="v_categoryLevel1"  th:value="${vCategory.vParentCategoryId}"></td>
+                </tr>
+                <tr>
+                  <td>分类级别</td>
+                  <td><input readonly="readonly" name="v_categoryLevel2"  th:value="${vCategory.vType}"></td>
+                </tr>
+                <tr>
+                  <td>图片路径</td>
+                  <td><input readonly="readonly" name="v_categoryLevel3"  th:value="${vCategory.vIconClass}"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="commodity">返回</a>
+                  </td>
+                </tr>
+              </table>
             </form>
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <tr>
-                <td>分类名</td>
-                <td>父级id</td>
-                <td>分类级别（1,2,3）</td>
-                <td>图片路径</td>
-                <td>操作</td>
-              </tr>
-              <tr th:each="category:${listcategory}">
-                <td th:text="${category.vCategoryName}"></td>
-                <td th:text="${category.vParentCategoryId}"></td>
-                <td th:text="${category.vType}"></td>
-                <td th:text="${category.vIconClass}"></td>
-                <td>
-                  <a th:href="@{tochakancategory(vCategoryId=${category.vCategoryId})}">查看</a>
-                  <a href="">修改</a>
-                  <a href="javascript:;"  th:value="${category.vCategoryId}" name="del">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a th:href="@{commodity(vCategoryName=${vCategoryName},pageNo=${1})}">首页</a>
-                  <a th:hidden="${page==1}" th:href="@{commodity(vCategoryName=${vCategoryName},pageNo=${page-1})}">上一页</a>
-                  <a th:hidden="${page>=totalCount}" th:href="@{commodity(vCategoryName=${vCategoryName},pageNo=${page+1})}">下一页</a>
-                  <a th:href="@{commodity(vCategoryName=${vCategoryName},pageNo=${totalCount})}">尾页</a>
-                </td>
-              </tr>
-            </table>
 
           </div>
         </div>

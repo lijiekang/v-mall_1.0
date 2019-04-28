@@ -13,6 +13,9 @@ import java.util.List;
 public interface VCategoryMapper {
     List<VCategory>listcategory(@Param("vCategoryName")String vCategoryName,@Param("PageNo") Integer PageNo, @Param("pageSize")Integer pageSize);
     int count(@Param("vCategoryName")String vCategoryName);
+    //查看
+    VCategory chakancategory(@Param("id")Integer id);
+    //修改前
     List<VCategory>categoryid(@Param("id") Integer id);
     int del(@Param("id") Integer id);
     int upd(VCategory vCategory);

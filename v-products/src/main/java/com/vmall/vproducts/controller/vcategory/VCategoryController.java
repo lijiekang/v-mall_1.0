@@ -8,13 +8,14 @@ import com.vmall.vproducts.service.vproduct.VProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class VCategoryController {
@@ -40,6 +41,50 @@ public class VCategoryController {
         model.addAttribute("categorylist",categorylist);
         model.addAttribute("totalCount",page.getPageye());
         return "commodity";
+    }
+    @RequestMapping("/tochakancategory")
+    public String tochakan(String vCategoryId,Model model){
+        VCategory vCategory=vCategoryService.chakancategory(Integer.valueOf(vCategoryId));
+        model.addAttribute("vCategory",vCategory);
+        model.addAttribute("categoryList",new VCategory());
+        return "chakancategory";
+    }
+    @RequestMapping(value="categorylevellist1",produces="application/json;charset=UTF-8")
+    @ResponseBody
+    public Object categorylevellist(HttpServletRequest request){
+        int id=Integer.parseInt(request.getParameter("queryCategoryLevel1"));
+        List<VCategory>categoryList=vCategoryService.getcategoryName(id);
+        return JSONArray.toJSONString(categoryList);
+    }
+    @RequestMapping(value = "toaddfenlei",method = RequestMethod.GET)
+    public String toaddfenlei(Model model){
+        List<VCategory> vclevel=vCategoryService.getcategorylist();
+        model.addAttribute("vCategory",vclevel);
+        model.addAttribute("categoryList",new VCategory());
+        return "addfenlei";
+    }
+    @RequestMapping("addfenlei")
+    public String addfenlei(MultipartFile multipartFile,VCategory vCategory){
+        File file1=new File("E:\\tu");
+        try {
+            String filekey= UUID.randomUUID().toString();
+            String fileName=multipartFile.getOriginalFilename();
+            String suffix=fileName.substring(fileName.indexOf("."));
+            multipartFile.transferTo(new File(file1,filekey+suffix));
+            if(".png".equals(suffix)||".jpg".equals(suffix)){
+                //上传文件
+                vCategory.setvIconClass(filekey+suffix);
+            }else{
+                return "文件格式错误";
+            }
+            int vc=vCategoryService.add(vCategory);
+            if (vc>0){
+                return "redirect:/commodity";
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return "addfenlei";
     }
     @RequestMapping("/del")
     @ResponseBody
