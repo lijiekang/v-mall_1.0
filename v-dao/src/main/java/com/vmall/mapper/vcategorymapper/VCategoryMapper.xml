@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.vcategorymapper.VCategoryMapper">
+    <select id="listcategory" resultType="com.vmall.pojo.VCategory">
+        SELECT * FROM v_category where 1=1
+        <if test="vCategoryName!=null and vCategoryName!=''">
+            and v_categoryName like concat('%',#{vCategoryName},'%')
+        </if>
+        LIMIT #{PageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT count(*) FROM v_category where 1=1
+        <if test="vCategoryName!=null and vCategoryName!=''">
+            and v_categoryName like concat('%',#{vCategoryName},'%')
+        </if>
+    </select>
+    <select id="categoryid" resultType="com.vmall.pojo.VCategory">
+        SELECT * FROM v_category WHERE v_categoryId=#{id}
+    </select>
+    <delete id="del">
+        DELETE FROM v_category WHERE v_categoryId = #{id}
+    </delete>
+    <update id="upd">
+        UPDATE v_category
+        <trim prefix="set" suffixOverrides="," suffix="where v_categoryId=#{vCategoryId}">
+            <if test="vCategoryName != null">v_categoryName=#{vCategoryName},</if>
+            <if test="vParentCategoryId != null">v_parentCategoryId=#{vParentCategoryId},</if>
+            <if test="vType != null">v_type=#{vType},</if>
+            <if test="vIconClass != null">v_iconClass=#{vIconClass},</if>
+        </trim>
+    </update>
+    <insert id="add">
+        INSERT INTO v_category(v_categoryId,v_categoryName,v_parentCategoryId,v_type,v_iconClass)
+        VALUES(#{vCategoryName},#{vParentCategoryId},#{vType},#{vIconClass},#{vCategoryName})
+    </insert>
+    <select id="getcategorylist" resultType="com.vmall.pojo.VCategory">
+        SELECT * FROM v_category WHERE v_parentCategoryId=0
+    </select>
+    <select id="getcategoryName" resultType="com.vmall.pojo.VCategory">
+        SELECT * FROM v_category WHERE v_parentCategoryId=#{vParentCategoryId}
+    </select>
+</mapper>

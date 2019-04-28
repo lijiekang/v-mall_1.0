@@ -8,10 +8,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.*;
 import java.util.List;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,11 +37,18 @@ public class VSeckillApplicationTests {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
     @Test
     public void test(){
-        ValueOperations valueOperations=redisTemplate.opsForValue();
-        valueOperations.set("nihao","wohenhao");
-        System.out.println(valueOperations.get("nihao"));
+        ValueOperations valueOperations=stringRedisTemplate.opsForValue();
+
+        valueOperations.set("seckill_product_id","3");
+        for (int i=0;i<5;i++){
+            long result=valueOperations.decrement("seckill_product_id");
+            System.out.println(result);
+        }
     }
 
 
@@ -64,4 +75,41 @@ public class VSeckillApplicationTests {
         valueOperations.set("token",vUesr);
 
     }
+
+    @Test
+    public void getTokens(){
+        File file=new File("d:/data.txt");
+        PrintWriter printWriter;
+        String token;
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+
+        try {
+            printWriter=new PrintWriter(file);
+            for (int i=0;i<1000;i++){
+                if(i==0)
+                    printWriter.println("productId,token");
+                token=generatorToken();
+                VUesr vUesr=new VUesr();
+                vUesr.setvUserId(i);
+                valueOperations.set(token,vUesr);
+
+                printWriter.println(1+","+token);
+            }
+
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    Random random=new Random();
+    private String generatorToken(){
+
+        return random.nextInt(100000)+"-"+System.currentTimeMillis()+random.nextInt(4);
+    }
+
+
+
 }
