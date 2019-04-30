@@ -3,9 +3,10 @@ package com.vmall.pojo;
 
 import com.vmall.pojo.VSeckillProduct;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class VSeckillOrder {
+public class VSeckillOrder implements Serializable {
 
   private long vSeckillOrderId;
   private long vSeckillProductId;
