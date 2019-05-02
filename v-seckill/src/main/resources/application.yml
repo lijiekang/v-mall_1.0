@@ -35,8 +35,8 @@ spring:
   rabbitmq:
     host: 192.168.159.129
     port: 5672
-    username: sang
-    password: 123
+    username: lijiekang
+    password: 19980920
     virtual-host: /
     listener:
       simple:

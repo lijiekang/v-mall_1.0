@@ -1,5 +1,8 @@
 package com.vmall.vseckill.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.vmall.pojo.message.MQMessage;
+import com.vmall.vseckill.config.MQConfig;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +21,7 @@ public class MQSender {
     private AmqpTemplate amqpTemplate;
 
 
-    public void send()
+    public void send(MQMessage mqMessage){
+        amqpTemplate.convertAndSend(MQConfig.QUEUE_NAME, JSONArray.toJSONString(mqMessage));
+    }
 }
