@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -51,9 +50,9 @@ public class VCategoryController {
     }
     @RequestMapping(value="categorylevellist1",produces="application/json;charset=UTF-8")
     @ResponseBody
-    public Object categorylevellist(HttpServletRequest request){
-        int id=Integer.parseInt(request.getParameter("queryCategoryLevel1"));
-        List<VCategory>categoryList=vCategoryService.getcategoryName(id);
+    public Object categorylevellist(Integer parentId,Model model){
+        List<VCategory>categoryList=vCategoryService.getcategoryName(parentId);
+        model.addAttribute("categoryList",categoryList);
         return JSONArray.toJSONString(categoryList);
     }
     @RequestMapping(value = "toaddfenlei",method = RequestMethod.GET)

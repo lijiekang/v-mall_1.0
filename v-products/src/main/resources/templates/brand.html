@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -9,76 +9,30 @@
   <meta name="author" content="">
   <title>SB Admin - Start Bootstrap Template</title>
   <!-- Bootstrap core CSS-->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link th:href="@{vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
+  <link th:href="@{css/sb-admin.css}" rel="stylesheet">
   <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
   <script type="text/javascript">
-      function selectProductCategoryLevel(obj) {
-          var level = $(obj).val();
-          if (level == 1) {
-              $('#vCategoryLevel1').parents("tr").hide();
-              $('#vCategoryLevel2').parents("tr").hide();
-          } else if (level == 2) {
-              $('#vCategoryLevel1').parents("tr").show();
-              $('#vCategoryLevel2').parents("tr").show();
-          } else {
-              $('#vCategoryLevel1').parent().parent().show(
+      $(function () {
+          $("[name=del]").click(function () {
+              var id=$(this).attr("value");
+              var jie=$(this);
+              $.getJSON("del","vCategoryId="+id,function (data) {
 
-
-              );
-              $('#vCategoryLevel2').parent().parent().show();
-          }
-      }
-      function addProductCategory() {
-          var productCategoryLevel1 = $("#vCategoryLevel1").val();
-          var productCategoryLevel2 = $("#vCategoryLevel2").val();
-          var name = $("#name").val();
-          var type = $("#type").val();
-          $.ajax({
-              url:"/categorylevellist1",
-              method: "post",
-              data: {
-                  name: name,
-                  type: type,
-                  vCategoryLevel1: (vCategoryLevel1 == null || vCategoryLevel1 == "") ? 0 : vCategoryLevel1,
-                  vCategoryLevel2: (vCategoryLevel2 == null || vCategoryLevel2 == "") ? 0 : vCategoryLevel2
-              },
-              success: function (jsonStr) {
-                  var result = eval("(" + jsonStr + ")");
-                  //状态判断
-                  if (result.status == 1) {
-                      window.location.reload();
+                  if(data=="true"){
+                      alert("删除成功!");
+                      jie.parents("tr").remove();
+                  }else{
+                      alert("删除失败!");
                   }
-              }
-          });
-      }
-      //查询下级分类
-      function queryProductCategoryList(obj, selectId) {
-          var parentId = $(obj).val();
-          $.ajax({
-              url:"/categorylevellist1",
-              data: {
-                  parentId: parentId
-              },
-              success: function (jsonStr) {
-                  var result = eval("(" + jsonStr + ")");
-                  //状态判断
-                  if (result.status == 1) {
-                      var options = "<option value='0'>" + "请选择..." + "</option>";
-                      for (var i = 0; i < result.data.length; i++) {
-                          var option = "<option value=" + result.data[i].id + ">" + result.data[i].name + "</option>";
-                          options = options + option;
-                      }
-                      $("#" + selectId).html(options);
-                  }
-              }
-          });
-      }
+              })
+          })
+      })
   </script>
 </head>
 
@@ -108,6 +62,14 @@
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponent">
+            <li>
+              <a href="commodity.html">Navbar</a>
+            </li>
+            <li>
+              <a href="cards.html">Cards</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
@@ -150,7 +112,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="tocommodity">商品分类</a>
             </li>
             <li>
               <a href="#">Second Level Item</a>
@@ -297,65 +259,40 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> 添加商品分类</div>
+          <i class="fa fa-table"></i> 商品品牌</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="addfenlei" method="post" enctype="multipart/form-data">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <tr>
-                  <td>商品分类名称</td>
-                  <td><input type="text"  name="vProductName"></td>
-                </tr>
-                <tr>
-                  <td>分类级别</td>
-                  <td  >
-                    <select name="type" id="type"
-                            onchange="selectProductCategoryLevel(this);">
-                    <option value="0">请选择...</option>
-                    <option value="1" th:selected="${categoryList.vType==1}" th:text="一级分类">
-                    </option>
-                    <option value="2" th:selected="${categoryList.vType==2}" th:text="二级分类">
-                    </option>
-                    <option value="3" th:selected="${categoryList.vType==3}" th:text="三级分类">
-                    </option>
-                    </select>
-                  </td>
-                </tr>
-                <tr th:hidden="${categoryList.vType==1}">
-                <td >一级分类</td>
-                <td colspan="3">
-                  <select name="vCategoryLevel1" id="vCategoryLevel1" onchange="queryProductCategoryList(this,'vCategoryLevel2');">
-                    <option value="0">请选择</option>
-                    <option th:each="vcategoryLevel1:${vCategory}" th:value="${vcategoryLevel1.vCategoryId}" th:text="${vcategoryLevel1.vCategoryName}"
-                    ></option> <!--th:selected="${vcategory.vCategoryId==vcategoryLevel1.vCategoryId || vcategory.vParentCategoryId==vcategoryLevel1.vCategoryId || parentProductCategory.parentId==vcategoryLevel1.vCategoryId}"-->
-                  </select>
-                </td>
-                </tr>
-                <tr th:hidden="${categoryList.vType!=3}">
-                <td>二级分类</td>
-                <td>
-                  <select name="vCategoryLevel2" id="vCategoryLevel2">
-                    <option value="0">请选择</option>
-                    <option th:each="vcategoryLevel2:${categoryList}" th:value="${vcategoryLevel2.vCategoryId}" th:text="${vcategoryLevel2.vCategoryName}"></option>
-                  </select>
-                </td>
-                </tr>
-                <tr>
-                  <td>图片路径</td>
-                  <td><input type="file" name="multipartFile"></td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="submit" value="新增">&nbsp;&nbsp;&nbsp;
-                  </td>
-                  <td>
-                    <a href="/commodity">
-                      <input type="button" value="回到首页">
-                    </a>
-                  </td>
-                </tr>
-              </table>
+            <form method="post" action="brand">
+              <input type="hidden" name="page" th:value="${page}"/>
+              <input type="text" name="vBrandName" th:value="${vBrandName}">
+              <input type="submit" value="查询">
+              <a href="toaddbrand">添加</a>
             </form>
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <tr>
+                <td>品牌标识</td>
+                <td>品牌名字</td>
+                <td>操作</td>
+              </tr>
+              <tr th:each="brand:${listvbrand}">
+                <td th:text="${brand.vBrandId}"></td>
+                <td th:text="${brand.vBrandName}"></td>
+                <td>
+                  <a th:href="@{tobrandchakan(vBrandId=${brand.vBrandId})}">查看</a>
+                  <a th:href="@{tobrandupd(vBrandId=${brand.vBrandId})}">修改</a>
+                  <a href="javascript:;"  th:value="${brand.vBrandId}" name="del">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a th:href="@{brand(vBrandName=${vBrandName},pageNo=${1})}">首页</a>
+                  <a th:hidden="${page==1}" th:href="@{brand(vBrandName=${vBrandName},pageNo=${page-1})}">上一页</a>
+                  <a th:hidden="${page>=totalCount}" th:href="@{brand(vBrandName=${vBrandName},pageNo=${page+1})}">下一页</a>
+                  <a th:href="@{brand(vBrandName=${vBrandName},pageNo=${totalCount})}">尾页</a>
+                </td>
+              </tr>
+            </table>
+
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -406,6 +343,5 @@
     <script src="js/sb-admin-datatables.min.js"></script>
   </div>
 </body>
-
 
 </html>

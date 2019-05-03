@@ -12,7 +12,7 @@
           values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId})
     </insert>
     <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
-        <association property="vUesr" javaType="com.vmall.pojo.VUesr">
+        <association property="vUser" javaType="com.vmall.pojo.VUser">
             <result property="vUsername" column="v_usernames"/>
         </association>
         <association property="vProduct" javaType="com.vmall.pojo.VProduct">
@@ -24,13 +24,13 @@
     </resultMap>
     <select id="getAllVOrderByUserName" resultMap="BaseResult">
         SELECT o.*,
-        (SELECT u.v_username FROM v_uesr u WHERE o.v_userId=u.v_userId) AS v_usernames,
+        (SELECT u.v_username FROM v_user u WHERE o.v_userId=u.v_userId) AS v_usernames,
         (SELECT p.v_productName FROM v_product p WHERE o.v_productId=p.v_productId) AS v_productNames,
         (SELECT s.v_statusName FROM v_order_status s WHERE o.v_statusId=s.v_statusId) AS v_statusNames
         FROM v_order o
         WHERE 1=1
         <if test="usernames!=null and usernames!=''">
-           and o.v_userId=(SELECT v_userId FROM v_uesr WHERE v_username like concat ('%',#{usernames},'%'))
+           and o.v_userId=(SELECT v_userId FROM v_user WHERE v_username like concat ('%',#{usernames},'%'))
         </if>
         limit #{no},#{size}
     </select>
