@@ -1,7 +1,6 @@
 package com.vmall.vtrade.service.userservice;
 
 import com.vmall.mapper.user.UserMapper;
-import com.vmall.pojo.VUesr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

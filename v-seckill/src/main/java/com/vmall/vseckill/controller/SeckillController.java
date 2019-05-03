@@ -1,14 +1,12 @@
 package com.vmall.vseckill.controller;
 
-import com.vmall.pojo.VUesr;
+import com.vmall.pojo.VUser;
 import com.vmall.pojo.dto.Dto;
 import com.vmall.pojo.dto.Status;
 import com.vmall.pojo.message.MQMessage;
-import com.vmall.vseckill.service.MQReceiver;
 import com.vmall.vseckill.service.MQSender;
 import com.vmall.vseckill.service.OrderService;
 import com.vmall.vseckill.service.ProductService;
-import com.vmall.vutil.exception.StoreNotEnoughException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 public class SeckillController {
@@ -35,11 +33,11 @@ public class SeckillController {
     @Autowired
     private MQSender mqSender;
 
-    private VUesr getUser(String token){
+    private VUser getUser(String token){
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         ValueOperations valueOperations = redisTemplate.opsForValue();
         Object object=valueOperations.get(token);
-        return object==null?null:(VUesr)object;
+        return object==null?null:(VUser)object;
     }
 
 
@@ -55,7 +53,7 @@ public class SeckillController {
     @GetMapping(value="/seckill")
     public Dto seckillProduct(String token, Integer productId){
         //获取当前登录的用户
-        VUesr user=getUser(token);
+        VUser user=getUser(token);
         try {
             if(user==null)
                 return Dto.failure(Status.AUTH_ERROR);
@@ -97,8 +95,8 @@ public class SeckillController {
 
     @GetMapping(value="/result")
     public Dto getResult(String token,Integer productId){
-        VUesr vUesr=getUser(token);
-        return Dto.success(orderService.getSeckillResult(vUesr.getvUserId(),productId));
+        VUser VUser=getUser(token);
+        return Dto.success(orderService.getSeckillResult(VUser.getvUserId(),productId));
     }
 
 

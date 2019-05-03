@@ -2,7 +2,6 @@ package com.vmall.vseckill;
 
 import com.vmall.mapper.seckill.SeckillProductMapper;
 import com.vmall.pojo.VSeckillProduct;
-import com.vmall.pojo.VUesr;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

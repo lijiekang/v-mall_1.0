@@ -1,7 +1,6 @@
 package com.vmall.vauth.service;
 
 import com.vmall.mapper.user.BackUserMapper;
-import com.vmall.pojo.VUesr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

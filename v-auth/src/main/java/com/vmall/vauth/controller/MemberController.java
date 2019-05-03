@@ -2,7 +2,6 @@ package com.vmall.vauth.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.VQuestion;
-import com.vmall.pojo.VUesr;
 import com.vmall.vauth.service.dev.DevUserService;
 import com.vmall.vauth.service.tool.TokenService;
 import io.swagger.annotations.Api;

@@ -4,7 +4,6 @@ import com.vmall.mapper.questionmapper.QuesUserMapper;
 import com.vmall.mapper.questionmapper.QuestionMapper;
 import com.vmall.mapper.user.UserMapper;
 import com.vmall.pojo.VQuestion;
-import com.vmall.pojo.VUesr;
 import com.vmall.vauth.service.tool.TokenService;
 import org.springframework.stereotype.Service;
 

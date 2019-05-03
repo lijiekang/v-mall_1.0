@@ -20,11 +20,19 @@ public class VOrder implements Serializable {
   private long vStatusId; //订单状态
   private String vPayNum; //交易号
   private long vProductId;//商品id
+  private VUser VUser;
+  private VProduct vProduct; //商品
+  private VOrderStatus vOrderStatus; //订单状态
+  private long vStreamId; //物流id
 
 
-  private VUesr vUesr;
-  private VProduct vProduct;
-  private VOrderStatus vOrderStatus;
+  public long getvStreamId() {
+    return vStreamId;
+  }
+
+  public void setvStreamId(long vStreamId) {
+    this.vStreamId = vStreamId;
+  }
 
   public void setvProduct(VProduct vProduct) {
     this.vProduct = vProduct;
@@ -38,12 +46,12 @@ public class VOrder implements Serializable {
     this.vOrderStatus = vOrderStatus;
   }
 
-  public VUesr getvUesr() {
-    return vUesr;
+  public VUser getVUser() {
+    return VUser;
   }
 
-  public void setvUesr(VUesr vUesr) {
-    this.vUesr = vUesr;
+  public void setVUser(VUser VUser) {
+    this.VUser = VUser;
   }
 
   public VProduct getvProduct() {

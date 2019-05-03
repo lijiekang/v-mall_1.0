@@ -1,7 +1,6 @@
 package com.vmall.vauth.service;
 
 import com.vmall.mapper.user.UserMapper;
-import com.vmall.pojo.VUesr;
 import com.vmall.vauth.service.tool.TokenService;
 import com.vmall.vutil.MD5Utils;
 import org.springframework.stereotype.Service;

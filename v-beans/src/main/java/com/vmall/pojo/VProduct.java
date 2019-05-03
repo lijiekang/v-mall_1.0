@@ -2,6 +2,7 @@ package com.vmall.pojo;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -15,7 +16,6 @@ public class VProduct implements Serializable {
   private long vCategoryLevel2; //商品分类等级2
   private long vCategoryLevel3;//商品分类等级3
   private long vStore; //商品库存
-  private double vPrice; //商品价格
   private String vImgUrl; //商品图片路径
   private double vGrade; //商品积分
   private long vIsDelete; //是否上下架(0上架 1下架)
@@ -24,6 +24,43 @@ public class VProduct implements Serializable {
   private String cateName2;
   private String cateName3;
   private String brandName;
+  private Timestamp vCreateDate; //创建时间
+  private Timestamp vModifyDate; //修改时间
+  private long vSalesVolume; //交易数量
+  private long vCommonsCount; //评论数量
+
+
+  public Timestamp getvCreateDate() {
+    return vCreateDate;
+  }
+
+  public void setvCreateDate(Timestamp vCreateDate) {
+    this.vCreateDate = vCreateDate;
+  }
+
+  public Timestamp getvModifyDate() {
+    return vModifyDate;
+  }
+
+  public void setvModifyDate(Timestamp vModifyDate) {
+    this.vModifyDate = vModifyDate;
+  }
+
+  public long getvSalesVolume() {
+    return vSalesVolume;
+  }
+
+  public void setvSalesVolume(long vSalesVolume) {
+    this.vSalesVolume = vSalesVolume;
+  }
+
+  public long getvCommonsCount() {
+    return vCommonsCount;
+  }
+
+  public void setvCommonsCount(long vCommonsCount) {
+    this.vCommonsCount = vCommonsCount;
+  }
 
   public String getCateName1() {
     return cateName1;
@@ -104,14 +141,6 @@ public class VProduct implements Serializable {
 
   public void setvStore(long vStore) {
     this.vStore = vStore;
-  }
-
-  public double getvPrice() {
-    return vPrice;
-  }
-
-  public void setvPrice(double vPrice) {
-    this.vPrice = vPrice;
   }
 
   public String getvImgUrl() {

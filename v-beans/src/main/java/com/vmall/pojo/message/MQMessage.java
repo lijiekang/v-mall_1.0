@@ -1,6 +1,6 @@
 package com.vmall.pojo.message;
 
-import com.vmall.pojo.VUesr;
+import com.vmall.pojo.VUser;
 
 /**
  * @Author: 李秸康
@@ -10,14 +10,19 @@ import com.vmall.pojo.VUesr;
  */
 public class MQMessage {
 
-    private VUesr vUesr;
+    private VUser vUesr;
     private Integer productId;
 
-    public VUesr getvUesr() {
+    public MQMessage(VUser vUesr, Integer productId) {
+        this.vUesr = vUesr;
+        this.productId = productId;
+    }
+
+    public VUser getvUesr() {
         return vUesr;
     }
 
-    public void setvUesr(VUesr vUesr) {
+    public void setvUesr(VUser vUesr) {
         this.vUesr = vUesr;
     }
 
@@ -26,11 +31,6 @@ public class MQMessage {
     }
 
     public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public MQMessage(VUesr vUesr, Integer productId) {
-        this.vUesr = vUesr;
         this.productId = productId;
     }
 }
