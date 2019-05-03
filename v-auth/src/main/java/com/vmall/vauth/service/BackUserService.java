@@ -1,6 +1,7 @@
 package com.vmall.vauth.service;
 
-import com.vmall.mapper.user.BackUserMapper;
+import com.vmall.mapper.User.BackUserMapper;
+import com.vmall.pojo.VUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class BackUserService {
     @Autowired
     BackUserMapper backUserMapper;
 
-    public List<VUesr> getUserByAll(String vUsercode,int currentPage){
+    public List<VUser> getUserByAll(String vUsercode, int currentPage){
         return backUserMapper.getUserByAll(vUsercode, currentPage);
     }
 
@@ -19,11 +20,11 @@ public class BackUserService {
         return backUserMapper.getTotalPageCount(vUserCode);
     }
 
-    public List<VUesr> getAllUser(String vUserCode, int currentPage, int pageSzie){
+    public List<VUser> getAllUser(String vUserCode, int currentPage, int pageSzie){
         return backUserMapper.getAllUser(vUserCode,currentPage, pageSzie);
     }
 
-    public VUesr getUserById(int id){
+    public VUser getUserById(int id){
         return backUserMapper.getUserById(id);
     }
 
@@ -31,11 +32,11 @@ public class BackUserService {
         return backUserMapper.delUser(id);
     }
 
-    public int addUser(VUesr vUesr){
+    public int addUser(VUser vUesr){
         return backUserMapper.addUser(vUesr);
     }
 
-    public int getUpdate(VUesr vUesr){
+    public int getUpdate(VUser vUesr){
         return backUserMapper.getUpdate(vUesr);
     }
 }

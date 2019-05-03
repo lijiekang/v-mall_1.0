@@ -2,25 +2,25 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vmall.mapper.user.UserMapper">
-    <select id="login" resultType="com.vmall.pojo.VUesr">
-        select * from v_uesr where v_usercode=#{userCode};
+<mapper namespace="com.vmall.mapper.User.UserMapper">
+    <select id="login" resultType="com.vmall.pojo.VUser">
+        select * from v_user where v_usercode=#{userCode};
     </select>
-    <select id="findEmail" resultType="com.vmall.pojo.VUesr">
-        select * from v_uesr where v_mail=#{email};
+    <select id="findEmail" resultType="com.vmall.pojo.VUser">
+        select * from v_user where v_mail=#{email};
     </select>
     <update id="findPassword">
-        update v_uesr set v_password=#{password},v_salt=#{salt} where v_userId=#{id}
+        update v_user set v_password=#{password},v_salt=#{salt} where v_userId=#{id}
     </update>
     <insert id="register">
-        insert into v_uesr(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_sex,v_usercode,v_salt)
+        insert into v_user(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_sex,v_usercode,v_salt)
         values (#{vUsername},#{vPassword},#{vMail},#{vPhone},#{vHeadPath},#{vIsActive},1,#{vSex},#{vUsercode},#{vSalt})
     </insert>
-    <select id="getVUesrById" resultType="com.vmall.pojo.VUesr">
+    <select id="getVUesrById" resultType="com.vmall.pojo.VUser">
         SELECT vu.v_username,vu.v_mail,vu.v_phone,vu.v_headPath,vu.v_grade,vu.v_sex,v_orderId,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=1 AND v_orderId=o1.v_orderId) s1,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=2 AND v_orderId=o1.v_orderId) s2,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=3 AND v_orderId=o1.v_orderId) s3
-        FROM v_order o1,v_uesr vu WHERE vu.v_userId=o1.v_userId AND vu.v_userId=#{userId}
+        FROM v_order o1,v_user vu WHERE vu.v_userId=o1.v_userId AND vu.v_userId=#{userId}
     </select>
 </mapper>

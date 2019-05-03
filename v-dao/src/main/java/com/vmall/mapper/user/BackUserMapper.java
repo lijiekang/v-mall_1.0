@@ -1,23 +1,24 @@
-package com.vmall.mapper.user;
+package com.vmall.mapper.User;
 
+import com.vmall.pojo.VUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface BackUserMapper {
 
-    List<VUesr> getAllUser(@Param("vUserCode")String vUserCode, @Param("currentPage") int currentPage, @Param("pageSize") Integer pageSzie);
+    List<VUser> getAllUser(@Param("vUserCode")String vUserCode, @Param("currentPage") int currentPage, @Param("pageSize") Integer pageSzie);
 
-    List<VUesr> getUserByAll(@Param("vUserCode")String vUsercode,@Param("currentPage") Integer currentPage);
+    List<VUser> getUserByAll(@Param("vUserCode")String vUsercode,@Param("currentPage") Integer currentPage);
 
     int getTotalPageCount(@Param("vUserCode") String vUserCode);
 
-    VUesr getUserById(int id);
+    VUser getUserById(int id);
 
-    int addUser(VUesr vUesr);
+    int addUser(VUser vUesr);
 
     int delUser(int id);
 
-    int getUpdate(VUesr vUesr);
+    int getUpdate(VUser vUesr);
 
 }
