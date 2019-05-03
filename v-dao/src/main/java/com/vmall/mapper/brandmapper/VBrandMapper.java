@@ -11,6 +11,7 @@ import java.util.List;
 public interface VBrandMapper {
     List<VBrand>vbrandlist(@Param("vBrandName")String vBrandName,@Param("PageNo") Integer PageNo, @Param("pageSize")Integer pageSize);
     int count(@Param("vBrandName")String vBrandName);
+    VBrand chakanbrand(@Param("id") Integer id);
     List<VBrand>vbrandid(@Param("id") Integer id);
     //修改品牌
     int vbrandupd(VBrand vBrand);

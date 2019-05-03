@@ -39,6 +39,29 @@ public class VBrandController {
         model.addAttribute("totalCount",page.getPageye());
         return "brand";
     }
+    @RequestMapping("tobrandchakan")
+    public String tobrandchakan(String vBrandId,Model model){
+        VBrand vBrand=vBrandService.chakanbrand(Integer.valueOf(vBrandId));
+        model.addAttribute("vBrand",vBrand);
+        return "chakanbrand";
+    }
+    @RequestMapping("/delbrabd")
+    @ResponseBody
+    public Object del(String vBrandId){
+        String flag="";
+        int delBrand=vBrandService.vbranddel(Integer.valueOf(vBrandId));
+        if(delBrand>0){
+            flag="true";
+        }else{
+            flag="false";
+        }
+        return JSONArray.toJSONString(flag);
+    }
+    /*public String chakan(String vProductId,Model model){
+        VProduct vproduct=vProductService.chakanvproduct(Integer.valueOf(vProductId));
+        model.addAttribute("vproduct",vproduct);
+        return "chakan";
+    }*/
     /*@ApiOperation(value = "添加商品品牌",notes = "添加一个商品品牌")
     @PostMapping("/vbrandadd")
     public Object vbrandadd(){

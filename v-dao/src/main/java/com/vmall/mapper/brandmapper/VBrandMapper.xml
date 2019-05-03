@@ -16,6 +16,9 @@
             and v_brandName like concat('%',#{vBrandName},'%')
         </if>
     </select>
+    <select id="chakanbrand" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand WHERE v_brandId=#{id}
+    </select>
     <select id="vbrandid" resultType="com.vmall.pojo.VBrand">
         SELECT * FROM v_brand WHERE v_brandId=#{id}
     </select>

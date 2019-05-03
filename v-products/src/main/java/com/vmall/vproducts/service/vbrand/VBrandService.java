@@ -18,6 +18,9 @@ public class VBrandService {
     public int count(String vBrandName){
         return vBrandMapper.count(vBrandName);
     }
+    public VBrand chakanbrand(Integer id){
+        return vBrandMapper.chakanbrand(id);
+    }
     public List<VBrand>vbrandid(Integer id){
         return vBrandMapper.vbrandid(id);
     }
