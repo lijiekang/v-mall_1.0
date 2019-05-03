@@ -18,6 +18,10 @@ public class ProductServiceImpl implements ProductService{
     private SeckillProductMapper seckillProductMapper;
 
 
+    //内存表示（true表示还有商品，false表示无商品）
+    private boolean flag=true;
+
+
     ValueOperations valueOperations;
 
     public ProductServiceImpl(StringRedisTemplate stringRedisTemplate) {
@@ -44,9 +48,15 @@ public class ProductServiceImpl implements ProductService{
     public boolean haveRemain(Integer seckillProductId) {
 
         //修改，从redis获取,预减库存
-        long result= valueOperations.decrement("seckill_product_"+seckillProductId);
-        return result>=0;
-        //老版本：从数据库获取
+        if(flag){
+            long result= valueOperations.decrement("seckill_product_"+seckillProductId);
+            if(result==-1){
+                flag=false;
+            }
+            return result!=-1;
+        }
+        return false;
+        //从数据库获取
         //return seckillProductMapper.getSeckillProductRemain(seckillProductId)>0;
     }
 

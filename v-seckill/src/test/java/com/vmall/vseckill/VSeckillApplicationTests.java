@@ -2,7 +2,6 @@ package com.vmall.vseckill;
 
 import com.vmall.mapper.seckill.SeckillProductMapper;
 import com.vmall.pojo.VSeckillProduct;
-import com.vmall.pojo.VUesr;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -79,15 +79,21 @@ public class VSeckillApplicationTests {
     @Test
     public void getTokens(){
         File file=new File("d:/data.txt");
+        if(file.exists())
+            file.delete();
         PrintWriter printWriter;
         String token;
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         ValueOperations valueOperations = redisTemplate.opsForValue();
 
         try {
             printWriter=new PrintWriter(file);
             for (int i=0;i<1000;i++){
-                if(i==0)
+                if(i==0) {
                     printWriter.println("productId,token");
+                    continue;
+                }
                 token=generatorToken();
                 VUesr vUesr=new VUesr();
                 vUesr.setvUserId(i);
@@ -112,4 +118,11 @@ public class VSeckillApplicationTests {
 
 
 
+
+    @Test
+    public void test5(){
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        VUesr vUesr=(VUesr) redisTemplate.opsForValue().get("88463-15567736050593");
+        System.out.println(vUesr.getvUserId());
+    }
 }

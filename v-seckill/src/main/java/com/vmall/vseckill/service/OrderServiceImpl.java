@@ -30,10 +30,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public boolean SeckillProduct(Integer userId, Integer seckillProductId) throws StoreNotEnoughException,Exception {
+    public boolean seckillProduct(Integer userId, Integer seckillProductId) throws StoreNotEnoughException,Exception {
         //减少库存
         if(!productService.modifyProduct(new VSeckillProduct(seckillProductId))){
             //库存不足，则抛出异常
+            MQReceiver.flag=true;
             throw new StoreNotEnoughException();
         }
         //生成订单号
@@ -55,5 +56,19 @@ public class OrderServiceImpl implements OrderService {
 //        return seckillOrderMapper.getSeckillOrderByConditions(userId,productId)!=null?true:false;
         //从redis里获取订单
         return valueOperations.get("seckill_order_"+userId)!=null?true:false;
+    }
+
+
+    @Override
+    public long getSeckillResult(long userId, int productId) {
+        Object result=valueOperations.get("seckill_order_"+userId);
+        if(result!=null)
+            return 1;
+        else{
+            if(!MQReceiver.flag)
+                return 0;
+            else
+                return -1;
+        }
     }
 }

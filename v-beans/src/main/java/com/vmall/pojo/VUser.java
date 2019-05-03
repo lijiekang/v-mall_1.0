@@ -1,53 +1,31 @@
 package com.vmall.pojo;
 
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 
-/**
- * 用户类
- */
-public class VUesr implements Serializable {
+public class VUser {
 
   private long vUserId; //用户id
-  private String vUsername; //用户昵称
-  private String vPassword; //用户登录密码
+  private String vUsername; //用户名
+  private String vPassword; //用户密码
   private String vMail; //用户邮箱
-  private String vPhone; //用户手机号
-  private String vHeadPath; //用户头像路径
+  private String vPhone; //用户手机
+  private String vHeadPath; //用户头像
   private long vIsActive; //是否激活
-  private long vType; //用户类型（0普通用户 1管理员）
+  private long vType; //类型
   private double vGrade; //用户积分
-  private long vSex; //用户性别（0男 1女）
+  private long vSex; //用户性别 0男 1女
   private String vIdentity; //用户身份证号
-  private String vUsercode; //用户登录名
-  private String vSalt;  //用户加密盐值
-  private Integer s1;//订单状态数量1
-  private Integer s2;//订单状态数量2
-  private Integer s3;//订单状态数量3
+  private String vUsercode; //用户编码
+  private String vSalt; //加密盐值
+  private double vAccount; //用户余额（暂且用不到）
+  private java.sql.Timestamp vBirthday; //用户生日
+  private String vPaypassword; //支付密码（暂时不需要）
+  private String vRealName; //真实姓名
+  private String vIDcardFront; //身份证正面照
+  private String vIDcardBehind; //背面照
+  private java.sql.Timestamp vLastLogin; //最后一次登录时间
 
-  public Integer getS1() {
-    return s1;
-  }
-
-  public void setS1(Integer s1) {
-    this.s1 = s1;
-  }
-
-  public Integer getS2() {
-    return s2;
-  }
-
-  public void setS2(Integer s2) {
-    this.s2 = s2;
-  }
-
-  public Integer getS3() {
-    return s3;
-  }
-
-  public void setS3(Integer s3) {
-    this.s3 = s3;
-  }
 
   public long getvUserId() {
     return vUserId;
@@ -151,5 +129,61 @@ public class VUesr implements Serializable {
 
   public void setvSalt(String vSalt) {
     this.vSalt = vSalt;
+  }
+
+  public double getvAccount() {
+    return vAccount;
+  }
+
+  public void setvAccount(double vAccount) {
+    this.vAccount = vAccount;
+  }
+
+  public Timestamp getvBirthday() {
+    return vBirthday;
+  }
+
+  public void setvBirthday(Timestamp vBirthday) {
+    this.vBirthday = vBirthday;
+  }
+
+  public String getvPaypassword() {
+    return vPaypassword;
+  }
+
+  public void setvPaypassword(String vPaypassword) {
+    this.vPaypassword = vPaypassword;
+  }
+
+  public String getvRealName() {
+    return vRealName;
+  }
+
+  public void setvRealName(String vRealName) {
+    this.vRealName = vRealName;
+  }
+
+  public String getvIDcardFront() {
+    return vIDcardFront;
+  }
+
+  public void setvIDcardFront(String vIDcardFront) {
+    this.vIDcardFront = vIDcardFront;
+  }
+
+  public String getvIDcardBehind() {
+    return vIDcardBehind;
+  }
+
+  public void setvIDcardBehind(String vIDcardBehind) {
+    this.vIDcardBehind = vIDcardBehind;
+  }
+
+  public Timestamp getvLastLogin() {
+    return vLastLogin;
+  }
+
+  public void setvLastLogin(Timestamp vLastLogin) {
+    this.vLastLogin = vLastLogin;
   }
 }

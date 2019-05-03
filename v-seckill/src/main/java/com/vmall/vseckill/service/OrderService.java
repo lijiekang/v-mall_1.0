@@ -10,7 +10,7 @@ public interface OrderService {
      * @param seckillProductId
      * @return
      */
-    boolean SeckillProduct(Integer userId,Integer seckillProductId) throws StoreNotEnoughException,Exception;
+    boolean seckillProduct(Integer userId,Integer seckillProductId) throws StoreNotEnoughException,Exception;
 
 
     /**
@@ -20,4 +20,12 @@ public interface OrderService {
      * @return
      */
     boolean isSeckilled(long userId,Integer productId);
+
+    /**
+     * 得到秒杀结果
+     * @param userId
+     * @param productId
+     * @return
+     */
+    long getSeckillResult(long userId,int productId);
 }

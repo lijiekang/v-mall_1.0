@@ -1,6 +1,5 @@
 package com.vmall.mapper.user;
 
-import com.vmall.pojo.VUesr;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
