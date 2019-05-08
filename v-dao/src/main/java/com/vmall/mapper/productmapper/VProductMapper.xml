@@ -88,4 +88,29 @@
     <delete id="del">
     DELETE FROM v_product WHERE v_productId = #{id}
   </delete>
+
+    <select id="getVCategoryLevel1" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_type=1
+    </select>
+
+    <select id="getVCategoryLevel2" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_parentCategoryId=#{vCategoryId}
+    </select>
+
+    <delete id="getDelCategoryLv1ById">
+      delete from v_category where v_categoryId=#{vCategoryId}
+    </delete>
+
+    <select id="getVCategoryLevelfen" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_type=#{vType}
+    </select>
+
+    <insert id="addClassification">
+        <if test="vType==1">
+            insert into v_category(v_categoryName,v_parentCategoryId,v_type) values (#{vCategoryName},0,1)
+        </if>
+        <if test="vType>1">
+            insert into v_category(v_categoryName,v_parentCategoryId,v_type) values (#{vCategoryName},#{vParentCategoryId},#{vType})
+        </if>
+    </insert>
 </mapper>

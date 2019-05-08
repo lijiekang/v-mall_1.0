@@ -306,21 +306,21 @@
                   <td>
                     <select name="vCategoryLevel1" id="categoryLevel1">
                       <option value="1">请选择</option>
-                      <option th:each="vcategoryLevel1:${vclevel}" th:value="${vcategoryLevel1.vCategoryId}" th:text="${vcategoryLevel1.vCategoryName}"th:selected="${vcategoryLevel1.vCategoryId==vproduct.vCategoryLevel1}"></option>
+                      <option th:each="vcategoryLevel1:${vclevel}" th:value="${vcategoryLevel1.vCategoryId}" th:text="${vcategoryLevel1.vCategoryName}"th:selected="${vcategoryLevel1.vCategoryId==1}"></option>
                     </select>
                   </td>
                 </tr>
                 <tr>
                   <td>二级分类</td>
                   <td>
-                    <select name="vCategoryLevel2" id="categoryLevel2">
+                    <select name="vCategoryLevel2" id="categoryLevel2" >
                     </select>
                   </td>
                 </tr>
                 <tr>
                   <td>三级分类</td>
                   <td>
-                    <select name="vCategoryLevel3" id="categoryLevel3">
+                    <select name="vCategoryLevel3" id="categoryLevel3" >
                     </select>
                   </td>
                 </tr>
@@ -349,10 +349,8 @@
                   <td><input type="text"  name="v_brandId"  th:value="${vproduct.brandName}"></td>
                 </tr>
                 <tr>
-                  <td>
-                    <input type="submit" value="修改">
-                    <a href="getproduct">返回</a>
-                  </td>
+                  <td><input type="submit" value="修改"></td>
+                  <td> <a href="getproduct">返回</a></td>
                 </tr>
               </table>
             </form>

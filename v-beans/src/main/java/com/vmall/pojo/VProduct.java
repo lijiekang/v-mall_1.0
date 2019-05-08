@@ -6,8 +6,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * 商品类
+ *  商品类
+ *
  */
+
 public class VProduct implements Serializable {
 
   private long vProductId; //商品id

@@ -8,23 +8,29 @@ public class VProperty {
 
   private long vPropertiesId;
   private String vPropertiesValue;
+  private String vParentId;
 
-
-  public long getVPropertiesId() {
+  public long getvPropertiesId() {
     return vPropertiesId;
   }
 
-  public void setVPropertiesId(long vPropertiesId) {
+  public void setvPropertiesId(long vPropertiesId) {
     this.vPropertiesId = vPropertiesId;
   }
 
-
-  public String getVPropertiesValue() {
+  public String getvPropertiesValue() {
     return vPropertiesValue;
   }
 
-  public void setVPropertiesValue(String vPropertiesValue) {
+  public void setvPropertiesValue(String vPropertiesValue) {
     this.vPropertiesValue = vPropertiesValue;
   }
 
+  public String getvParentId() {
+    return vParentId;
+  }
+
+  public void setvParentId(String vParentId) {
+    this.vParentId = vParentId;
+  }
 }

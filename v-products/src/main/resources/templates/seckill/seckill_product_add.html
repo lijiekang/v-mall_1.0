@@ -1,0 +1,119 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content"></div>
+
+
+
+<div class="card card-register mx-auto mt-5" id="addContent">
+    <!--<div class="card-header">Register an Account</div>-->
+    <div class="card-body">
+        <form>
+
+
+
+            <div style="display: inline-block;margin-right: 50px;">
+                <label for="exampleInputName">一级分类</label>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div>
+
+           <div style="display: inline-block;margin-right: 50px;">
+               <label for="exampleInputName">二级分类</label>
+               <div class="dropdown">
+                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                       Dropdown
+                       <span class="caret"></span>
+                   </button>
+                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                       <li><a href="#">Action</a></li>
+                       <li><a href="#">Another action</a></li>
+                       <li><a href="#">Something else here</a></li>
+                       <li role="separator" class="divider"></li>
+                       <li><a href="#">Separated link</a></li>
+                   </ul>
+               </div>
+           </div>
+
+           <div style="display: inline-block">
+               <label for="exampleInputName">三级分类</label>
+               <div class="dropdown">
+                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                       Dropdown
+                       <span class="caret"></span>
+                   </button>
+                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                       <li><a href="#">Action</a></li>
+                       <li><a href="#">Another action</a></li>
+                       <li><a href="#">Something else here</a></li>
+                       <li role="separator" class="divider"></li>
+                       <li><a href="#">Separated link</a></li>
+                   </ul>
+               </div>
+           </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputName">First name</label>
+                        <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName">Last name</label>
+                        <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleConfirmPassword">Confirm password</label>
+                        <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary btn-block" href="login.html">Register</a>
+        </form>
+        <div class="text-center">
+            <a class="d-block small mt-3" href="login.html">Login Page</a>
+            <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("添加秒杀商品").append("<a class=\"btn btn-primary\" href=\"#\" id=\"toggleNavPosition\" style='float: right'>新增秒杀商品</a>")
+        $(".table-responsive").html($("#addContent"));
+    })
+</script>
+</body>
+</html>

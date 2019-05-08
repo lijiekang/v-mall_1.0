@@ -3,15 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.brandmapper.VBrandMapper">
+    <select id="vbrandlist" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand WHERE 1=1
+        <if test="vBrandName!=null and vBrandName!=''">
+            and v_brandName like concat('%',#{vBrandName},'%')
+        </if>
+        LIMIT #{PageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT count(*) FROM v_brand WHERE 1=1
+        <if test="vBrandName!=null and vBrandName!=''">
+            and v_brandName like concat('%',#{vBrandName},'%')
+        </if>
+    </select>
+    <select id="chakanbrand" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand WHERE v_brandId=#{id}
+    </select>
+    <select id="vbrandid" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand WHERE v_brandId=#{id}
+    </select>
     <insert id="vbrandadd">
         INSERT INTO v_brand (v_brandName) VALUES(#{v_brandName})
     </insert>
     <delete id="vbranddel">
         DELETE FROM v_brand WHERE v_brandId =#{id}
     </delete>
-    <select id="vbrandlist" resultType="com.vmall.pojo.VBrand">
-        SELECT * FROM v_brand WHERE v_brandId=#{id}
-    </select>
+
     <update id="vbrandupd">
         UPDATE v_brand
         <trim prefix="set" suffixOverrides="," suffix="where v_brandId=#{id}">
