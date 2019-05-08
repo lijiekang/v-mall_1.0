@@ -1,5 +1,6 @@
 package com.vmall.vauth.controller;
 
+import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.LoginService;
 import com.vmall.vauth.service.tool.MailService;
 import com.vmall.vauth.service.tool.TokenService;
@@ -72,7 +73,7 @@ public class LoginController {
         return "register";
     }
     @PostMapping("/regist")
-    public String regist(MultipartFile file,VUesr vUesr,@RequestParam("phoneCode")String phoneCode){
+    public String regist(MultipartFile file, VUser vUser, @RequestParam("phoneCode")String phoneCode){
         String realPath="F:/Vmall/VmallImage/userportrait/";
         File folder=new File(realPath);
         if(!folder.isDirectory()){
@@ -81,9 +82,9 @@ public class LoginController {
         String oldName=file.getOriginalFilename();
         String newName=oldName.substring(oldName.indexOf("."),oldName.length());
         try {
-            file.transferTo(new File(folder,vUesr.getvUsercode()+newName));
-            vUesr.setvHeadPath(newName);
-            if(loginService.register(vUesr,phoneCode)!=false){
+            file.transferTo(new File(folder,vUser.getvUsercode()+newName));
+            vUser.setvHeadPath(newName);
+            if(loginService.register(vUser,phoneCode)!=false){
                 return "login";
             }
         } catch (IOException e) {

@@ -8,33 +8,30 @@ public class VProperties {
 
   private long vPropertiesId;
   private String vPropertiesName;
-  private long vPropertyId;
+  private VProperty vProperty;
 
+  public VProperty getvProperty() {
+    return vProperty;
+  }
 
-  public long getVPropertiesId() {
+  public void setvProperty(VProperty vProperty) {
+    this.vProperty = vProperty;
+  }
+
+  public long getvPropertiesId() {
     return vPropertiesId;
   }
 
-  public void setVPropertiesId(long vPropertiesId) {
+  public void setvPropertiesId(long vPropertiesId) {
     this.vPropertiesId = vPropertiesId;
   }
 
-
-  public String getVPropertiesName() {
+  public String getvPropertiesName() {
     return vPropertiesName;
   }
 
-  public void setVPropertiesName(String vPropertiesName) {
+  public void setvPropertiesName(String vPropertiesName) {
     this.vPropertiesName = vPropertiesName;
-  }
-
-
-  public long getVPropertyId() {
-    return vPropertyId;
-  }
-
-  public void setVPropertyId(long vPropertyId) {
-    this.vPropertyId = vPropertyId;
   }
 
 }

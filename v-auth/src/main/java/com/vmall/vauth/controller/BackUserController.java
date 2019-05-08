@@ -52,8 +52,8 @@ public class BackUserController {
     @ApiOperation(value = "根据Id查询用户",notes = "id")
     @GetMapping("/user/{id}")
     public Object getUserById(int id){
-        VUser vUesr=backUserService.getUserById(id);
-        String json=JSONArray.toJSONString(vUesr);
+        VUser vUser=backUserService.getUserById(id);
+        String json=JSONArray.toJSONString(vUser);
         return json;
     }
 

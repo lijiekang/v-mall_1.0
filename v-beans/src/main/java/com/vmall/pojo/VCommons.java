@@ -18,8 +18,34 @@ public class VCommons implements Serializable {
   private double vGrade; //评分
   private Timestamp vCreateDate; //评论创建时间
   private Timestamp vModifyDate; //评论修改时间
+  private VUser vUser;
   private long vIsOk; //是否推荐
+  private long  vReview;//是否为追评
+  private String vReply;//回复内容
 
+  public VUser getvUser() {
+    return vUser;
+  }
+
+  public void setvUser(VUser vUser) {
+    this.vUser = vUser;
+  }
+
+  public long getvReview() {
+    return vReview;
+  }
+
+  public void setvReview(long vReview) {
+    this.vReview = vReview;
+  }
+
+  public String getvReply() {
+    return vReply;
+  }
+
+  public void setvReply(String vReply) {
+    this.vReply = vReply;
+  }
 
   public long getvCommonsId() {
     return vCommonsId;

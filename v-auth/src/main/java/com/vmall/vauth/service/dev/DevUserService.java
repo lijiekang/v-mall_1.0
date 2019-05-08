@@ -4,6 +4,7 @@ import com.vmall.mapper.questionmapper.QuesUserMapper;
 import com.vmall.mapper.questionmapper.QuestionMapper;
 import com.vmall.mapper.user.UserMapper;
 import com.vmall.pojo.VQuestion;
+import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.tool.TokenService;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,15 @@ public class DevUserService {
     QuestionMapper questionMapper;
     @Resource
     QuesUserMapper quesUserMapper;
-    public VUesr getVUesrById(String token){
-        VUesr vUesr=(VUesr)tokenService.get(token);
+    public VUser getVUesrById(String token){
+        VUser vUesr=(VUser)tokenService.get(token);
         return userMapper.getVUesrById(vUesr.getvUserId());
     }
     public List<VQuestion> allQuestion(){
         return questionMapper.allQuestion();
     }
     public int addQuestion(int quesId,String token,String answer){
-        VUesr vUesr=(VUesr)tokenService.get(token);
+        VUser vUesr=(VUser)tokenService.get(token);
         return quesUserMapper.insert(vUesr.getvUserId(),quesId,answer);
     }
 }

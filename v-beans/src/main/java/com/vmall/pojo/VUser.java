@@ -3,7 +3,7 @@ package com.vmall.pojo;
 
 import java.sql.Timestamp;
 
-public class VUser {
+public class VUser{
 
   private long vUserId; //用户id
   private String vUsername; //用户名
@@ -25,7 +25,15 @@ public class VUser {
   private String vIDcardFront; //身份证正面照
   private String vIDcardBehind; //背面照
   private java.sql.Timestamp vLastLogin; //最后一次登录时间
+  private String vSecurityPass;//安全验证登录密码
 
+  public String getvSecurityPass() {
+    return vSecurityPass;
+  }
+
+  public void setvSecurityPass(String vSecurityPass) {
+    this.vSecurityPass = vSecurityPass;
+  }
 
   public long getvUserId() {
     return vUserId;

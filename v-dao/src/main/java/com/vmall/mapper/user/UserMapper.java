@@ -1,4 +1,4 @@
-package com.vmall.mapper.User;
+package com.vmall.mapper.user;
 
 import com.vmall.pojo.VUser;
 import org.apache.ibatis.annotations.Param;

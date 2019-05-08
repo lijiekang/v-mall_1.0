@@ -2,6 +2,7 @@ package com.vmall.vauth.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.VQuestion;
+import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.dev.DevUserService;
 import com.vmall.vauth.service.tool.TokenService;
 import io.swagger.annotations.Api;
@@ -29,7 +30,7 @@ public class MemberController {
     @ApiImplicitParam(value="token",name = "token",paramType = "header")
     public String Vuesr(HttpServletRequest request){
         String token=request.getHeader("token");
-        VUesr vUesr=devUserService.getVUesrById(token);//空为没有这些状态的订单数量
+        VUser vUesr=devUserService.getVUesrById(token);//空为没有这些状态的订单数量
         return JSONArray.toJSONString(vUesr);
     }
     @GetMapping("question")
@@ -51,7 +52,7 @@ public class MemberController {
     @ApiImplicitParam(value="token",name = "token",paramType = "header")
     public void tokenDisplace(HttpServletRequest request, HttpServletResponse response){
         String token=request.getHeader("token");
-        VUesr vUesr=(VUesr)tokenService.get(token);
+        VUser vUesr=(VUser)tokenService.get(token);
         if(vUesr!=null) {
             tokenService.set(vUesr);
             Cookie cookie = new Cookie("token", token.toString());
