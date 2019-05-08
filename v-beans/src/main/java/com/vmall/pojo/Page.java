@@ -7,13 +7,13 @@ public class Page {
     private int currentPageNo;//当前页数
     private int totalPageCount;//总页数
     private int pageSize=1;//页面大小
-    private List<VUesr> vUserList;
+    private List<VUser> vUserList;
 
-    public List<VUesr> getvUserList() {
+    public List<VUser> getvUserList() {
         return vUserList;
     }
 
-    public void setvUserList(List<VUesr> vUserList) {
+    public void setvUserList(List<VUser> vUserList) {
         this.vUserList = vUserList;
     }
 

@@ -9,11 +9,11 @@
   <meta name="author" content="">
   <title>SB Admin - Start Bootstrap Template</title>
   <!-- Bootstrap core CSS-->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{../../back/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{../../back/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin.css}" rel="stylesheet">
+  <link th:href="@{../../back/css/sb-admin.css}" rel="stylesheet">
 </head>
 
 <body class="bg-dark">
@@ -81,7 +81,7 @@
   </div>
 </div>
 <!-- Bootstrap core JavaScript-->
-<script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../back/vendor/jquery/jquery.min.js"></script>
 <script type="text/javascript">
   var time = 60;
   function settime(obj){
@@ -101,7 +101,6 @@
   }
   $(function () {
     $("#form").submit(function () {
-
       if($("#pwd1").val()!=$("#pwd2").val()){
         alert("两次密码不一致");
         return false;
@@ -109,6 +108,7 @@
       return true;
     });
     $("[type='button']").click(function () {
+
       var phone=$("[name='vPhone']").val();
       if(phone!=null&&phone!=""){
         $.post("/getPhoneCode","phone="+phone,function (data) {
@@ -121,9 +121,9 @@
 
   })
 </script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../back/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../../back/vendor/jquery-easing/jquery.easing.min.js"></script>
 </body>
 
 </html>

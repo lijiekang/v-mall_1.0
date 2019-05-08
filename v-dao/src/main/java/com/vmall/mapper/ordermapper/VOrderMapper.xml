@@ -12,7 +12,7 @@
           values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId})
     </insert>
     <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
-        <association property="vUesr" javaType="com.vmall.pojo.VUesr">
+        <association property="vUesr" javaType="com.vmall.pojo.VUser">
             <result property="vUsername" column="v_usernames"/>
         </association>
         <association property="vProduct" javaType="com.vmall.pojo.VProduct">

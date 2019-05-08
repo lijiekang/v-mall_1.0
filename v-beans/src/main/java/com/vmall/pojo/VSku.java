@@ -10,7 +10,24 @@ public class VSku {
   private String vSkuName;
   private double vSkuPrice;
   private long vProductId;
+  private String vSkuCode;
+  private VProduct vProduct;
 
+  public String getVSkuCode() {
+    return vSkuCode;
+  }
+
+  public void setVSkuCode(String vSkuCode) {
+    this.vSkuCode = vSkuCode;
+  }
+
+  public VProduct getVProduct() {
+    return vProduct;
+  }
+
+  public void setVProduct(VProduct vProduct) {
+    this.vProduct = vProduct;
+  }
 
   public long getVSkuId() {
     return vSkuId;

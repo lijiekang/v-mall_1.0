@@ -3,24 +3,90 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.user.UserMapper">
-    <select id="login" resultType="com.vmall.pojo.VUesr">
-        select * from v_uesr where v_usercode=#{userCode};
+    <select id="login" resultType="com.vmall.pojo.VUser">
+        select * from v_user where v_usercode=#{userCode};
     </select>
-    <select id="findEmail" resultType="com.vmall.pojo.VUesr">
-        select * from v_uesr where v_mail=#{email};
+    <select id="findEmail" resultType="com.vmall.pojo.VUser">
+        select count(1) from v_user where v_mail=#{email};
     </select>
     <update id="findPassword">
-        update v_uesr set v_password=#{password},v_salt=#{salt} where v_userId=#{id}
+        update v_user set v_password=#{password},v_salt=#{salt} where v_userId=#{id}
     </update>
     <insert id="register">
-        insert into v_uesr(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_sex,v_usercode,v_salt)
+        insert into v_user(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_sex,v_usercode,v_salt)
         values (#{vUsername},#{vPassword},#{vMail},#{vPhone},#{vHeadPath},#{vIsActive},1,#{vSex},#{vUsercode},#{vSalt})
     </insert>
-    <select id="getVUesrById" resultType="com.vmall.pojo.VUesr">
+    <select id="getVUesrById" resultType="com.vmall.pojo.VUser">
         SELECT vu.v_username,vu.v_mail,vu.v_phone,vu.v_headPath,vu.v_grade,vu.v_sex,v_orderId,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=1 AND v_orderId=o1.v_orderId) s1,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=2 AND v_orderId=o1.v_orderId) s2,
         (SELECT COUNT(1) FROM v_order WHERE v_statusId=3 AND v_orderId=o1.v_orderId) s3
-        FROM v_order o1,v_uesr vu WHERE vu.v_userId=o1.v_userId AND vu.v_userId=#{userId}
+        FROM v_order o1,v_user vu WHERE vu.v_userId=o1.v_userId AND vu.v_userId=#{userId}
     </select>
+    <update id="updProfile">
+        update v_user
+        <set>
+            <if test="vUsername!=null and vUsername!=''">
+                v_username =#{vUsername} ,
+            </if>
+            <if test="vMail!=null and vMail!=''">
+                v_mail =#{vMail} ,
+            </if>
+            <if test="vPhone!=null and vPhone!=''">
+                v_phone =#{vPhone} ,
+            </if>
+            <if test="vHeadPath!=null and vHeadPath!=''">
+                v_headPath =#{vHeadPath} ,
+            </if>
+            <if test="vSex!=0">
+                v_sex =#{vSex} ,
+            </if>
+            <if test="vUsercode!=null and vUsercode!=''">
+                v_usercode =#{vUsercode} ,
+            </if>
+            <if test="vIdentity!=null and vIdentity!=''">
+                v_identity =#{vIdentity} ,
+            </if>
+        </set>
+        where v_userId=#{vUserId};
+    </update>
+    <resultMap id="history" type="com.vmall.pojo.VBrowsinghistory">
+        <id property="vHistoryId" column="v_historyId"/>
+        <result property="vUserId" column="v_userId"/>
+        <result property="vProductId" column="v_productId"/>
+        <result property="vBrowsTime" column="v_browsTime"/>
+        <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+            <id property="vProductId" column="v_productId"/>
+            <result property="vProductName" column="v_productName"/>
+            <result property="vPrice" column="v_price"/>
+            <result property="vIsDelete" column="v_isDelete"/>
+            <result property="vImgUrl" column="v_imgUrl"/>
+        </association>
+    </resultMap>
+    <select id="MyfootHistory" resultMap="history">
+        SELECT p.* FROM v_user u,v_browsinghistory b,v_product p WHERE
+        u.`v_userId`=b.`v_userId` AND b.`v_productId`=p.`v_productId` AND b.`v_userId`=#{vUserId} limit #{pageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT count(p.v_productId) FROM v_user u,v_browsinghistory b,v_product p WHERE
+        u.`v_userId`=b.`v_userId` AND b.`v_productId`=p.`v_productId` AND b.`v_userId`=#{vUserId}
+    </select>
+    <insert id="addFootHistory">
+        insert into v_browsinghistory (v_userId,v_productId,v_browsTime) values (#{vUserId},#{vProductId},#{vBrowsTime});
+    </insert>
+    <delete id="delFootHistory">
+        DELETE FROM v_browsinghistory WHERE v_historyId IN(
+        SELECT * FROM (SELECT s.v_historyId FROM v_browsinghistory s
+        WHERE s.v_browsTime NOT IN(SELECT h.`v_browsTime` FROM v_browsinghistory h WHERE DATEDIFF(v_browsTime,NOW())&lt;=0 AND DATEDIFF(v_browsTime,NOW())&gt;-7)) AS n
+        )
+    </delete>
+    <update id="updPhoneNumber">
+        update v_user set v_phone=#{phoneNumber} where v_userId=#{userId} ;
+    </update>
+    <select id="findPhoneNumber" resultType="int">
+        select count(1) from v_user where v_phone=#{phoneNumber};
+    </select>
+    <update id="updEmail">
+        update v_user set v_mail = #{email}  where v_userId=#{userId} ;
+    </update>
 </mapper>
