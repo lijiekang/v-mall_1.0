@@ -2,18 +2,18 @@ package com.vmall.pojo;
 
 import java.util.List;
 
-public class Page {
+public class Page<T> {
     private int totalCount;//总条数
     private int currentPageNo;//当前页数
     private int totalPageCount;//总页数
     private int pageSize=1;//页面大小
-    private List<VUser> vUserList;
+    private List<T> vUserList;
 
-    public List<VUser> getvUserList() {
+    public List<T> getvUserList() {
         return vUserList;
     }
 
-    public void setvUserList(List<VUser> vUserList) {
+    public void setvUserList(List<T> vUserList) {
         this.vUserList = vUserList;
     }
 

@@ -24,18 +24,18 @@ public interface SeckillProductMapper {
 
     /**
      * 修改秒杀商品信息
-     * @param vSeckillProduct
+     * @param
      * @return
      */
-    int updateSeckillProduct(VSeckillProduct vSeckillProduct);
+    int updateSeckillProduct(VSeckillProduct v_seckill_id);
 
 
     /**
      * 根据秒杀商品id获取该秒杀商品的数量
-     * @param seckillProductId 秒杀商品id
+     * @param v_seckill_id 秒杀商品id
      * @return 剩余数量
      */
-    int getSeckillProductRemain(Integer seckillProductId);
+    int getSeckillProductRemain(Integer v_seckill_id);
 
 
 
