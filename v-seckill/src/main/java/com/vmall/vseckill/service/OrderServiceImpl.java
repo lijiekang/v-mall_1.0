@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
         if(!productService.modifyProduct(new VSeckillProduct(seckillProductId))){
             //库存不足，则抛出异常
             MQReceiver.flag=true;
-            throw new StoreNotEnoughException();
+            throw new StoreNotEnoughException("库存不足");
         }
         //生成订单号
         String serialNum= GenerateNumUtil.generateOrderNumber(userId,seckillProductId);

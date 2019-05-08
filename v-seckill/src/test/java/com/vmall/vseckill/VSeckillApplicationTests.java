@@ -2,6 +2,7 @@ package com.vmall.vseckill;
 
 import com.vmall.mapper.seckill.SeckillProductMapper;
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.VUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,26 +56,26 @@ public class VSeckillApplicationTests {
 
 
 
-    @Test
-    public void test2(){
-        VUesr vUesr=new VUesr();
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("token:111",vUesr);
-
-
-        System.out.println(valueOperations.get("token:111"));
-    }
-
-
-    @Test
-    public void testAddUser(){
-        VUesr vUesr=new VUesr();
-        vUesr.setvUserId(1);
-
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("token",vUesr);
-
-    }
+//    @Test
+//    public void test2(){
+//        VUesr vUesr=new VUesr();
+//        ValueOperations valueOperations = redisTemplate.opsForValue();
+//        valueOperations.set("token:111",vUesr);
+//
+//
+//        System.out.println(valueOperations.get("token:111"));
+//    }
+//
+//
+//    @Test
+//    public void testAddUser(){
+//        VUesr vUesr=new VUesr();
+//        vUesr.setvUserId(1);
+//
+//        ValueOperations valueOperations = redisTemplate.opsForValue();
+//        valueOperations.set("token",vUesr);
+//
+//    }
 
     @Test
     public void getTokens(){
@@ -84,7 +85,7 @@ public class VSeckillApplicationTests {
         PrintWriter printWriter;
         String token;
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+//        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
         ValueOperations valueOperations = redisTemplate.opsForValue();
 
         try {
@@ -95,7 +96,7 @@ public class VSeckillApplicationTests {
                     continue;
                 }
                 token=generatorToken();
-                VUesr vUesr=new VUesr();
+                VUser vUesr=new VUser();
                 vUesr.setvUserId(i);
                 valueOperations.set(token,vUesr);
 
@@ -109,20 +110,20 @@ public class VSeckillApplicationTests {
 
     }
 
-
+//
     Random random=new Random();
     private String generatorToken(){
 
         return random.nextInt(100000)+"-"+System.currentTimeMillis()+random.nextInt(4);
     }
 
-
-
-
-    @Test
-    public void test5(){
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        VUesr vUesr=(VUesr) redisTemplate.opsForValue().get("88463-15567736050593");
-        System.out.println(vUesr.getvUserId());
-    }
+//
+//
+//
+//    @Test
+//    public void test5(){
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        VUesr vUesr=(VUesr) redisTemplate.opsForValue().get("88463-15567736050593");
+//        System.out.println(vUesr.getvUserId());
+//    }
 }
