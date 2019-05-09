@@ -44,4 +44,8 @@ public class VSeckillProductController {
         return "seckill/seckill_product_add";
     }
 
+    @GetMapping(value="/seckillorderlist")
+    public String seckillorderlist(){
+        return "seckill/seckill_order_list";
+    }
 }

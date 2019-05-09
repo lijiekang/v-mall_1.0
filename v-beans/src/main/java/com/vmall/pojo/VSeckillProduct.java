@@ -13,7 +13,15 @@ public class VSeckillProduct implements Serializable {
   private Timestamp vSeckillStartDate;
   private Timestamp vSeckillEndDate;
   private String vSkuName;
+  private VSku vSku;
 
+  public VSku getvSku() {
+    return vSku;
+  }
+
+  public void setvSku(VSku vSku) {
+    this.vSku = vSku;
+  }
 
   public String getvSkuName() {
     return vSkuName;

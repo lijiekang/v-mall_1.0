@@ -23,4 +23,40 @@
         where
         v_seckill_userId=#{userId} and v_seckill_productId=#{productId} and v_seckill_status=0
     </select>
+    <select id="seckillOrderList" resultMap="seckillList">
+        SELECT * FROM v_seckill_order so,v_seckill_product sp,v_product p,v_sku s
+        WHERE so.`v_seckill_productId`=sp.`v_seckill_id` AND sp.`v_seckill_productId`=s.`v_sku_id`
+        AND p.`v_productId`=s.`v_product_id`
+        <if test="statusId!=0">
+            and so.v_seckill_status=#{statusId}
+        </if>
+        <if test="serialNumber!=0">
+            and so.v_seckill_serialNumber=#{serialNumber}
+        </if>
+        <if test="productName!=null and productName!=''">
+            and p.v_productName like concat('%',#{productName},'')
+        </if>
+        limit #{pageNo},#{pageSize}
+    </select>
+    <resultMap id="seckillList" type="com.vmall.pojo.VSeckillOrder">
+        <id property="vSeckillOrderId" column="v_seckill_orderId"/>
+        <result property="vSeckillUserId" column="v_seckill_userId"/>
+        <result property="vSeckillCreateDate" column="v_seckill_createDate"/>
+        <result property="vSeckillSerialNumber" column="v_seckill_serialNumber"/>
+        <result property="vSeckillPayNum" column="v_seckill_payNum"/>
+        <result property="vSeckillStatus" column="v_seckill_status"/>
+        <association property="vSeckillProduct" javaType="com.vmall.pojo.VSeckillProduct">
+            <id property="vSeckillId" column="v_seckill_id"/>
+            <result property="vSeckillPrice" column="v_seckill_price"/>
+            <association property="vSku" javaType="com.vmall.pojo.VSku">
+                <id property="vSkuId" column="v_sku_id"/>
+                <result property="vSkuName" column="v_sku_name"/>
+                <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+                    <id property="vProductId" column="v_productId"/>
+                    <result property="vProductName" column="v_productName"/>
+                    <result property="vImgUrl" column="v_imgUrl"/>
+                </association>
+            </association>
+        </association>
+    </resultMap>
 </mapper>

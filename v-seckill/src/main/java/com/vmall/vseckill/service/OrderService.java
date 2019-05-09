@@ -1,6 +1,10 @@
 package com.vmall.vseckill.service;
 
+import com.vmall.pojo.Page;
+import com.vmall.pojo.VSeckillOrder;
 import com.vmall.vutil.exception.StoreNotEnoughException;
+
+import java.util.List;
 
 public interface OrderService {
 
@@ -28,4 +32,5 @@ public interface OrderService {
      * @return
      */
     long getSeckillResult(long userId,int productId);
+    List<VSeckillOrder> seckillOrderList(long statusId, long serialNumber, String productName, Page page);
 }
