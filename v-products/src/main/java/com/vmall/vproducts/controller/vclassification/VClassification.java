@@ -25,8 +25,6 @@ public class VClassification {
     VClassificationService vClassificationService;
     @GetMapping("/fen")
     public String getClassificaton(Model model){
-
-
             List<VCategory> lv1=vClassificationService.getVCategoryLevel1();
             List<VCategory> lv2=vClassificationService.getVCategoryLevel2(1);
             List<VCategory> lv3=vClassificationService.getVCategoryLevel2(18);

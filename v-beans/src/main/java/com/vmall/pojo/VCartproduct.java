@@ -1,4 +1,4 @@
-package com.sample;
+package com.vmall.pojo;
 
 
 public class VCartproduct {
