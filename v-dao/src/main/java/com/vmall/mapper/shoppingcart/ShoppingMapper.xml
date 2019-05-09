@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.shoppingcart.ShoppingMapper">
+    <select id="count" resultType="int">
+        SELECT count(1)
+        FROM v_shoppingcart c,v_cartproduct p,v_product d,v_sku s
+        WHERE c.`v_cartProductId`=p.`v_cartProductId` AND p.`v_skuId`=s.`v_sku_id`
+        AND s.`v_product_id`=d.`v_productId` AND c.`v_userId`=#{userId}
+    </select>
+    <select id="cartList" resultMap="cart">
+        SELECT *
+        FROM v_shoppingcart c,v_cartproduct p,v_product d,v_sku s
+        WHERE c.`v_cartProductId`=p.`v_cartProductId` AND p.`v_skuId`=s.`v_sku_id`
+        AND s.`v_product_id`=d.`v_productId` AND c.`v_userId`=#{userId}
+        limit #{pageNo},#{pageSize}
+    </select>
+    <resultMap id="cart" type="com.vmall.pojo.VShoppingcart">
+        <id property="vCartId" column="v_cartId"/>
+        <result property="vCartProductId" column="v_cartProductId"/>
+        <result property="vUserId" column="v_userId"/>
+        <collection property="vCartproduct" ofType="com.vmall.pojo.VCartproduct">
+            <id property="vCartProductId" column="v_cartProductId"/>
+            <result property="vSkuId" column="v_skuId"/>
+            <result property="vNum" column="v_num"/>
+            <association property="vSku" javaType="com.vmall.pojo.VSku">
+                <id property="vSkuId" column="v_sku_id"/>
+                <result property="vSkuName" column="v_sku_name"/>
+                <result property="vSkuPrice" column="v_sku_price"/>
+                <result property="vProductId" column="v_product_id"/>
+                <result property="vSkuCode" column="v_sku_code"/>
+                <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+                    <id property="vProductId" column="v_productId"/>
+                    <result property="vProductName" column="v_productName"/>
+                    <result property="vStore" column="v_store"/>
+                    <result property="vImgUrl" column="v_imgUrl"/>
+                    <result property="vGrade" column="v_grade"/>
+                    <result property="vIsDelete" column="v_isDelete"/>
+                </association>
+            </association>
+        </collection>
+    </resultMap>
+    <insert id="addShopping">
+        insert into v_shoppingcart (v_cartProductId, v_userId) values (#{cartProductId},#{userId});
+    </insert>
+    <delete id="delShopping">
+        delete from v_shoppingcart where v_cartId=#{cartId}
+    </delete>
+</mapper>

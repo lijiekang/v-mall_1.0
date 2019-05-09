@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.collection.CollectionMapper">
+    <select id="collectionList" resultMap="colList">
+        select * from v_collection c,v_product p where c.v_productId=p.v_productId and c.v_userId=#{userId} and p.v_isDelete=0
+        limit #{pageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        select * from v_collection c,v_product p where c.v_productId=p.v_productId and c.v_userId=#{userId} and p.v_isDelete
+    </select>
+    <resultMap id="colList" type="com.vmall.pojo.VCollection">
+        <id column="v_collectionId" property="v_collectionId"/>
+        <result column="v_productId" property="v_productId"/>
+        <result column="v_userId" property="v_userId"/>
+        <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+            <id property="vProductId" column="v_productId"/>
+            <result property="vProductName" column="v_productName"/>
+            <result property="cateName1" column="v_categoryName1"/>
+            <result property="cateName2" column="v_categoryName2"/>
+            <result property="cateName3" column="v_categoryName3"/>
+            <result property="vStore" column="v_store"/>
+            <result property="vPrice" column="v_price"/>
+            <result property="vImgUrl" column="v_imgUrl"/>
+            <result property="vGrade" column="v_grade"/>
+            <result property="vIsDelete" column="v_isDelete"/>
+            <result property="brandName" column="v_brandName"/>
+        </association>
+    </resultMap>
+    <delete id="delCollection">
+        delete from v_collection where v_collectionId=#{collectionId}
+    </delete>
+</mapper>
