@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -9,58 +9,13 @@
   <meta name="author" content="">
   <title>SB Admin - Start Bootstrap Template</title>
   <!-- Bootstrap core CSS-->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
-  <link th:href="@{vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin.css}" rel="stylesheet">
-  <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-  <script type="text/javascript">
-      $(function () {
-          $("[name=del]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              $.getJSON("delete","vProductId="+id,function (data) {
-
-                  if(data=="true"){
-                      alert("删除成功!");
-                      jie.parents("tr").remove();
-                  }else{
-                      alert("删除失败!");
-                  }
-              })
-          })
-      })
-      $(function () {
-          $("[name=productshang]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              if(confirm("是否上架？")){
-                  $.getJSON("productupdshang","vProductId="+id,function (data) {
-                      if (data == "true") {
-                          location.reload();
-                      }
-                  })
-              }
-
-          })
-      })
-      $(function () {
-          $("[name=productxia]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              if(confirm("是否下架？")){
-                  $.getJSON("productupdxia",{"vProductId":id},function (data) {
-                      if (data == true) {
-                          location.reload();
-                      }
-                  })
-              }
-          })
-      })
-  </script>
+  <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -89,14 +44,6 @@
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponent">
-            <li>
-              <a href="commodity.html">Navbar</a>
-            </li>
-            <li>
-              <a href="cards.html">Cards</a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
@@ -286,60 +233,26 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> 商品列表</div>
+          <i class="fa fa-table"></i> 修改商品品牌</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form method="post" action="/getproduct">
-              <input type="hidden" name="page" th:value="${page}"/>
-              <input type="text" name="vProductName" th:value="${vProductName}">
-              <input type="submit" value="查询">
-              <a href="toadd">添加</a>
+            <form action="/brandupd" method="post">
+              <input type="hidden" name="vBrandId" th:value="${vBrand.vBrandId}">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <tr>
+                  <td>商品品牌id</td>
+                  <td><input readonly="readonly" name="vBrandId" th:value="${vBrand.vBrandId}"></td>
+                </tr>
+                <tr>
+                  <td>商品品牌名称</td>
+                  <td><input type="text" name="vBrandName" th:value="${vBrand.vBrandName}"></td>
+                </tr>
+                <tr>
+                  <td><input type="submit" value="修改"></td>
+                  <td> <a href="brand">返回</a></td>
+                </tr>
+              </table>
             </form>
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <tr>
-                <th>商品名称</th>
-                <th>一级分类</th>
-                <th>二级分类</th>
-                <th>三级分类</th>
-                <th>库存</th>
-                <th>商品图片路径</th>
-                <th>商品积分</th>
-                <th>商品上下架（0上架，1下架）</th>
-                <th>商品品牌</th>
-                <th>创建时间</th>
-                <th>修改时间</th>
-                <th>交易数量</th>
-                <th>评论数量</th>
-                <th>操作</th>
-              </tr>
-              <tr th:each="product:${listproduct}">
-                <td th:text="${product.vProductName}"></td>
-                <td th:text="${product.cateName1}"></td>
-                <td th:text="${product.cateName2}"></td>
-                <td th:text="${product.cateName3}"></td>
-                <td th:text="${product.vStore}"></td>
-                <td th:text="${product.vImgUrl}"></td>
-                <td th:text="${product.vGrade}"></td>
-                <td th:text="${product.vIsDelete}"></td>
-                <td th:text="${product.brandName}"></td>
-                <td th:text="${product.vCreateDate}"></td>
-                <td th:text="${product.vModifyDate}"></td>
-                <td th:text="${product.vSalesVolume}"></td>
-                <td th:text="${product.vCommonsCount}"></td>
-                <td>
-                  <a th:href="@{tochakan(vProductId=${product.vProductId})}">查看</a>
-                  <a th:href="@{toinventory(vProductId=${product.vProductId})}">库存</a>
-                  <a th:if="${product.vIsDelete==1}" href="javascript:;"th:value="${product.vProductId}" name="productshang">上架</a>
-                  <a th:if="${product.vIsDelete==0}" href="javascript:;"th:value="${product.vProductId}" name="productxia">下架</a>
-                  <a th:href="@{toupd(vProductId=${product.vProductId})}">修改</a>
-                  <a href="javascript:;"  th:value="${product.vProductId}" name="del">删除</a>
-                </td>
-              </tr>
-            </table>
-            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${1})}">首页</a>
-            <a th:hidden="${page==1}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page-1})}">上一页</a>
-            <a th:hidden="${page>=totalCount}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page+1})}">下一页</a>
-            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${totalCount})}">尾页</a>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

@@ -3,6 +3,7 @@ package com.vmall.vproducts.controller.vbrand;
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.Pages;
 import com.vmall.pojo.VBrand;
+import com.vmall.vproducts.config.SolrUtil;
 import com.vmall.vproducts.service.vbrand.VBrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*@RestController
 @Api(tags = "商品品牌")*/
@@ -57,10 +59,58 @@ public class VBrandController {
         }
         return JSONArray.toJSONString(flag);
     }
-    /*public String chakan(String vProductId,Model model){
-        VProduct vproduct=vProductService.chakanvproduct(Integer.valueOf(vProductId));
-        model.addAttribute("vproduct",vproduct);
-        return "chakan";
+    @RequestMapping("/toaddbrand")
+    public String toaddbrand(){
+        return "addbrand";
+    }
+    @RequestMapping("addbrand")
+    public String addbrand(VBrand vBrand,Model model){
+        int add=vBrandService.vbrandadd(vBrand);
+        if(add>0){
+            return "redirect:brand";
+        }
+        return "addbrand";
+    }
+    @RequestMapping("/tobrandupd")
+    public String tobrandupd(String vBrandId,Model model){
+        VBrand vBrand=vBrandService.chakanbrand(Integer.valueOf(vBrandId));
+        model.addAttribute("vBrand",vBrand);
+        return "updbrand";
+    }
+    @RequestMapping("/brandupd")
+    public String brandupd(VBrand vBrand){
+        int upd=vBrandService.vbrandupd(vBrand);
+        if(upd>0){
+            return "redirect:brand";
+        }
+        return "updbrand";
+    }
+    @RequestMapping("putawayupd")
+    @ResponseBody
+    public Object putawayupd(VBrand vBrand){
+        String flag="";
+        int upd=vBrandService.putawayupd(vBrand);
+        if (upd>0){
+            flag="true";
+        }else{
+            flag="false";
+        }
+        return JSONArray.toJSONString(flag);
+    }
+    @RequestMapping("putawayupdxia")
+    @ResponseBody
+    public Object putawayupdxia(VBrand vBrand){
+        vBrand.setvPutaway(1);
+        int upd=vBrandService.putawayupd(vBrand);
+        if (upd>0){
+            return  true;
+        }
+        return false;
+    }
+
+    /*@GetMapping("a")
+    public Map<String,Object> name(){
+        return SolrUtil.SolrName()
     }*/
     /*@ApiOperation(value = "添加商品品牌",notes = "添加一个商品品牌")
     @PostMapping("/vbrandadd")

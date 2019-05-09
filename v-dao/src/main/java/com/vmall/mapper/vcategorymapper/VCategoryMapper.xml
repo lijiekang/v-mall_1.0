@@ -42,6 +42,6 @@
         SELECT * FROM v_category WHERE v_parentCategoryId=0
     </select>
     <select id="getcategoryName" resultType="com.vmall.pojo.VCategory">
-        SELECT * FROM v_category WHERE v_parentCategoryId=#{vParentCategoryId}
+        SELECT *  FROM v_category WHERE v_parentCategoryId=#{vParentCategoryId}
     </select>
 </mapper>

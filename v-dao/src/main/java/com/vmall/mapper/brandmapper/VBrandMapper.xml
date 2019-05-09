@@ -23,7 +23,7 @@
         SELECT * FROM v_brand WHERE v_brandId=#{id}
     </select>
     <insert id="vbrandadd">
-        INSERT INTO v_brand (v_brandName) VALUES(#{v_brandName})
+        INSERT INTO v_brand (v_brandName) VALUES(#{vBrandName})
     </insert>
     <delete id="vbranddel">
         DELETE FROM v_brand WHERE v_brandId =#{id}
@@ -31,8 +31,17 @@
 
     <update id="vbrandupd">
         UPDATE v_brand
-        <trim prefix="set" suffixOverrides="," suffix="where v_brandId=#{id}">
-            <if test="v_brandName != null">v_brandName=#{v_brandNamehn},</if>
+        <trim prefix="set" suffixOverrides="," suffix="where v_brandId=#{vBrandId}">
+            <if test="vBrandName != null">v_brandName=#{vBrandName},</if>
+        </trim>
+    </update>
+    <select id="chabrand" resultType="com.vmall.pojo.VBrand">
+        SELECT * FROM v_brand
+    </select>
+    <update id="putawayupd">
+        UPDATE v_brand
+        <trim prefix="set" suffixOverrides="," suffix="where v_brandId=#{vBrandId}">
+            <if test="vPutaway!=null">v_putaway=#{vPutaway}</if>
         </trim>
     </update>
 </mapper>

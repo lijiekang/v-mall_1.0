@@ -306,7 +306,7 @@
                   <td>
                     <select name="vCategoryLevel1" id="categoryLevel1">
                       <option value="1">请选择</option>
-                      <option th:each="vcategoryLevel1:${vclevel}" th:value="${vcategoryLevel1.vCategoryId}" th:text="${vcategoryLevel1.vCategoryName}"th:selected="${vcategoryLevel1.vCategoryId==1}"></option>
+                      <option th:each="vcategoryLevel1:${vclevel}" th:value="${vcategoryLevel1.vCategoryId}" th:text="${vcategoryLevel1.vCategoryName}"th:selected="${vcategoryLevel1.vCategoryId==currentLevel1}"></option>
                     </select>
                   </td>
                 </tr>
@@ -314,6 +314,7 @@
                   <td>二级分类</td>
                   <td>
                     <select name="vCategoryLevel2" id="categoryLevel2" >
+                      <option th:each="vcategoryLevel2:${vcleve2}" th:value="${vcategoryLevel2.vCategoryId}" th:text="${vcategoryLevel2.vCategoryName}"th:selected="${vcategoryLevel2.vCategoryId==currentLevel2}"></option>
                     </select>
                   </td>
                 </tr>
@@ -321,16 +322,13 @@
                   <td>三级分类</td>
                   <td>
                     <select name="vCategoryLevel3" id="categoryLevel3" >
+                      <option th:each="vcategoryLevel3:${vcleve3}" th:value="${vcategoryLevel3.vCategoryId}" th:text="${vcategoryLevel3.vCategoryName}"th:selected="${vcategoryLevel3.vCategoryId==currentLevel3}"></option>
                     </select>
                   </td>
                 </tr>
                 <tr>
                   <td>库存</td>
-                  <td><input type="text" name="v_store"  th:value="${vproduct.vStore}"></td>
-                </tr>
-                <tr>
-                  <td>商品价格</td>
-                  <td><input type="text"  name="v_price"  th:value="${vproduct.vPrice}"></td>
+                  <td><input type="text" name="vStore"  th:value="${vproduct.vStore}"></td>
                 </tr>
                 <tr>
                   <td>商品图片路径</td>
@@ -338,15 +336,35 @@
                 </tr>
                 <tr>
                   <td>商品积分</td>
-                  <td><input type="text"  name="v_grade"  th:value="${vproduct.vGrade}" ></td>
+                  <td><input type="text"  name="vGrade"  th:value="${vproduct.vGrade}" ></td>
                 </tr>
                 <tr>
                   <td>商品上下架</td>
-                  <td><input type="text" name="v_isDelete"  th:value="${vproduct.vIsDelete}"></td>
+                  <td><input type="text" name="vIsDelete"  th:value="${vproduct.vIsDelete}"></td>
                 </tr>
                 <tr>
                   <td>商品品牌</td>
-                  <td><input type="text"  name="v_brandId"  th:value="${vproduct.brandName}"></td>
+                  <td>
+                     <select name="vBrandId">
+                       <option th:each="brand:${early}" th:value="${brand.vBrandId}" th:text="${brand.vBrandName}" th:selected="${brand.vBrandId==vb}"></option>
+                     </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>创建时间</td>
+                  <td><input type="text"  name="vCreateDate" th:value="${vproduct.vCreateDate}"></td>
+                </tr>
+                <tr>
+                  <td>修改时间</td>
+                  <td><input type="text"  name="vModifyDate" th:value="${vproduct.vModifyDate}"></td>
+                </tr>
+                <tr>
+                  <td>交易数量</td>
+                  <td><input type="text"  name="vSalesVolume" th:value="${vproduct.vSalesVolume}"></td>
+                </tr>
+                <tr>
+                  <td>评论数量</td>
+                  <td><input type="text"  name="vCommonsCount" th:value="${vproduct.vCommonsCount}"></td>
                 </tr>
                 <tr>
                   <td><input type="submit" value="修改"></td>

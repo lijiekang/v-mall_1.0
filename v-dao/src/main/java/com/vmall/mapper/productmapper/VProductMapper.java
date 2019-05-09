@@ -24,4 +24,12 @@ public interface VProductMapper {
     int add(VProduct product);
     //删除商品
     int del(@Param("id") Integer id);
+    //修改预警货品
+    int updearly(VProduct product);
+    //修改库存
+    int inventory(VProduct vProduct);
+    //上架下架
+    int putawayproduct(VProduct vProduct);
+    //用solr查询商品
+    List<VProduct>solrvProduct(@Param("vProductName")String vProductName, @Param("PageNo") Integer PageNo, @Param("pageSize")Integer pageSize);
 }

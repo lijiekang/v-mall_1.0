@@ -260,10 +260,6 @@
                   <td><input readonly="readonly" name="v_store"  th:value="${vproduct.vStore}"></td>
                 </tr>
                 <tr>
-                  <td>商品价格</td>
-                  <td><input type="text" name="v_price"  th:value="${vproduct.vPrice}"></td>
-                </tr>
-                <tr>
                   <td>商品图片路径</td>
                   <td><input readonly="readonly" name="v_imgUrl"  th:value="${vproduct.vImgUrl}"></td>
                 </tr>
@@ -278,6 +274,22 @@
                 <tr>
                   <td>商品品牌</td>
                   <td><input readonly="readonly" name="v_brandId"  th:value="${vproduct.brandName}"></td>
+                </tr>
+                <tr>
+                  <td>创建时间</td>
+                  <td><input readonly="readonly" name="vCreateDate"  th:value="${vproduct.vCreateDate}"></td>
+                </tr>
+                <tr>
+                  <td>修改时间</td>
+                  <td><input readonly="readonly" name="vModifyDate"  th:value="${vproduct.vModifyDate}"></td>
+                </tr>
+                <tr>
+                  <td>交易数量</td>
+                  <td><input readonly="readonly" name="vSalesVolume"  th:value="${vproduct.vSalesVolume}"></td>
+                </tr>
+                <tr>
+                  <td>评论数量</td>
+                  <td><input readonly="readonly" name="vCommonsCount"  th:value="${vproduct.vCommonsCount}"></td>
                 </tr>
                 <tr>
                   <td>

@@ -33,6 +33,34 @@
               })
           })
       })
+      $(function () {
+          $("[name=brandshang]").click(function () {
+              var id=$(this).attr("value");
+              var jie=$(this);
+              if(confirm("是否上架？")){
+                  $.getJSON("putawayupd","vBrandId="+id,function (data) {
+                      if (data == "true") {
+                          location.reload();
+                      }
+                  })
+              }
+
+          })
+      })
+    $(function () {
+        $("[name=brandxia]").click(function () {
+            var id=$(this).attr("value");
+            var jie=$(this);
+            if(confirm("是否下架？")){
+                $.getJSON("putawayupdxia",{"vBrandId":id},function (data) {
+                    if (data == true) {
+                        location.reload();
+                    }
+                })
+            }
+        })
+    })
+
   </script>
 </head>
 
@@ -272,13 +300,17 @@
               <tr>
                 <td>品牌标识</td>
                 <td>品牌名字</td>
+                <td>上架下架（0上架1下架）</td>
                 <td>操作</td>
               </tr>
               <tr th:each="brand:${listvbrand}">
                 <td th:text="${brand.vBrandId}"></td>
                 <td th:text="${brand.vBrandName}"></td>
+                <td th:text="${brand.vPutaway}"></td>
                 <td>
                   <a th:href="@{tobrandchakan(vBrandId=${brand.vBrandId})}">查看</a>
+                  <a th:if="${brand.vPutaway==1}" href="javascript:;"th:value="${brand.vBrandId}" name="brandshang">上架</a>
+                  <a th:if="${brand.vPutaway==0}" href="javascript:;"th:value="${brand.vBrandId}" name="brandxia">下架</a>
                   <a th:href="@{tobrandupd(vBrandId=${brand.vBrandId})}">修改</a>
                   <a href="javascript:;"  th:value="${brand.vBrandId}" name="del">删除</a>
                 </td>

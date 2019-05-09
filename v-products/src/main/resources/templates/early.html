@@ -33,33 +33,6 @@
               })
           })
       })
-      $(function () {
-          $("[name=productshang]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              if(confirm("是否上架？")){
-                  $.getJSON("productupdshang","vProductId="+id,function (data) {
-                      if (data == "true") {
-                          location.reload();
-                      }
-                  })
-              }
-
-          })
-      })
-      $(function () {
-          $("[name=productxia]").click(function () {
-              var id=$(this).attr("value");
-              var jie=$(this);
-              if(confirm("是否下架？")){
-                  $.getJSON("productupdxia",{"vProductId":id},function (data) {
-                      if (data == true) {
-                          location.reload();
-                      }
-                  })
-              }
-          })
-      })
   </script>
 </head>
 
@@ -286,15 +259,20 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> 商品列表</div>
+          <i class="fa fa-table"></i> 预警货品</div>
         <div class="card-body">
           <div class="table-responsive">
-            <form method="post" action="/getproduct">
+            <form method="post">
+              <!--<select name="">
+                <option th:selected="" value="100">100</option>
+                <option th:selected="" value="1000">1000</option>
+                <option th:selected="" value="2000">2000</option>
+              </select>-->
               <input type="hidden" name="page" th:value="${page}"/>
               <input type="text" name="vProductName" th:value="${vProductName}">
               <input type="submit" value="查询">
-              <a href="toadd">添加</a>
             </form>
+
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <tr>
                 <th>商品名称</th>
@@ -327,19 +305,15 @@
                 <td th:text="${product.vSalesVolume}"></td>
                 <td th:text="${product.vCommonsCount}"></td>
                 <td>
-                  <a th:href="@{tochakan(vProductId=${product.vProductId})}">查看</a>
-                  <a th:href="@{toinventory(vProductId=${product.vProductId})}">库存</a>
-                  <a th:if="${product.vIsDelete==1}" href="javascript:;"th:value="${product.vProductId}" name="productshang">上架</a>
-                  <a th:if="${product.vIsDelete==0}" href="javascript:;"th:value="${product.vProductId}" name="productxia">下架</a>
-                  <a th:href="@{toupd(vProductId=${product.vProductId})}">修改</a>
-                  <a href="javascript:;"  th:value="${product.vProductId}" name="del">删除</a>
+                  <a th:href="@{toearlyupd(vProductId=${product.vProductId})}">修改</a>
                 </td>
-              </tr>
+                </tr>
+
             </table>
-            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${1})}">首页</a>
-            <a th:hidden="${page==1}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page-1})}">上一页</a>
-            <a th:hidden="${page>=totalCount}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page+1})}">下一页</a>
-            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${totalCount})}">尾页</a>
+            <a th:href="@{early(vProductName=${vProductName},pageNo=${1})}">首页</a>
+            <a th:hidden="${page==1}" th:href="@{early(vProductName=${vProductName},pageNo=${page-1})}">上一页</a>
+            <a th:hidden="${page>=totalCount}" th:href="@{early(vProductName=${vProductName},pageNo=${page+1})}">下一页</a>
+            <a th:href="@{early(vProductName=${vProductName},pageNo=${totalCount})}">尾页</a>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

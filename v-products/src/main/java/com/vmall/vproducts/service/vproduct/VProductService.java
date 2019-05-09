@@ -23,9 +23,6 @@ public class  VProductService {
     public VProduct chakanvproduct(Integer id){
         return vProductMapper.chakanvproduct(id);
     }
-    public List<VProduct> productid(Integer id) {
-        return vProductMapper.productid(id);
-    }
     public int upd(VProduct product) {
         return vProductMapper.upd(product);
     }
@@ -34,5 +31,17 @@ public class  VProductService {
     }
     public int del(Integer id) {
         return vProductMapper.del(id);
+    }
+    public int updearly(VProduct vProduct){
+        return vProductMapper.updearly(vProduct);
+    }
+    public int inventory(VProduct vProduct){
+        return vProductMapper.inventory(vProduct);
+    }
+    public int putawayproduct(VProduct vProduct){
+        return vProductMapper.putawayproduct(vProduct);
+    }
+    public List<VProduct> solrvProduct(String vProductName, Pages page){
+        return vProductMapper.solrvProduct(vProductName,(page.getPageNo()-1)*page.getPageSize(),page.getPageSize());
     }
 }
