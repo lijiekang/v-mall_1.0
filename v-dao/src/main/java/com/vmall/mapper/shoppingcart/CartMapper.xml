@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.shoppingcart.CartMapper">
+    <insert id="addCart" useGeneratedKeys="true" keyProperty="vCartProductId">
+        insert into v_cartproduct(v_skuId, v_num) values (#{vSkuId},#{vNum})
+    </insert>
+    <delete id="delCart">
+        delete from v_cartproduct where v_cartProductId=#{v_cartProductId}
+    </delete>
+</mapper>

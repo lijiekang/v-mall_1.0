@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.aftersale.AfterSaleMapper">
+    <select id="afterSaleList" resultMap="aftersale">
+        SELECT a.`v_aftersaleId`,a.`v_returnedNum`,o.`v_serialNumber`,
+        p.`v_productName`,s.`v_sku_name`,a.`v_money`,a.`v_aftersaleDate`,a.`v_status`,p.v_imgUrl
+        FROM v_aftersale a,v_order o,v_sku s,v_product p,v_order_details d
+        WHERE a.`v_orderId`=o.`v_orderId` AND d.`v_orderId`=o.`v_orderId` AND o.`v_skuid`=s.`v_sku_id`
+        AND s.`v_product_id`=p.`v_productId` AND a.`v_userId`=#{userId} limit #{pageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT count(1)
+        FROM v_aftersale a,v_order o,v_sku s,v_product p,v_order_details d
+        WHERE a.`v_orderId`=o.`v_orderId` AND d.`v_orderId`=o.`v_orderId` AND o.`v_skuid`=s.`v_sku_id`
+        AND s.`v_product_id`=p.`v_productId` AND a.`v_userId`=#{userId}
+    </select>
+    <select id="getAfterSale" resultMap="aftersale">
+        SELECT a.*,o.`v_serialNumber`,o.`v_createTime`,
+        p.`v_productName`,s.`v_sku_name`,
+        p.`v_imgUrl`,d.`v_cost`,d.`v_quantity`,s.`v_sku_price`
+        FROM v_aftersale a,v_order o,v_sku s,v_product p,v_order_details d
+        WHERE a.`v_orderId`=o.`v_orderId` AND d.`v_orderId`=o.`v_orderId` AND o.`v_skuid`=s.`v_sku_id`
+        AND s.`v_product_id`=p.`v_productId` AND a.`v_userId`=#{userId} AND a.`v_aftersaleId`=#{aftersaleId}
+    </select>
+    <resultMap id="aftersale" type="com.vmall.pojo.VAftersale">
+        <id property="vAftersaleId" column="v_aftersaleId"/>
+        <result property="vReturnedNum" column="v_returnedNum"/>
+        <result property="vStatus" column="v_status"/>
+        <result property="vAftersaleDate" column="v_aftersaleDate"/>
+        <result property="vOrderId" column="v_orderId"/>
+        <result property="vReason" column="v_reason"/>
+        <result property="vRemark" column="v_remark"/>
+        <result property="vAccount" column="v_account"/>
+        <result property="vMoney" column="v_money"/>
+        <result property="vUserId" column="v_userId"/>
+        <collection property="vOrder" ofType="com.vmall.pojo.VOrder">
+            <result property="vSerialNumber" column="v_serialNumber"/>
+            <result property="vCreateTime" column="v_createTime"/>
+            <association property="vOrderDetails" javaType="com.vmall.pojo.VOrderDetails">
+                <result property="vCost" column="v_cost"/>
+                <result property="vQuantity" column="v_quantity"/>
+            </association>
+            <association property="vSku" javaType="com.vmall.pojo.VSku">
+                <result property="vSkuName" column="v_sku_name"/>
+                <result property="vSkuPrice" column="v_sku_price"/>
+                <association property="vProduct" javaType="com.vmall.pojo.VProduct">
+                    <result property="vProductName" column="v_productName"/>
+                    <result property="vImgUrl" column="v_imgUrl"/>
+                </association>
+            </association>
+        </collection>
+    </resultMap>
+</mapper>

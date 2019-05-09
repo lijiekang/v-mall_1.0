@@ -1,0 +1,29 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content"></div>
+
+
+
+<div id="addContent">
+
+    <h1>秒杀</h1>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("秒杀订单列表").append("<a class=\"btn btn-primary\" href=\"#\" id=\"toggleNavPosition\" style='float: right'>新增秒杀商品</a>")
+        $(".table-responsive").html($("#addContent"));
+    })
+</script>
+</body>
+</html>

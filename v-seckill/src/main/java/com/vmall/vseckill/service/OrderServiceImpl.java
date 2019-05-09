@@ -1,6 +1,7 @@
 package com.vmall.vseckill.service;
 
 import com.vmall.mapper.seckill.SeckillOrderMapper;
+import com.vmall.pojo.Page;
 import com.vmall.pojo.VSeckillOrder;
 import com.vmall.pojo.VSeckillProduct;
 import com.vmall.vutil.GenerateNumUtil;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -70,5 +72,11 @@ public class OrderServiceImpl implements OrderService {
             else
                 return -1;
         }
+    }
+
+    @Override
+    public List<VSeckillOrder> seckillOrderList(long statusId, long serialNumber, String productName, Page page) {
+        return seckillOrderMapper.seckillOrderList(statusId,serialNumber,productName,(page
+        .getCurrentPageNo()-1)*page.getPageSize(),page.getPageSize());
     }
 }
