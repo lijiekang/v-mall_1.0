@@ -24,7 +24,24 @@ public class VOrder implements Serializable {
   private VProduct vProduct; //商品
   private VOrderStatus vOrderStatus; //订单状态
   private long vStreamId; //物流id
+  private VOrderDetails vOrderDetails;
+  private VSku vSku;
 
+  public VSku getvSku() {
+    return vSku;
+  }
+
+  public void setvSku(VSku vSku) {
+    this.vSku = vSku;
+  }
+
+  public VOrderDetails getvOrderDetails() {
+    return vOrderDetails;
+  }
+
+  public void setvOrderDetails(VOrderDetails vOrderDetails) {
+    this.vOrderDetails = vOrderDetails;
+  }
 
   public long getvStreamId() {
     return vStreamId;

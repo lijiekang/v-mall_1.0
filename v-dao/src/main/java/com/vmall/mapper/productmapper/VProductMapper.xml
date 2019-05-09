@@ -102,6 +102,7 @@
     <delete id="del">
     DELETE FROM v_product WHERE v_productId = #{id}
   </delete>
+
     <update id="updearly">
         UPDATE v_product SET v_store =#{vStore}  WHERE v_productId =#{vProductId}
     </update>
@@ -114,7 +115,7 @@
             <if test="vIsDelete!=null">v_isDelete=#{vIsDelete}</if>
         </trim>
     </update>
-    <select id="solrvProduct" resultType="sss">
+    <select id="solrvProduct" resultMap="sss">
         SELECT p.v_productId,p.v_productName,
         v_categoryLevel1,v_categoryLevel2,v_categoryLevel3,
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel1) v_categoryName1,
@@ -137,4 +138,30 @@
         </if>
         LIMIT #{PageNo},#{pageSize}
     </select>
+
+    <select id="getVCategoryLevel1" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_type=1
+    </select>
+
+    <select id="getVCategoryLevel2" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_parentCategoryId=#{vCategoryId}
+    </select>
+
+    <delete id="getDelCategoryLv1ById">
+      delete from v_category where v_categoryId=#{vCategoryId}
+    </delete>
+
+    <select id="getVCategoryLevelfen" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_type=#{vType}
+    </select>
+
+    <insert id="addClassification">
+        <if test="vType==1">
+            insert into v_category(v_categoryName,v_parentCategoryId,v_type) values (#{vCategoryName},0,1)
+        </if>
+        <if test="vType>1">
+            insert into v_category(v_categoryName,v_parentCategoryId,v_type) values (#{vCategoryName},#{vParentCategoryId},#{vType})
+        </if>
+    </insert>
+
 </mapper>

@@ -19,7 +19,15 @@ public class VCommons implements Serializable {
   private Timestamp vCreateDate; //评论创建时间
   private Timestamp vModifyDate; //评论修改时间
   private long vIsOk; //是否推荐
+  private VProduct vProduct;
 
+  public VProduct getvProduct() {
+    return vProduct;
+  }
+
+  public void setvProduct(VProduct vProduct) {
+    this.vProduct = vProduct;
+  }
 
   public long getvCommonsId() {
     return vCommonsId;

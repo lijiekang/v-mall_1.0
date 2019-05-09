@@ -53,7 +53,7 @@ public class VOrderController {
      * @param session session对象
      * @return 订单页面
      */
-    @RequestMapping(value = "/toIndex")
+   /* @RequestMapping(value = "/toIndex")
     @ApiOperation(value = "根据名字查询订单信息",notes = "查询订单")
     public String toIndex(@RequestParam(value = "no",required = false)String no, @RequestParam(value = "size",required = false)String size,
                           @RequestParam(value = "usernames",required = false)String usernames, HttpSession session){
@@ -80,7 +80,7 @@ public class VOrderController {
         session.setAttribute("vOrderList",vOrderList);
         session.setAttribute("page",page);
         return "ordermanage";
-    }
+    }*/
 
     /**
      * 进入新增订单详情页面
@@ -107,7 +107,7 @@ public class VOrderController {
             @RequestParam("productName")String productName, @RequestParam("vCost")String vCost,
             @RequestParam("num")String num, @RequestParam("vUserAddress")String vUserAddress
     ){
-        VUesr vUesr=userService.getUserIdByUserName(username);//根据用户名查询用户id
+        VUser vUesr=userService.getUserIdByUserName(username);//根据用户名查询用户id
         VProduct vProduct=vProductService.getVProductIdByProductName(productName);//根据商品名称查询商品id,商品积分
         VOrder vOrder=new VOrder();
         if(vProduct!=null && vProduct!=null){

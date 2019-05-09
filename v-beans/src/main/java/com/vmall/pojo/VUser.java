@@ -1,9 +1,10 @@
 package com.vmall.pojo;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class VUser {
+public class VUser implements Serializable {
 
   private long vUserId; //用户id
   private String vUsername; //用户名

@@ -49,8 +49,7 @@ public class MQReceiver {
         try {
             orderService.seckillProduct((int)mqMessage.getvUesr().getvUserId(),mqMessage.getProductId());
         } catch (Exception e) {
-            log.info(mqMessage.getvUesr().getvUserId()+"秒杀失败");
-            log.debug("未知错误:"+e.getMessage());
+            log.info(mqMessage.getvUesr().getvUserId()+"秒杀失败:"+e.getMessage());
         }
 
 

@@ -1,47 +1,37 @@
-package com.vmall.pojo;
+package com.sample;
 
 
-import java.io.Serializable;
+public class VCartproduct {
 
-/**
- * 购物车商品对象
- */
-public class VCartproduct implements Serializable {
+  private long vCartProductId;
+  private long vSkuId;
+  private long vNum;
 
-  private long vCartProductId; //购物车商品id
-  private long vProductId; //商品id
-  private long vNum; //商品数量
-  private VProduct vProduct; //商品对象
 
-  public long getvCartProductId() {
+  public long getVCartProductId() {
     return vCartProductId;
   }
 
-  public void setvCartProductId(long vCartProductId) {
+  public void setVCartProductId(long vCartProductId) {
     this.vCartProductId = vCartProductId;
   }
 
-  public long getvProductId() {
-    return vProductId;
+
+  public long getVSkuId() {
+    return vSkuId;
   }
 
-  public void setvProductId(long vProductId) {
-    this.vProductId = vProductId;
+  public void setVSkuId(long vSkuId) {
+    this.vSkuId = vSkuId;
   }
 
-  public long getvNum() {
+
+  public long getVNum() {
     return vNum;
   }
 
-  public void setvNum(long vNum) {
+  public void setVNum(long vNum) {
     this.vNum = vNum;
   }
 
-  public VProduct getvProduct() {
-    return vProduct;
-  }
-
-  public void setvProduct(VProduct vProduct) {
-    this.vProduct = vProduct;
-  }
 }
