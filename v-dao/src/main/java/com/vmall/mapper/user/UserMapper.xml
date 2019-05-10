@@ -89,4 +89,12 @@
     <update id="updEmail">
         update v_user set v_mail = #{email}  where v_userId=#{userId} ;
     </update>
+
+    <update id="updateUserByGrade">
+        update v_user set v_grade=v_grade+#{grade}
+          where v_userId=#{v_userId}
+    </update>
+    <select id="getUserIdByUserName" resultType="com.vmall.pojo.VUser">
+        select v_userId from v_user where v_username=#{userName}
+    </select>
 </mapper>

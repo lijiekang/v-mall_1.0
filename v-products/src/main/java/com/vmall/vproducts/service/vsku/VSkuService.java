@@ -3,6 +3,7 @@ package com.vmall.vproducts.service.vsku;
 import com.vmall.mapper.skumapper.VSkuMapper;
 import com.vmall.pojo.VProperties;
 import com.vmall.pojo.VProperty;
+import com.vmall.pojo.VSku;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,6 @@ public class VSkuService {
    public int getAddSkuGui(@Param("vPropertiesName")String vPropertiesName,@Param("vPropertiesId")int vPropertiesId ){
        return vSkuMapper.getAddSkuGui(vPropertiesName,vPropertiesId);
     }
+
+
 }

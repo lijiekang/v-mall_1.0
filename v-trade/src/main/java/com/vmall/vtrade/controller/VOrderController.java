@@ -153,8 +153,8 @@ public class VOrderController {
                 List<VProperties> vPropertiesList=vPropertiesService.findAllVProperties(skuids);//根据skuid查询属性
                 for(int k=0;k<vPropertiesList.size();k++){
                     vProperties=vPropertiesList.get(k);
-                    sb.append("<span  value='"+vProperties.getVPropertiesId()+"'/>" +vProperties.getVPropertiesName()+":</span>");
-                    List<VProperty> vPropertyList=vPropertyService.findAllVProperty((int)vProperties.getVPropertiesId());//根据属性id获得属性值集合
+                    sb.append("<span  value='"+vProperties.getvPropertiesId()+"'/>" +vProperties.getvPropertiesName()+":</span>");
+                    List<VProperty> vPropertyList=vPropertyService.findAllVProperty((int)vProperties.getvPropertiesId());//根据属性id获得属性值集合
                     for(int l=0;l<vPropertyList.size();l++){
                         vProperty=vPropertyList.get(l);
                         sb.append("<input onchange='dj($(this))' id='dan' type='radio' value='"+vProperty.getvPropertiesId()+"' name='"+valueName+"'/>"

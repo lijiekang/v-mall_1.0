@@ -23,4 +23,6 @@ public interface UserMapper {
     public int updEmail(@Param("email")String email,@Param("userId")long userId);
     public int updPhoneNumber(@Param("phoneNumber")String phoneNumber,@Param("userId")long userId);
     public int findPhoneNumber(@Param("phoneNumber")String phoneNumber);
+    public Integer updateUserByGrade(@Param("v_userId")long v_userId,@Param("grade") double grade);//修改用户积分
+    public VUser getUserIdByUserName(String userName);//根据用户名称查询用户id
 }

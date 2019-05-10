@@ -30,16 +30,16 @@ public class VCategoryController {
         if(pageNo!=""){
             pageno=Integer.valueOf(pageNo);
         }
-        Page page=new Page();
-        page.setCurrentPageNo(pageno);
-        page.setTotalCount(count);
+        Pages page=new Pages();
+        page.setPageNo(pageno);
+        page.setPagetiao(count);
         List<VCategory>listcategory=vCategoryService.listcategory(vCategoryName,page);
         List<VCategory>categorylist=vCategoryService.getcategorylist();//查询一级
         model.addAttribute("vCategoryName",vCategoryName);
-        model.addAttribute("page",page.getCurrentPageNo());
+        model.addAttribute("page",page.getPageNo());
         model.addAttribute("listcategory",listcategory);
         model.addAttribute("categorylist",categorylist);
-        model.addAttribute("totalCount",page.getTotalPageCount());
+        model.addAttribute("totalCount",page.getPagetiao());
         return "commodity";
     }
     @RequestMapping("/tochakancategory")
