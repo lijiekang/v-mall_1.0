@@ -2,11 +2,13 @@ package com.vmall.mapper.skumapper;
 
 import com.vmall.pojo.VProperties;
 import com.vmall.pojo.VProperty;
+import com.vmall.pojo.VSku;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface VSkuMapper {
+    public VSku getVSkuBySkuCode(@Param("skuCode")String skuCode);
     //根据条件查询所有的参数规格
     List<VProperties>getAllSku(@Param("vPropertiesId") int vPropertiesId);
     //根据ID删除某个规格

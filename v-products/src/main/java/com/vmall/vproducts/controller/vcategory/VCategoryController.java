@@ -1,6 +1,7 @@
 package com.vmall.vproducts.controller.vcategory;
 
 import com.alibaba.fastjson.JSONArray;
+import com.vmall.pojo.Page;
 import com.vmall.pojo.Pages;
 import com.vmall.pojo.VCategory;
 import com.vmall.vproducts.service.vcategory.VCategoryService;
@@ -29,16 +30,16 @@ public class VCategoryController {
         if(pageNo!=""){
             pageno=Integer.valueOf(pageNo);
         }
-        Pages page=new Pages();
-        page.setPageNo(pageno);
-        page.setPagetiao(count);
+        Page page=new Page();
+        page.setCurrentPageNo(pageno);
+        page.setTotalCount(count);
         List<VCategory>listcategory=vCategoryService.listcategory(vCategoryName,page);
         List<VCategory>categorylist=vCategoryService.getcategorylist();//查询一级
         model.addAttribute("vCategoryName",vCategoryName);
-        model.addAttribute("page",page.getPageNo());
+        model.addAttribute("page",page.getCurrentPageNo());
         model.addAttribute("listcategory",listcategory);
         model.addAttribute("categorylist",categorylist);
-        model.addAttribute("totalCount",page.getPageye());
+        model.addAttribute("totalCount",page.getTotalPageCount());
         return "commodity";
     }
     @RequestMapping("/tochakancategory")
