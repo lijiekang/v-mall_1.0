@@ -19,13 +19,41 @@ public class VOrder implements Serializable {
   private String vSerialNumber; //序列化的订单号
   private long vStatusId; //订单状态
   private String vPayNum; //交易号
-  private long vProductId;//商品id
-  private VUser VUser;
-  private VProduct vProduct; //商品
-  private VOrderStatus vOrderStatus; //订单状态
-  private long vStreamId; //物流id
+  private long vSkuId;//sku id
+
+  private String vPhone;//收货人电话
+  private VUser vUser;
+  private VProduct vProduct;
+  private VOrderStatus vOrderStatus;
   private VOrderDetails vOrderDetails;
   private VSku vSku;
+  private VProperty vProperty;
+  private VProperties vProperties;
+
+
+  public VProperties getvProperties() {
+    return vProperties;
+  }
+
+  public void setvProperties(VProperties vProperties) {
+    this.vProperties = vProperties;
+  }
+
+  public VProperty getvProperty() {
+    return vProperty;
+  }
+
+  public void setvProperty(VProperty vProperty) {
+    this.vProperty = vProperty;
+  }
+
+  public long getvSkuId() {
+    return vSkuId;
+  }
+
+  public void setvSkuId(long vSkuId) {
+    this.vSkuId = vSkuId;
+  }
 
   public VSku getvSku() {
     return vSku;
@@ -43,12 +71,12 @@ public class VOrder implements Serializable {
     this.vOrderDetails = vOrderDetails;
   }
 
-  public long getvStreamId() {
-    return vStreamId;
+  public String getvPhone() {
+    return vPhone;
   }
 
-  public void setvStreamId(long vStreamId) {
-    this.vStreamId = vStreamId;
+  public void setvPhone(String vPhone) {
+    this.vPhone = vPhone;
   }
 
   public void setvProduct(VProduct vProduct) {
@@ -63,24 +91,16 @@ public class VOrder implements Serializable {
     this.vOrderStatus = vOrderStatus;
   }
 
-  public VUser getVUser() {
-    return VUser;
+  public VUser getvUser() {
+    return vUser;
   }
 
-  public void setVUser(VUser VUser) {
-    this.VUser = VUser;
+  public void setvUser(VUser vUser) {
+    this.vUser = vUser;
   }
 
   public VProduct getvProduct() {
     return vProduct;
-  }
-
-  public long getvProductId() {
-    return vProductId;
-  }
-
-  public void setvProductId(long vProductId) {
-    this.vProductId = vProductId;
   }
 
   public long getvOrderId() {

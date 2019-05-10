@@ -8,34 +8,118 @@
     </select>
 
     <insert id="addVOrder" useGeneratedKeys="true" keyProperty="vOrderId">
-        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_productId)
-          values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vProductId})
+        insert into v_order(v_userId,v_username,v_userAddress,v_createTime,v_cost,v_serialNumber,v_phone,v_skuid)
+          values (#{vUserId},#{vUsername},#{vUserAddress},#{vCreateTime},#{vCost},#{vSerialNumber},#{vPhone},#{vSkuId})
     </insert>
     <resultMap id="BaseResult" type="com.vmall.pojo.VOrder">
-        <association property="vUesr" javaType="com.vmall.pojo.VUser">
+        <association property="vUser" javaType="com.vmall.pojo.VUser">
             <result property="vUsername" column="v_usernames"/>
         </association>
         <association property="vProduct" javaType="com.vmall.pojo.VProduct">
             <result property="vProductName" column="v_productNames"/>
+        </association>
+        <association property="vOrderDetails" javaType="com.vmall.pojo.VOrderDetails">
+            <result property="vQuantity" column="vQuantitys"/>
+        </association>
+        <association property="vSku" javaType="com.vmall.pojo.VSku">
+            <result property="vSkuName" column="skuname"/>
+            <result property="vSkuPrice" column="skuprice"/>
         </association>
         <association property="vOrderStatus" javaType="com.vmall.pojo.VOrderStatus">
             <result property="vStatusName" column="v_statusNames"/>
         </association>
     </resultMap>
     <select id="getAllVOrderByUserName" resultMap="BaseResult">
-        SELECT o.*,
-        (SELECT u.v_username FROM v_uesr u WHERE o.v_userId=u.v_userId) AS v_usernames,
-        (SELECT p.v_productName FROM v_product p WHERE o.v_productId=p.v_productId) AS v_productNames,
-        (SELECT s.v_statusName FROM v_order_status s WHERE o.v_statusId=s.v_statusId) AS v_statusNames
+        SELECT
+        o.*,s.v_statusName AS v_statusNames,u.`v_username` AS v_usernames,
+        k.v_sku_name AS skuname,k.v_sku_price AS skuprice,p.v_productName AS v_productNames,d.v_quantity AS vQuantitys
         FROM v_order o
-        WHERE 1=1
+        INNER JOIN v_sku k
+        ON k.v_sku_id=o.`v_skuid`
+        INNER JOIN v_user u
+        ON u.v_userId=o.`v_userId`
+        INNER JOIN v_order_status s
+        ON s.v_statusId=o.v_statusId
+        INNER JOIN v_product p
+        ON p.v_productId=k.v_product_id
+        INNER JOIN v_order_details d
+        ON d.v_orderId=o.v_orderId
+        WHERE 1=1 and isDelete=0
         <if test="usernames!=null and usernames!=''">
-           and o.v_userId=(SELECT v_userId FROM v_uesr WHERE v_username like concat ('%',#{usernames},'%'))
+            and o.v_userId=(SELECT v_userId FROM v_user WHERE v_username like concat ('%',#{usernames},'%'))
         </if>
         limit #{no},#{size}
     </select>
+    <!--<select id="getAllVOrderByUserName" resultMap="BaseResult">-->
+        <!--SELECT-->
+        <!--o.*,s.v_statusName AS v_statusNames,u.`v_username` AS v_usernames,pr.v_properties_name AS guige,pt.v_properties_value AS propervalue,-->
+        <!--k.v_sku_name AS skuname,k.v_sku_price AS skuprice,p.v_productName AS v_productNames-->
+        <!--FROM v_order o-->
+        <!--INNER JOIN v_sku k-->
+        <!--ON k.v_sku_id=o.`v_skuid`-->
+        <!--INNER JOIN v_user u-->
+        <!--ON u.v_userId=o.`v_userId`-->
+        <!--INNER JOIN v_order_status s-->
+        <!--ON s.v_statusId=o.v_statusId-->
+        <!--INNER JOIN v_product p-->
+        <!--ON p.v_productId=k.v_product_id-->
+        <!--INNER JOIN v_properties_sku sku-->
+        <!--ON k.v_sku_id=sku.v_sku_id-->
+        <!--INNER JOIN v_properties pr-->
+        <!--ON pr.v_properties_id=sku.v_properties_id-->
+        <!--INNER JOIN v_property pt-->
+        <!--ON pt.v_parent_id=pr.v_properties_id AND pt.v_properties_id=o.v_properties_id-->
+        <!--WHERE 1=1-->
+        <!--<if test="usernames!=null and usernames!=''">-->
+            <!--and o.v_userId=(SELECT v_userId FROM v_user WHERE v_username like concat ('%',#{usernames},'%'))-->
+        <!--</if>-->
+        <!--limit #{no},#{size}-->
+    <!--</select>-->
+
 
     <select id="allCount" resultType="Integer">
         select count(*) from v_order
     </select>
+    <select id="getVOrderByorderId" resultMap="BaseResult">
+         SELECT v.*,p.v_productName AS v_productNames,u.v_username AS v_usernames,d.v_quantity AS vQuantitys
+         FROM v_order v
+         INNER JOIN v_sku k
+         ON k.v_sku_id=v.v_skuid
+         INNER JOIN v_product p
+         ON p.v_productId=k.v_product_id
+         INNER JOIN v_user u
+         ON u.v_userId=v.v_userId
+         INNER JOIN v_order_details d
+         ON d.v_orderId=v.v_orderId
+         WHERE v.v_orderId=#{vOrderId}
+    </select>
+    <update id="updateVOrderByorderId">
+        update v_order set v_username=#{vUsername},v_userAddress=#{vUserAddress},v_phone=#{vPhone}
+              where v_orderId=#{vOrderId}
+    </update>
+    <delete id="deleteOrder">
+        delete from v_order where v_orderId=#{vOrderId}
+    </delete>
+
+    <delete id="delCommonsByOrderId">
+        delete from v_commons where v_orderId=#{vOrderId}
+    </delete>
+
+    <delete id="delAfterSale">
+        delete from v_aftersale where v_orderId=#{vOrderId}
+    </delete>
+
+    <update id="orderStatus">
+        update v_order set isDelete=1 where v_orderId=#{vOrderId}
+    </update>
+
+    <update id="upOrderStatus" useGeneratedKeys="true" keyProperty="vOrderId">
+    UPDATE v_order AS o,v_product,v_sku,v_order_details
+	SET o.`v_statusId`=3,v_product.`v_store`=v_product.`v_store`+
+	(SELECT v_quantity FROM v_order_details WHERE v_orderId=o.`v_orderId`)
+    WHERE
+	TIMESTAMPDIFF(SECOND,v_createTime,NOW())>60*15
+	AND o.`v_skuid`=v_sku.`v_sku_id` AND v_sku.`v_product_id`=v_product.`v_productId`
+	and o.v_statusId=1
+    </update>
 </mapper>

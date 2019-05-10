@@ -1,7 +1,7 @@
 package com.vmall.vproducts.service.vcategory;
 
 import com.vmall.mapper.vcategorymapper.VCategoryMapper;
-import com.vmall.pojo.Pages;
+import com.vmall.pojo.Page;
 import com.vmall.pojo.VCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,8 @@ public class VCategoryService {
     @Autowired
     VCategoryMapper vCategoryMapper;
 
-    public List<VCategory> listcategory(String vCategoryName, Pages page) {
-        return vCategoryMapper.listcategory(vCategoryName,(page.getPageNo()-1)*page.getPageSize(),page.getPageSize());
+    public List<VCategory> listcategory(String vCategoryName, Page page) {
+        return vCategoryMapper.listcategory(vCategoryName,(page.getCurrentPageNo()-1)*page.getPageSize(),page.getPageSize());
     }
     public int count(String vCategoryName){
         return vCategoryMapper.count(vCategoryName);

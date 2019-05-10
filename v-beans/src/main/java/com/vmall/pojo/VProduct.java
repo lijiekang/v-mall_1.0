@@ -179,4 +179,7 @@ public class VProduct implements Serializable {
   public void setvBrandId(long vBrandId) {
     this.vBrandId = vBrandId;
   }
+
+
+
 }

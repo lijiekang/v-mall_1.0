@@ -14,6 +14,16 @@ public class VSeckillProduct implements Serializable {
   private Timestamp vSeckillEndDate;
   private String vSkuName;
   private VSku vSku;
+  private String vProductName;
+
+
+  public String getvProductName() {
+    return vProductName;
+  }
+
+  public void setvProductName(String vProductName) {
+    this.vProductName = vProductName;
+  }
 
   public VSku getvSku() {
     return vSku;

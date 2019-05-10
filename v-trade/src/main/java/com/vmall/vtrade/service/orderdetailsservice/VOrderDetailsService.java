@@ -13,4 +13,8 @@ public class VOrderDetailsService {
     public Integer addVOrderDetails(VOrderDetails vOrderDetails){
         return vOrderDetailsMapper.addVOrderDetails(vOrderDetails);
     }//新增订单详情
+
+    public Integer delOrderDetails(Integer vOrderId){
+        return vOrderDetailsMapper.delOrderDetails(vOrderId);
+    }//根据订单id删除订单详情
 }

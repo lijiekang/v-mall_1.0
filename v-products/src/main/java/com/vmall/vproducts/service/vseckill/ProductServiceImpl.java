@@ -1,8 +1,13 @@
 package com.vmall.vproducts.service.vseckill;
 
+import com.vmall.mapper.productmapper.VProductMapper;
 import com.vmall.mapper.seckill.SeckillProductMapper;
 import com.vmall.pojo.Page;
+import com.vmall.pojo.VProduct;
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.VSku;
+import com.vmall.pojo.vo.CategoryVO;
+import com.vmall.pojo.vo.SeckillProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +24,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private SeckillProductMapper seckillProductMapper;
-
+    @Autowired
+    private VProductMapper vProductMapper;
 
     @Override
     public List<VSeckillProduct> listSeckillProductByPage() {
@@ -27,9 +33,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean addSeckillPorduct(VSeckillProduct vSeckillProduct) {
-        return seckillProductMapper.insertSeckillProduct(vSeckillProduct)==1?true:false;
+    public boolean addSeckillPorduct(SeckillProductVO seckillProductVO) {
+        return seckillProductMapper.insertSeckillProduct(seckillProductVO)==1?true:false;
     }
 
 
+    @Override
+    public List<VProduct> listProductByLevels(CategoryVO categoryVO) {
+        return vProductMapper.listProductsByLevels(categoryVO);
+    }
+
+
+    @Override
+    public List<VSku> listSkuByProductId(Integer productId) {
+        return vProductMapper.listSkuByProductId(productId);
+    }
 }

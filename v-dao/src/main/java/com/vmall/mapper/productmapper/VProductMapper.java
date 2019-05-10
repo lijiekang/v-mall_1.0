@@ -1,6 +1,5 @@
 package com.vmall.mapper.productmapper;
 
-import com.vmall.pojo.VCategory;
 import com.vmall.pojo.VProduct;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,25 +24,7 @@ public interface VProductMapper {
     int add(VProduct product);
     //删除商品
     int del(@Param("id") Integer id);
+    public VProduct getVProductNameByProductId(String productId);//根据商品id查询商品名称
 
-    //修改预警货品
-    int updearly(VProduct product);
-    //修改库存
-    int inventory(VProduct vProduct);
-    //上架下架
-    int putawayproduct(VProduct vProduct);
-    //用solr查询商品
-    List<VProduct>solrvProduct(@Param("vProductName")String vProductName, @Param("PageNo") Integer PageNo, @Param("pageSize")Integer pageSize);
-
-    //一级分类
-    List<VCategory>getVCategoryLevel1();
-    //二三级分类
-    List<VCategory>getVCategoryLevel2(@Param("vCategoryId") int vCategoryId);
-    //删除目录
-   int getDelCategoryLv1ById(@Param("vCategoryId") int vCategoryId);
-   //查找不同分级
-    List<VCategory>getVCategoryLevelfen(@Param("vType") int vType);
-    //新增分类
-    int addClassification(@Param("vType") int vType,@Param("vParentCategoryId") int vParentCategoryId,@Param("vCategoryName") String vCategoryName);
-
+    Integer shuStore(@Param("productId") Integer productId,@Param("num")Integer num);//根据商品id修改库存
 }

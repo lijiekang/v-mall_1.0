@@ -6,9 +6,9 @@ package com.vmall.pojo;
  */
 public class VMenu {
 
-  private long vMenuId;
-  private String vUrl;
-  private String vRemark;
+  private long vMenuId;//菜单id
+  private String vUrl;//菜单路径
+  private String vRemark;//菜单备注
 
 
   public long getVMenuId() {
