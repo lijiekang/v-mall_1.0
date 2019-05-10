@@ -164,4 +164,26 @@
         </if>
     </insert>
 
+
+    <select id="listProductsByLevels" resultType="VProduct">
+        select * from v_product
+        <where>
+            <if test="level1!=null">
+                and v_categoryLevel1=#{level1}
+
+            </if>
+            <if test="level2!=null">
+                and v_categoryLevel2=#{level2}
+            </if>
+            <if test="level3!=null">
+                and v_categoryLevel3=#{level3}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listSkuByProductId" parameterType="int" resultType="VSku">
+        select * from v_sku where v_product_id=#{_parameter}
+    </select>
+
 </mapper>

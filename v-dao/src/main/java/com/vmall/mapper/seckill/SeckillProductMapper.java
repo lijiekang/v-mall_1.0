@@ -1,6 +1,7 @@
 package com.vmall.mapper.seckill;
 
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.vo.SeckillProductVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,10 +10,10 @@ public interface SeckillProductMapper {
 
     /**
      * 新增秒杀商品
-     * @param vSeckillProduct
+     * @param seckillProductVO
      * @return
      */
-    int insertSeckillProduct(VSeckillProduct vSeckillProduct);
+    int insertSeckillProduct(SeckillProductVO seckillProductVO);
 
 
     /**

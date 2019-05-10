@@ -2,7 +2,10 @@ package com.vmall.mapper.productmapper;
 
 import com.vmall.pojo.VCategory;
 import com.vmall.pojo.VProduct;
+import com.vmall.pojo.VSku;
+import com.vmall.pojo.vo.CategoryVO;
 import org.apache.ibatis.annotations.Param;
+import org.apache.log4j.Category;
 
 import java.util.List;
 
@@ -46,4 +49,19 @@ public interface VProductMapper {
     //新增分类
     int addClassification(@Param("vType") int vType,@Param("vParentCategoryId") int vParentCategoryId,@Param("vCategoryName") String vCategoryName);
 
+
+    /**
+     * 根据查询指定分类下的所有商品数据
+     * @param categoryVO
+     * @return
+     */
+    List<VProduct> listProductsByLevels(CategoryVO categoryVO);
+
+
+    /**
+     * 根据商品id查询规格信息
+     * @param productId 商品id
+     * @return
+     */
+    List<VSku> listSkuByProductId(Integer productId);
 }

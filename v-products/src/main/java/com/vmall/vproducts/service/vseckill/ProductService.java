@@ -1,7 +1,11 @@
 package com.vmall.vproducts.service.vseckill;
 
 import com.vmall.pojo.Page;
+import com.vmall.pojo.VProduct;
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.VSku;
+import com.vmall.pojo.vo.CategoryVO;
+import com.vmall.pojo.vo.SeckillProductVO;
 
 import java.util.List;
 
@@ -21,14 +25,27 @@ public interface ProductService {
 
 
     /**
-     *
-     * @param vSeckillProduct
+     * 添加秒杀商品
+     * @param seckillProductVO
      * @return
      */
-    boolean addSeckillPorduct(VSeckillProduct vSeckillProduct);
+    boolean addSeckillPorduct(SeckillProductVO seckillProductVO);
 
 
+    /**
+     * 查询指定分类下的商品信息
+     * @param categoryVO
+     * @return
+     */
+    List<VProduct> listProductByLevels(CategoryVO categoryVO);
 
+
+    /**
+     * 查询某个商品所有的SKU
+     * @param productId
+     * @return
+     */
+    List<VSku> listSkuByProductId(Integer productId);
 
 
 

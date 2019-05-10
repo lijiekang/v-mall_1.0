@@ -15,19 +15,19 @@
         <thead>
         <tr>
             <th>商品</th>
+            <th>规格</th>
             <th>开始时间</th>
             <th>秒杀价格</th>
             <th>秒杀数量</th>
-            <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="product:${products}">
+            <td th:text="${product.getvProductName()}"></td>
             <td th:text="${product.getvSkuName()}"></td>
             <td th:text="${product.getvSeckillStartDate()}"/>
             <td th:text="${product.getvSeckillPrice()}"/>
             <td th:text="${product.getvSeckillQuantity()}"/>
-            <td></td>
         </tr>
 
         </tbody>

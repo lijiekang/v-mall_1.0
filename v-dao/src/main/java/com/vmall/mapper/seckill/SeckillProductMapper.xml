@@ -11,7 +11,7 @@
           v_seckill_productId, v_seckill_quantity, v_seckill_price, v_seckill_startDate, v_seckill_endDate
         )
         values (
-          #{vSeckillProductId},#{vSeckillQuantity},#{vSeckillPrice},#{vSeckillStartDate},#{vSeckillEndDate}
+          #{skuId},#{skuQuantity},#{skuPrice},#{skuBeginDate},#{skuEndDate}
         )
     </insert>
 
@@ -25,10 +25,12 @@
           `v_seckill_price`,
           `v_seckill_startDate`,
           `v_seckill_endDate` ,
-          v_sku_name
+          v_sku_name,
+          v_productName
       FROM
         `v-mall`.`v_seckill_product`
       LEFT JOIN v_sku ON v_sku.`v_sku_id`=v_seckill_product.`v_seckill_productId`
+      left join v_product on v_sku.v_product_id=v_product.v_productId
 
     </select>
 
