@@ -14,7 +14,9 @@
   <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link th:href="@{/css/sb-admin.css}" rel="stylesheet">
+  <script th:src="@{/js/jquery-1.12.4.js}"></script>
 </head>
+
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -229,7 +231,7 @@
       </ol>
       <div class="row">
         <div class="col-12">
-          <h1>新增订单</h1>
+          <h1>订单补单</h1>
         </div>
       </div>
       <form action="/vorder/toAddOrder" method="post">
@@ -251,6 +253,38 @@
               <label for="e">商品名称</label>
               <input class="form-control" id="e" type="text" name="productName" aria-describedby="nameHelp" placeholder="商品名称">
             </div>
+            <script>
+              $(function () {
+                $("[name=productName]").on("blur",function () {
+                  var spmc=$(this).val();
+                  $("#shuxing").load("/vorder/properties?spmc="+spmc);
+                });
+                $("[name=wen]").hide();
+              });
+              function dj($node) {
+                var id=$node.val();
+                //alert(id);
+                //获取文本框本来的值
+                var value=$("[name=wen]").val();
+                var newValue=$node.next().text();
+                $("[name=wen]").show();
+                var finsh=value+"-"+newValue;
+                var temp;
+                if(finsh.charAt(0)=="-")
+                  temp=finsh.substring(1,finsh.length);
+                else
+                  temp=finsh;
+                $("[name=wen]").val(temp);
+              }
+            </script>
+            <input type="hidden" name="danName" th:value="${#session.getAttribute('valueName')}"/>
+            <div class="col-md-6" id="shuxing">
+
+            </div>
+            <div class="col-md-6" id="shuxingzhi">
+
+            </div>
+            <input  class="form-control" type="text" name="wen"/>
           </div>
         </div>
         <div class="form-group">

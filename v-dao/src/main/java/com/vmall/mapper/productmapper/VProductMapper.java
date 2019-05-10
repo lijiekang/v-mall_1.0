@@ -24,4 +24,7 @@ public interface VProductMapper {
     int add(VProduct product);
     //删除商品
     int del(@Param("id") Integer id);
+    public VProduct getVProductNameByProductId(String productId);//根据商品id查询商品名称
+
+    Integer shuStore(@Param("productId") Integer productId,@Param("num")Integer num);//根据商品id修改库存
 }

@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class VBrand implements Serializable {
 
-  private long vBrandId;
-  private String vBrandName;
+  private long vBrandId;//品牌id
+  private String vBrandName;//品牌名称
 
 
   public long getvBrandId() {

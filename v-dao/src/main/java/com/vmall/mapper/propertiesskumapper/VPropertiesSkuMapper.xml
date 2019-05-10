@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.propertiesskumapper.VPropertiesSkuMapper">
+    <select id="vPropertList" resultType="Integer">
+        select v_properties_id from v_properties_sku where v_sku_id=#{v_sku_id}
+    </select>
+</mapper>

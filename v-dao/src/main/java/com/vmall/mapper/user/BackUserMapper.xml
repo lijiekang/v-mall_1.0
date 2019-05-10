@@ -3,31 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.user.BackUserMapper">
-    <select id="getUserByAll" resultType="com.vmall.pojo.VUesr">
-        SELECT * FROM v_uesr WHERE v_usercode like  concat('%',#{vUserCode},'%') LIMIT #{currentPage},3
+    <select id="getUserByAll" resultType="com.vmall.pojo.VUser">
+        SELECT * FROM v_user WHERE v_usercode like  concat('%',#{vUserCode},'%') LIMIT #{currentPage},3
     </select>
-    <select id="getUserById" parameterType="com.vmall.pojo.VUesr">
-        select * from v_uesr where id=#{id}
+    <select id="getUserById" parameterType="com.vmall.pojo.VUser">
+        select * from v_user where id=#{id}
     </select>
     <select id="getTotalPageCount" resultType="int">
-        select count(*) from v_uesr where v_usercode like concat('%',#{vUserCode},'%')
+        select count(*) from v_user where v_usercode like concat('%',#{vUserCode},'%')
     </select>
-    <select id="getAllUser" resultType="com.vmall.pojo.VUesr">
-        SELECT * FROM v_uesr where 1=1
+    <select id="getAllUser" resultType="com.vmall.pojo.VUser">
+        SELECT * FROM v_user where 1=1
         <if test="vUserCode!=null and vUserCode!=''">
             and v_usercode like concat('%',#{vUserCode},'%')
         </if>
         LIMIT #{currentPage},#{pageSize}
     </select>
-    <insert id="addUser" parameterType="com.vmall.pojo.VUesr">
-        INSERT INTO v_uesr(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_grade,v_sex,v_identity,v_usercode,v_salt)
+    <insert id="addUser" parameterType="com.vmall.pojo.VUser">
+        INSERT INTO v_user(v_username,v_password,v_mail,v_phone,v_headPath,v_isActive,v_type,v_grade,v_sex,v_identity,v_usercode,v_salt)
 		        VALUE (#{vUsername},#{vPassword},#{vMail},#{vPhone},#{vHeadPath},1,1,0,#{vSex},#{vIdentity},#{vUsercode},#{vSalt})
     </insert>
     <delete id="delUser">
-        delete from v_uesr where v_userId = #{id}
+        delete from v_user where v_userId = #{id}
     </delete>
-    <update id="getUpdate" parameterType="com.vmall.pojo.VUesr">
-        UPDATE v_uesr SET
+    <update id="getUpdate" parameterType="com.vmall.pojo.VUser">
+        UPDATE v_user SET
           v_username=#{vUsername},
           v_password=#{vPassword},
           v_mail=#{vMail},

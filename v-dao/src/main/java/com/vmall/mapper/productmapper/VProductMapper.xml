@@ -55,7 +55,6 @@
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel2) v_categoryName2,
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel3) v_categoryName3,
         p.v_store,
-        p.v_price,
         p.v_imgUrl,
         p.v_grade,
         p.v_isDelete,
@@ -88,4 +87,13 @@
     <delete id="del">
     DELETE FROM v_product WHERE v_productId = #{id}
   </delete>
+
+    <select id="getVProductNameByProductId" resultType="com.vmall.pojo.VProduct">
+        select v_productName from v_product where v_productId=#{productId}
+    </select>
+
+    <update id="shuStore">
+        update v_product set v_store=v_store+#{num}
+          where v_productId=#{productId}
+    </update>
 </mapper>

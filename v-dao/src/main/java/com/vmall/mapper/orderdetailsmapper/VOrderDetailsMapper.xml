@@ -7,4 +7,7 @@
         insert into v_order_details(v_productId,v_quantity,v_cost,v_orderId)
            values(#{vProductId},#{vQuantity},#{vCost},#{vOrderId})
     </insert>
+    <delete id="delOrderDetails">
+        delete from v_order_details where v_orderId=#{vOrderId}
+    </delete>
 </mapper>

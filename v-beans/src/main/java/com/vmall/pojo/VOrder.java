@@ -19,13 +19,49 @@ public class VOrder implements Serializable {
   private String vSerialNumber; //序列化的订单号
   private long vStatusId; //订单状态
   private String vPayNum; //交易号
-  private long vProductId;//商品id
+  private long vSkuId;//sku id
 
   private String vPhone;//收货人电话
-  private VUesr vUesr;
+  private VUser vUser;
   private VProduct vProduct;
   private VOrderStatus vOrderStatus;
   private VOrderDetails vOrderDetails;
+  private VSku vSku;
+  private VProperty vProperty;
+  private VProperties vProperties;
+
+
+  public VProperties getvProperties() {
+    return vProperties;
+  }
+
+  public void setvProperties(VProperties vProperties) {
+    this.vProperties = vProperties;
+  }
+
+  public VProperty getvProperty() {
+    return vProperty;
+  }
+
+  public void setvProperty(VProperty vProperty) {
+    this.vProperty = vProperty;
+  }
+
+  public long getvSkuId() {
+    return vSkuId;
+  }
+
+  public void setvSkuId(long vSkuId) {
+    this.vSkuId = vSkuId;
+  }
+
+  public VSku getvSku() {
+    return vSku;
+  }
+
+  public void setvSku(VSku vSku) {
+    this.vSku = vSku;
+  }
 
   public VOrderDetails getvOrderDetails() {
     return vOrderDetails;
@@ -55,24 +91,16 @@ public class VOrder implements Serializable {
     this.vOrderStatus = vOrderStatus;
   }
 
-  public VUesr getvUesr() {
-    return vUesr;
+  public VUser getvUser() {
+    return vUser;
   }
 
-  public void setvUesr(VUesr vUesr) {
-    this.vUesr = vUesr;
+  public void setvUser(VUser vUser) {
+    this.vUser = vUser;
   }
 
   public VProduct getvProduct() {
     return vProduct;
-  }
-
-  public long getvProductId() {
-    return vProductId;
-  }
-
-  public void setvProductId(long vProductId) {
-    this.vProductId = vProductId;
   }
 
   public long getvOrderId() {

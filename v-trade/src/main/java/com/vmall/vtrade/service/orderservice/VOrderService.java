@@ -2,9 +2,9 @@ package com.vmall.vtrade.service.orderservice;
 
 import com.vmall.mapper.ordermapper.VOrderMapper;
 import com.vmall.pojo.VOrder;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,4 +36,26 @@ public class VOrderService {
         return vOrderMapper.getVOrderByorderId(vOrderId);
     }//根据订单id获取订单详细信息
 
+    public Integer deleteOrder(Integer vOrderId){
+        return vOrderMapper.deleteOrder(vOrderId);
+    }//删除订单
+
+    public Integer delCommonsByOrderId(Integer vOrderId){
+        return vOrderMapper.delCommonsByOrderId(vOrderId);
+    }//删除订单下的评论
+
+    public Integer delAfterSale(Integer vOrderId){
+        return vOrderMapper.delAfterSale(vOrderId);
+    }//删除订单的售后
+
+    public Integer orderStatus(Integer vOrderId){
+        return vOrderMapper.orderStatus(vOrderId);
+    }//修改订单是否删除状态
+
+    @Transactional
+    public Integer upOrderStatus(){
+        //1修改状态
+        vOrderMapper.upOrderStatus();
+        return 1;
+    }//修改订单状态
 }

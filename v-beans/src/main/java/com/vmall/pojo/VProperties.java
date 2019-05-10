@@ -6,9 +6,8 @@ package com.vmall.pojo;
  */
 public class VProperties {
 
-  private long vPropertiesId;
-  private String vPropertiesName;
-  private long vPropertyId;
+  private long vPropertiesId;//属性id
+  private String vPropertiesName;//属性名称
 
 
   public long getVPropertiesId() {
@@ -28,13 +27,5 @@ public class VProperties {
     this.vPropertiesName = vPropertiesName;
   }
 
-
-  public long getVPropertyId() {
-    return vPropertyId;
-  }
-
-  public void setVPropertyId(long vPropertyId) {
-    this.vPropertyId = vPropertyId;
-  }
 
 }

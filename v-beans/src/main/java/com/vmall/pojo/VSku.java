@@ -6,10 +6,10 @@ package com.vmall.pojo;
  */
 public class VSku {
 
-  private long vSkuId;
-  private String vSkuName;
-  private double vSkuPrice;
-  private long vProductId;
+  private long vSkuId;//规格id
+  private String vSkuName;//规格名称
+  private double vSkuPrice;//SPU价格
+  private long vProductId;//商品id
 
 
   public long getVSkuId() {
