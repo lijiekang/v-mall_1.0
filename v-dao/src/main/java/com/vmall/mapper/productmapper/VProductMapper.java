@@ -63,4 +63,7 @@ public interface VProductMapper {
      * @return
      */
     List<VSku> listSkuByProductId(Integer productId);
+    VProduct getVProductNameByProductId(String productId);//根据商品id查询商品名称
+
+    Integer shuStore(@Param("productId") Integer productId,@Param("num")Integer num);//根据商品id修改库存
 }
