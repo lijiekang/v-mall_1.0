@@ -74,9 +74,4 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Override
-    public List<VSeckillOrder> seckillOrderList(long statusId, long serialNumber, String productName, Page page) {
-        return seckillOrderMapper.seckillOrderList(statusId,serialNumber,productName,(page
-        .getCurrentPageNo()-1)*page.getPageSize(),page.getPageSize());
-    }
 }

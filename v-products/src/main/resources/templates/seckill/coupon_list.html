@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
 </head>
 <body>
 
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content"></div>
+
+
+
+<div id="addContent">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>优惠券名称</th>
+            <th>优惠券面额（元）</th>
+            <th>使用限制（元）</th>
+            <th>使用期限</th>
+            <th>发行量</th>
+            <th>已使用量</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="conpon:${session.list}">
+            <td th:text="${conpon.couponName}"/>
+            <td th:text="${conpon.couponAccount}"/>
+            <td th:text="${conpon.couponNeed}"/>
+            <td th:text="${#dates.format(conpon.couponStart,'yyyy-MM-dd')}+'~'+${#dates.format(conpon.couponEnd,'yyyy-MM-dd')}"/>
+            <td th:text="${conpon.couponNum}"/>
+            <td th:text="${conpon.couponAlready}"/>
+            <td><a href="javascript:;">修改</a>&nbsp;<a href="javascript:;">删除</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("优惠券列表").append("<a class=\"btn btn-primary\" href=\"addcon\" id=\"toggleNavPosition\" style='float: right'>新增优惠券</a>")
+        $(".table-responsive").html($("#addContent"));
+    })
+</script>
 </body>
 </html>

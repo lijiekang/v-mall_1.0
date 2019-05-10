@@ -35,4 +35,14 @@ public interface SeckillOrderMapper {
                                          @Param("pageNo")long pageNo,
                                          @Param("pageSize")long pageSize);
 
+    /**
+     * 订单列表记录
+     * @param statusId
+     * @param serialNumber
+     * @param productName
+     * @return
+     */
+    int count(@Param("statusId")long statusId,
+              @Param("serialNumber")long serialNumber,
+              @Param("productName")String productName);
 }

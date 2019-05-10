@@ -13,10 +13,7 @@
 <div class="card card-register mx-auto mt-5" id="addContent">
     <!--<div class="card-header">Register an Account</div>-->
     <div class="card-body">
-        <form action="/seckillProduct" method="post">
-            <input type="hidden" id="upSKUId" name="skuId"/>
-
-
+        <form action="/addConpon" method="post">
             <div class="form-group">
                 <div class="form-row">
                     <div class="col-md-6">
@@ -49,15 +46,15 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <label for="exampleInputPassword1">开始日期</label>
-                        <input class="form-control" id="exampleInputPassword1" type="text" placeholder="BeginDate" name="couponStart">
+                        <input class="form-control" id="exampleInputPassword1" type="date" placeholder="BeginDate" name="couponStart">
                     </div>
                     <div class="col-md-6">
                         <label for="exampleConfirmPassword">结束日期</label>
-                        <input class="form-control" id="exampleConfirmPassword" type="text" placeholder="EndDate" name="couponEnd">
+                        <input class="form-control" id="exampleConfirmPassword" type="date" placeholder="EndDate" name="couponEnd">
                     </div>
                 </div>
             </div>
-            <a class="btn btn-primary btn-block" href="javascript:;" id="register">Register</a>
+            <input class="btn btn-primary btn-block" type="submit" value="确认"/>
         </form>
         <!--<div class="text-center">-->
         <!--<a class="d-block small mt-3" href="login.html">Login Page</a>-->
@@ -72,8 +69,8 @@
 
 <script type="text/javascript">
     $(function(){
-        $(".card-header").html("优惠券新增").append("<a class=\"btn btn-primary\" href=\"/seckillProduct\" id=\"toggleNavPosition\" style='float: right'>返回</a>")
-        $(".table-responsive").html($("#dataTable"));
+        $(".card-header").html("优惠券新增").append("<a class=\"btn btn-primary\" href=\"/conponList\" id=\"toggleNavPosition\" style='float: right'>返回</a>")
+        $(".table-responsive").html($("#addContent"));
     })
 </script>
 </body>

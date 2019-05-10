@@ -32,5 +32,4 @@ public interface OrderService {
      * @return
      */
     long getSeckillResult(long userId,int productId);
-    List<VSeckillOrder> seckillOrderList(long statusId, long serialNumber, String productName, Page page);
 }

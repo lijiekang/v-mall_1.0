@@ -20,6 +20,33 @@ public class VCommons implements Serializable {
   private Timestamp vModifyDate; //评论修改时间
   private long vIsOk; //是否推荐
   private VProduct vProduct;
+  private long vReview;
+  private String vReply;
+  private VUser vUser;
+
+  public VUser getvUser() {
+    return vUser;
+  }
+
+  public void setvUser(VUser vUser) {
+    this.vUser = vUser;
+  }
+
+  public long getvReview() {
+    return vReview;
+  }
+
+  public void setvReview(long vReview) {
+    this.vReview = vReview;
+  }
+
+  public String getvReply() {
+    return vReply;
+  }
+
+  public void setvReply(String vReply) {
+    this.vReply = vReply;
+  }
 
   public VProduct getvProduct() {
     return vProduct;
