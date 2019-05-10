@@ -12,16 +12,41 @@ public class VSeckillProduct implements Serializable {
   private double vSeckillPrice;
   private Timestamp vSeckillStartDate;
   private Timestamp vSeckillEndDate;
-  private VProduct vProduct;
+  private String vSkuName;
+  private VSku vSku;
+  private String vProductName;
 
 
+  public String getvProductName() {
+    return vProductName;
+  }
 
+  public void setvProductName(String vProductName) {
+    this.vProductName = vProductName;
+  }
+
+  public VSku getvSku() {
+    return vSku;
+  }
+
+  public void setvSku(VSku vSku) {
+    this.vSku = vSku;
+  }
+
+  public String getvSkuName() {
+    return vSkuName;
+  }
+
+  public void setvSkuName(String vSkuName) {
+    this.vSkuName = vSkuName;
+  }
 
   public VSeckillProduct(long vSeckillProductId) {
-    this.vSeckillProductId = vSeckillProductId;
+    this.vSeckillId = vSeckillProductId;
   }
 
   public VSeckillProduct() {
+
   }
 
   public long getvSeckillId() {
@@ -72,11 +97,4 @@ public class VSeckillProduct implements Serializable {
     this.vSeckillEndDate = vSeckillEndDate;
   }
 
-  public VProduct getvProduct() {
-    return vProduct;
-  }
-
-  public void setvProduct(VProduct vProduct) {
-    this.vProduct = vProduct;
-  }
 }

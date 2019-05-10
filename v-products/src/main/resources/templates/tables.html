@@ -33,6 +33,33 @@
               })
           })
       })
+      $(function () {
+          $("[name=productshang]").click(function () {
+              var id=$(this).attr("value");
+              var jie=$(this);
+              if(confirm("是否上架？")){
+                  $.getJSON("productupdshang","vProductId="+id,function (data) {
+                      if (data == "true") {
+                          location.reload();
+                      }
+                  })
+              }
+
+          })
+      })
+      $(function () {
+          $("[name=productxia]").click(function () {
+              var id=$(this).attr("value");
+              var jie=$(this);
+              if(confirm("是否下架？")){
+                  $.getJSON("productupdxia",{"vProductId":id},function (data) {
+                      if (data == true) {
+                          location.reload();
+                      }
+                  })
+              }
+          })
+      })
   </script>
 </head>
 
@@ -275,11 +302,14 @@
                 <th>二级分类</th>
                 <th>三级分类</th>
                 <th>库存</th>
-                <th>商品价格</th>
                 <th>商品图片路径</th>
                 <th>商品积分</th>
                 <th>商品上下架（0上架，1下架）</th>
                 <th>商品品牌</th>
+                <th>创建时间</th>
+                <th>修改时间</th>
+                <th>交易数量</th>
+                <th>评论数量</th>
                 <th>操作</th>
               </tr>
               <tr th:each="product:${listproduct}">
@@ -288,27 +318,28 @@
                 <td th:text="${product.cateName2}"></td>
                 <td th:text="${product.cateName3}"></td>
                 <td th:text="${product.vStore}"></td>
-                <td th:text="${product.vPrice}"></td>
                 <td th:text="${product.vImgUrl}"></td>
                 <td th:text="${product.vGrade}"></td>
                 <td th:text="${product.vIsDelete}"></td>
                 <td th:text="${product.brandName}"></td>
+                <td th:text="${product.vCreateDate}"></td>
+                <td th:text="${product.vModifyDate}"></td>
+                <td th:text="${product.vSalesVolume}"></td>
+                <td th:text="${product.vCommonsCount}"></td>
                 <td>
-                    <a th:href="@{tochakan(vProductId=${product.vProductId})}">查看</a>
-                    <a th:href="@{toupd(vProductId=${product.vProductId})}">修改</a>
-                    <a href="javascript:;"  th:value="${product.vProductId}" name="del">删除</a>
-                  </td>
-                </tr>
-              <tr>
-                <td>
-                  <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${1})}">首页</a>
-                  <a th:hidden="${page==1}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page-1})}">上一页</a>
-                  <a th:hidden="${page>=totalCount}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page+1})}">下一页</a>
-                  <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${totalCount})}">尾页</a>
+                  <a th:href="@{tochakan(vProductId=${product.vProductId})}">查看</a>
+                  <a th:href="@{toinventory(vProductId=${product.vProductId})}">库存</a>
+                  <a th:if="${product.vIsDelete==1}" href="javascript:;"th:value="${product.vProductId}" name="productshang">上架</a>
+                  <a th:if="${product.vIsDelete==0}" href="javascript:;"th:value="${product.vProductId}" name="productxia">下架</a>
+                  <a th:href="@{toupd(vProductId=${product.vProductId})}">修改</a>
+                  <a href="javascript:;"  th:value="${product.vProductId}" name="del">删除</a>
                 </td>
               </tr>
             </table>
-
+            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${1})}">首页</a>
+            <a th:hidden="${page==1}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page-1})}">上一页</a>
+            <a th:hidden="${page>=totalCount}" th:href="@{getproduct(vProductName=${vProductName},pageNo=${page+1})}">下一页</a>
+            <a th:href="@{getproduct(vProductName=${vProductName},pageNo=${totalCount})}">尾页</a>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

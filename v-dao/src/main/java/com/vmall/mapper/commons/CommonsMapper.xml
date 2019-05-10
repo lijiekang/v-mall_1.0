@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.commons.CommonsMapper">
+    <resultMap id="getUserAndCommons" type="com.vmall.pojo.VCommons">
+        <id column="v_commonsId" property="vCommonsId"/>
+        <result column="v_productId" property="vProductId"></result>
+        <result column="v_content" property="vContent"></result>
+        <result column="v_orderId" property="vOrderId"></result>
+        <result column="v_userId" property="vUserId"></result>
+        <result column="v_grade" property="vGrade"></result>
+        <result column="v_createDate" property="vCreateDate"></result>
+        <result column="v_modifyDate" property="vModifyDate"></result>
+        <result column="v_isOk" property="vIsOk"></result>
+        <result column="v_review" property="vReview"></result>
+        <result column="v_reply" property="vReply"></result>
+        <association property="vUser" javaType="com.vmall.pojo.VUser">
+            <id property="vUserId" column="uid"/>
+            <result column="v_username" property="vUsername"/>
+        </association>
+    </resultMap>
+    <select id="getAllCommonsById" resultMap="getUserAndCommons">
+        SELECT  `v_commons`.*,`v_user`.*,`v_user`.`v_userId` AS uid FROM `v_user`,`v_commons` WHERE `v_commons`.`v_userId`=`v_user`.`v_userId`
+        <if test="vProductId>0">
+            and v_productId=#{vProductId}
+        </if>
+        limit #{pageno},10
+    </select>
+
+    <select id="getVCategoryLevel1" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_type=1
+    </select>
+
+
+    <select id="getVCategoryLevel2" resultType="com.vmall.pojo.VCategory">
+        select * from v_category where v_parentCategoryId=#{vCategoryId}
+    </select>
+
+    <select id="getProductById" resultType="com.vmall.pojo.VProduct">
+        select * from v_product where v_categoryLevel3=#{vCategoryLevel3}
+    </select>
+
+    <select id="getPageCount" resultType="int">
+        select count(*) from v_commons
+    </select>
+
+    <delete id="getDelCommonts">
+        delete from v_commons where `v_commonsId` = #{vCommonsId};
+    </delete>
+
+    <insert id="getAddCommons">
+        insert into v_commons(v_productId,v_content,v_orderId,v_userId,v_grade,v_createDate,v_modifyDate,v_isOk,v_review,v_reply)
+        values(#{vProductId},#{vContent},#{vOrderId},#{vUserId},#{vGrade},#{vCreateDate},#{vModifyDate},#{vIsOk},#{vReview},#{vReply})
+    </insert>
+
+    <select id="getMoCommons" resultMap="getUserAndCommons">
+          SELECT  `v_commons`.*,`v_user`.*,`v_user`.`v_userId` AS uid FROM `v_user`,`v_commons` WHERE `v_commons`.`v_userId`=`v_user`.`v_userId` and v_commonsId=#{vCommonsId}
+    </select>
+
+    <update id="getUpdateCommons">
+          update `v_commons` set v_content=#{vContent} where v_commonsId=#{vCommonsId}
+    </update>
+
+    <update id="getUpdateHuiCommons">
+              update `v_commons` set v_reply=#{vReply} where v_commonsId=#{vCommonsId}
+    </update>
+
+
+</mapper>

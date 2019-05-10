@@ -1,0 +1,232 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content"></div>
+
+
+<script type="text/javascript">
+
+    $(function(){
+        $(".parent").on("click",".level",function () {
+
+            //将文字显示到选项栏
+            var value=$(this).text();
+            $(this).parents("ul").prev().text(value);
+            //将值赋如隐藏域
+            var valueId=$(this).attr("name");
+
+            $(this).parents("div").children("input").val(valueId)
+
+            var $note=$(this);
+
+            //填充下级菜单的值
+            var realValue=$(this).attr("name");
+            $.ajax({
+                url:"categorys",
+                data:{"parentId":realValue},
+                parentId:realValue,
+                success:function (data) {
+                    var li="";
+
+                    data.forEach(function (element) {
+                        li=li+"<li><a href='javascript:;' class='level' name='"+element.vCategoryId+"'>"+element.vCategoryName+"</a></li>"
+                    })
+
+                    $note.parents(".parent").next().find("ul").html(li);
+
+                }
+            })
+
+            //查询所有商品信息
+            var categoryLevel1=$("[name=level1Value]").val();
+            var categoryLevel2=$("[name=level2Value]").val();
+            var categroyLevel3=$("[name=level3Value]").val();
+
+            $.ajax({
+                url:"products",
+                data:{"level1":categoryLevel1,
+                "level2":categoryLevel2,
+                "level3":categroyLevel3},
+                success:function (data) {
+                    var li="";
+                    data.forEach(function (element) {
+                        li+="<li><a href='javascript:;' class='product' name='"+element.vProductId+"'>"+element.vProductName+"</a> </li>";
+                    })
+                    $("#products").html(li);
+                }
+            })
+
+
+            //查询所有规格信息
+            $("#productChose").on("click",".product",function () {
+                var productId=$(this).attr("name");
+                var productName=$(this).text();
+                //将选项值绑定
+                $(this).parents("ul").prev().text(productName);
+                $.ajax({
+                    url:"/SKU",
+                    data:"productId="+productId,
+                    success:function (data) {
+                        var skus="";
+                        data.forEach(function (element) {
+                            skus+="<li><a href='javascript:;' class='sku' name='"+element.vskuId+"'>"+element.vskuName+"</a></li>"
+                        })
+                        $("#sku").html(skus);
+
+                    }
+                })
+            })
+
+
+            $("#skuChose").on("click",".sku",function () {
+                $("#upSKUId").val($(this).attr("name"))
+                var value=$(this).text();
+                $(this).parents("ul").prev().text(value);
+
+            })
+        })
+    })
+</script>
+
+<div class="card card-register mx-auto mt-5" id="addContent">
+    <!--<div class="card-header">Register an Account</div>-->
+    <div class="card-body">
+        <form action="/seckillProduct" method="post">
+            <input type="hidden" id="upSKUId" name="skuId"/>
+
+
+
+            <div style="display: inline-block;margin-right: 50px;" class="parent">
+                <label for="exampleInputName">一级分类</label>
+                <div class="dropdown">
+                    <input type="hidden" name="level1Value"/>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" categoryId="">
+                        请选择
+
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li th:each="categoryLevel1:${categoryLevel1s}">
+                            <a href="javascript:;" th:text="${categoryLevel1.getvCategoryName()}" th:name="${categoryLevel1.getvCategoryId()}" class="level"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+           <div style="display: inline-block;margin-right: 50px;" class="parent">
+               <label for="exampleInputName">二级分类</label>
+               <input type="hidden" name="level2Value"/>
+               <div class="dropdown">
+                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      请选择
+
+                       <span class="caret"></span>
+                   </button>
+                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                   </ul>
+               </div>
+           </div>
+
+           <div style="display: inline-block" class="parent">
+               <label for="exampleInputName">三级分类</label>
+               <input type="hidden" name="level3Value"/>
+               <div class="dropdown">
+                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                       请选择
+
+                       <span class="caret"></span>
+                   </button>
+                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                       <li><a href="#">Action</a></li>
+                       <li><a href="#">Another action</a></li>
+                       <li><a href="#">Something else here</a></li>
+                       <li role="separator" class="divider"></li>
+                       <li><a href="#">Separated link</a></li>
+                   </ul>
+               </div>
+           </div>
+            <br/>
+
+            <br/>
+            <div style="display: inline-block;margin-right:50px" id="productChose">
+                <label for="exampleInputName">商品选择</label>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        请选择
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="products">
+                    </ul>
+                </div>
+            </div>
+            <div style="display: inline-block;" id="skuChose">
+                <label for="exampleInputName">规格选择</label>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        请选择
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="sku">
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputName">商品数量</label>
+                        <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Quantity" name="skuQuantity">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName">商品价格</label>
+                        <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Price" name="skuPrice">
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label for="exampleInputEmail1">Email address</label>-->
+                <!--<input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">-->
+            <!--</div>-->
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputPassword1">开始时间</label>
+                        <input class="form-control" id="exampleInputPassword1" type="text" placeholder="BeginDate" name="skuBeginDate">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleConfirmPassword">结束时间</label>
+                        <input class="form-control" id="exampleConfirmPassword" type="text" placeholder="EndDate" name="skuEndDate">
+                    </div>
+                </div>
+            </div>
+            <a class="btn btn-primary btn-block" href="javascript:;" id="register">Register</a>
+        </form>
+        <!--<div class="text-center">-->
+            <!--<a class="d-block small mt-3" href="login.html">Login Page</a>-->
+            <!--<a class="d-block small" href="forgot-password.html">Forgot Password?</a>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("添加秒杀商品").append("<a class=\"btn btn-primary\" href=\"#\" id=\"toggleNavPosition\" style='float: right'>新增秒杀商品</a>")
+        $(".table-responsive").html($("#addContent"));
+        $("#register").click(function(){
+            $("form").submit();
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.skumapper.VSkuMapper">
+    <resultMap id="getProperties" type="com.vmall.pojo.VProperties">
+        <id property="vPropertiesId" column="v_properties_id"></id>
+        <result property="vPropertiesName" column="v_properties_name"></result>
+        <association property="vProperty" javaType="com.vmall.pojo.VProperty">
+            <id property="vPropertiesId" column="pid"></id>
+            <result property="vPropertiesValue" column="v_properties_value"></result>
+            <result property="vParentId" column="v_parent_id"></result>
+        </association>
+    </resultMap>
+
+    <select id="getAllSku" resultMap="getProperties">
+        SELECT v_property.`v_properties_id` AS pid,v_property.`v_properties_value`,v_property.`v_parent_id`,v_properties.`v_properties_id`,v_properties.`v_properties_name`
+        FROM `v_properties` LEFT JOIN `v_property` ON v_properties.`v_properties_id`=v_property.`v_parent_id`
+        where 1=1
+<if test="vPropertiesId>0">
+       AND v_properties.`v_properties_id`=#{vPropertiesId}
+</if>
+    </select>
+
+    <delete id="getDelSku">
+       DELETE FROM `v_properties` WHERE v_properties_id=#{vPropertiesId}
+    </delete>
+
+    <delete id="getDelSkuChild">
+        DELETE FROM `v_property` WHERE v_parent_id=#{vParentId}
+    </delete>
+
+    <delete id="getDelSkuMoChild">
+     DELETE FROM `v_property` WHERE v_properties_id=#{vPropertiesId}
+    </delete>
+
+    <insert id="getInsertSku">
+        insert into v_properties(v_properties_name) values (#{vPropertiesName})
+    </insert>
+
+    <select id="getmoSku" resultType="com.vmall.pojo.VProperty">
+    SELECT * FROM v_property WHERE v_parent_id=#{vParentId}
+    </select>
+    <update id="getUpdateSku">
+        update v_properties set  v_properties_name=#{vPropertiesName} where v_properties_id=#{vPropertiesId}
+    </update>
+
+    <insert id="getAddSkuGui">
+        insert into v_property(v_properties_value,v_parent_id) values (#{vPropertiesName},#{vPropertiesId})
+    </insert>
+</mapper>

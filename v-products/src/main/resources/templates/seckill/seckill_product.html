@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+<body>
+
+    <nav th:replace="/seckill/commons/nav::nav"></nav>
+    <div th:replace="/seckill/commons/content::content">
+
+
+    </div>
+
+
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>商品</th>
+            <th>规格</th>
+            <th>开始时间</th>
+            <th>秒杀价格</th>
+            <th>秒杀数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product:${products}">
+            <td th:text="${product.getvProductName()}"></td>
+            <td th:text="${product.getvSkuName()}"></td>
+            <td th:text="${product.getvSeckillStartDate()}"/>
+            <td th:text="${product.getvSeckillPrice()}"/>
+            <td th:text="${product.getvSeckillQuantity()}"/>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <script type="text/javascript">
+        $(function(){
+            $(".card-header").html("秒杀商品管理").append("<a class=\"btn btn-primary\" href=\"/seckillProduct\" id=\"toggleNavPosition\" style='float: right'>新增秒杀商品</a>")
+            $(".table-responsive").html($("#dataTable"));
+        })
+    </script>
+</body>
+</html>

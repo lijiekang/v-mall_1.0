@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <table border="1">
+        <tr><td>用户名</td><td>评论内容</td>><td>评分</td><td>评论时间</td><td>操作</td></tr>
+        <tr th:each="common:${commonsList}">
+            <td th:text="${common.vContent}">1</td>
+            <td th:text="${common.vContent}">1</td>
+            <td th:text="${common.vGrade}">1</td>
+            <td th:text="${common.vCreateDate}">1</td>
+            <td><a>删除</a>  <a>修改</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

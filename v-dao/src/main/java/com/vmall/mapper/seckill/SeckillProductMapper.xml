@@ -11,33 +11,37 @@
           v_seckill_productId, v_seckill_quantity, v_seckill_price, v_seckill_startDate, v_seckill_endDate
         )
         values (
-          #{vSeckillProductId},#{vSeckillQuantity},#{vSeckillPrice},#{vSeckillStartDate},#{vSeckillEndDate}
+          #{skuId},#{skuQuantity},#{skuPrice},#{skuBeginDate},#{skuEndDate}
         )
     </insert>
 
 
-    <resultMap id="productMap" type="com.vmall.pojo.VSeckillProduct">
-        <id property="vSeckillId" column="v_seckill_id"/>
-        <association property="vProduct" javaType="com.vmall.pojo.VProduct">
-            <id property="vProductId" column="v_productId"/>
-        </association>
-    </resultMap>
-    <select id="listSeckillProducts" resultMap="productMap">
-        select
-              v_seckill_id,v_seckill_productId,v_seckill_quantity,v_seckill_price,v_seckill_startDate,v_seckill_endDate,
-              v_productId,v_productName
-        from v_seckill_product
-        left join v_product on v_seckill_product.v_seckill_productId = v_product.v_productId
+
+    <select id="listSeckillProducts" resultType="VSeckillProduct">
+      SELECT
+          `v_seckill_id`,
+          `v_seckill_productId`,
+          `v_seckill_quantity`,
+          `v_seckill_price`,
+          `v_seckill_startDate`,
+          `v_seckill_endDate` ,
+          v_sku_name,
+          v_productName
+      FROM
+        `v-mall`.`v_seckill_product`
+      LEFT JOIN v_sku ON v_sku.`v_sku_id`=v_seckill_product.`v_seckill_productId`
+      left join v_product on v_sku.v_product_id=v_product.v_productId
+
     </select>
 
 
     <update id="updateSeckillProduct" parameterType="com.vmall.pojo.VSeckillProduct">
         update v_seckill_product set
         v_seckill_quantity=v_seckill_quantity-1
-        where v_seckill_productId=#{vSeckillProductId} and v_seckill_quantity>0
+        where `v_seckill_id`=#{vSeckillId} and v_seckill_quantity>0
     </update>
 
     <select id="getSeckillProductRemain" resultType="int">
-        select v_seckill_quantity from v_seckill_product where v_seckill_productId=#{_parameter}
+        select v_seckill_quantity from v_seckill_product where `v_seckill_id`=#{vSeckillId}
     </select>
 </mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.score.ScoreMapper">
+    <select id="scorelist" resultType="com.vmall.pojo.VScore">
+        select * from v_score_change where v_userId=#{userId} limit #{pageNo},#{pageSize};
+    </select>
+    <select id="count" resultType="int">
+        select count(1) from v_score_change where v_userId=#{userId};
+    </select>
+    <select id="ifSignIn" resultType="com.vmall.pojo.VScore">
+        SELECT * FROM v_score_change WHERE DATEDIFF(v_createDate,NOW())=0 AND v_userId=#{userId} AND v_details='每日签到'
+    </select>
+    <insert id="addScore">
+        INSERT INTO `v_score_change`(v_userId,v_change_score,v_details,v_createDate,v_type)
+	    VALUES(#{v_userId},#{v_change_score},#{v_details},#{v_createDate},#{v_type})
+    </insert>
+</mapper>

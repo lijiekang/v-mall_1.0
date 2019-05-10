@@ -1,6 +1,7 @@
 package com.vmall.vauth.service;
 
 import com.vmall.mapper.user.UserMapper;
+import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.tool.TokenService;
 import com.vmall.vutil.MD5Utils;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,20 @@ public class LoginService {
     @Resource
     TokenService tokenService;
     public String login(String userCode,String password){
-        VUesr uesr=userMapper.login(userCode);
+        VUser uesr=userMapper.login(userCode);
         String pwd=MD5Utils.twoEncryption(MD5Utils.oneEncryption(password),uesr.getvSalt());
         if (pwd.equals(uesr.getvPassword())&&uesr!=null){
             return tokenService.set(uesr);
         }
         return "false";
     }
-    public VUesr findEmail(String email){
+    public VUser findEmail(String email){
         return userMapper.findEmail(email);
     }
     public boolean findPassword(String code,String email,String password){
         Object obj=tokenService.get(email);
         if(String.valueOf(obj).equals(code)&&obj!=null){
-            VUesr uesr=userMapper.findEmail(email);
+            VUser uesr=userMapper.findEmail(email);
             String onePwd=MD5Utils.oneEncryption(password);
             String salt = "";
             for (int i = 0;i<3;i++){
@@ -42,7 +43,8 @@ public class LoginService {
             return false;
         }
     }
-    public boolean register(VUesr vUesr,String phonecode){
+
+    public boolean register(VUser vUesr, String phonecode){
         Object code= tokenService.get(vUesr.getvPhone());
         if(phonecode!=""&&phonecode!=null){
             if(code!=null&&phonecode.equals(String.valueOf(code))){

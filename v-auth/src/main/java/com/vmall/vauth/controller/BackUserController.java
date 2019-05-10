@@ -2,6 +2,7 @@ package com.vmall.vauth.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.Page;
+import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.BackUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,7 +38,7 @@ public class BackUserController {
             }
             int totalCount1=backUserService.getTotalPageCount(vUserCode);
             page.setTotalCount(totalCount1);
-            List<VUesr> userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
+            List<VUser> userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
             page.setvUserList(userList);
         }catch (Exception e){
             e.printStackTrace();
@@ -51,8 +52,8 @@ public class BackUserController {
     @ApiOperation(value = "根据Id查询用户",notes = "id")
     @GetMapping("/user/{id}")
     public Object getUserById(int id){
-        VUesr vUesr=backUserService.getUserById(id);
-        String json=JSONArray.toJSONString(vUesr);
+        VUser vUser=backUserService.getUserById(id);
+        String json=JSONArray.toJSONString(vUser);
         return json;
     }
 
@@ -74,7 +75,7 @@ public class BackUserController {
 
     @ApiOperation(value = "修改用户")
     @PutMapping(value = "/user/{id}",consumes = "multipart/*",headers = "content-type=multipart/form-date")
-    public Object getUpdate(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request,VUesr vUesr){
+    public Object getUpdate(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request,VUser vUesr){
         HashMap<String,String> map=new HashMap<>();
         File file=new File("E:\\img");
         try {
@@ -104,7 +105,7 @@ public class BackUserController {
 
     @ApiOperation(value="添加用户", notes="文件上传")
     @PostMapping(value = "/user",consumes = "multipart/*",headers = "content-type=multipart/form-date")
-    public Object upload(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request, VUesr vUesr) {
+    public Object upload(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request, VUser vUesr) {
         HashMap<String,String> map=new HashMap<String, String>();
         File file=new File("E:\\img");
         if(!file.isDirectory()){

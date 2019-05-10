@@ -3,8 +3,8 @@ spring:
     #   数据源基本配置
     username: root
     password: 19980920
-    url: jdbc:mysql://localhost:3306/v-mall?serverTimezone=GMT%2B8
-    #type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://www.lijiekang.top:3306/v-mall?serverTimezone=GMT%2B8
+    type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
     initialSize: 5
     minIdle: 5
@@ -22,9 +22,10 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    
   redis:
     database: 0
-    host: localhost
+    host: www.lijiekang.top
     port: 6379
     jedis:
       pool:
@@ -32,8 +33,10 @@ spring:
         max-idle: 8
         max-wait: -1ms
         min-idle: 0
+    password: 19980920
+    timeout: 10000
   rabbitmq:
-    host: 192.168.159.129
+    host: www.lijiekang.top
     port: 5672
     username: lijiekang
     password: 19980920

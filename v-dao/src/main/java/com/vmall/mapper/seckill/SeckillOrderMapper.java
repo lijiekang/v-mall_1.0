@@ -3,6 +3,8 @@ package com.vmall.mapper.seckill;
 import com.vmall.pojo.VSeckillOrder;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SeckillOrderMapper {
 
     /**
@@ -22,7 +24,15 @@ public interface SeckillOrderMapper {
     VSeckillOrder getSeckillOrderByConditions(@Param("userId")long userId,
                                         @Param("productId")Integer productId);
 
-
-
+    /**
+     * 全部秒杀订单
+     *
+     *
+     */
+    List<VSeckillOrder> seckillOrderList(@Param("statusId")long statusId,
+                                         @Param("serialNumber")long serialNumber,
+                                         @Param("productName")String productName,
+                                         @Param("pageNo")long pageNo,
+                                         @Param("pageSize")long pageSize);
 
 }

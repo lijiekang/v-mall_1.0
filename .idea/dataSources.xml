@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="mysql" uuid="ef21a58e-6c73-4278-a980-36dcafc336c6">
+    <data-source source="LOCAL" name="lijiekang.top" uuid="91d063a1-4263-45c8-9c9a-dbcf6b975260">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/v-mall</jdbc-url>
+      <jdbc-url>jdbc:mysql://www.lijiekang.top:3306/v-mall</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

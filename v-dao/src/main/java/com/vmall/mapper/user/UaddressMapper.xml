@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.user.UaddressMapper">
+    <select id="addressList" resultType="com.vmall.pojo.VUserAddress">
+        select * from v_user_address where v_userId=#{userId} limit #{pageNo},#{pageSize};
+    </select>
+    <select id="count" resultType="int">
+        select count(1) from v_user_address where v_userId=#{userId};
+    </select>
+    <select id="getAddressById" resultType="com.vmall.pojo.VUserAddress">
+        select * from v_user_address where v_addressId=#{vAddressId};
+    </select>
+    <!--<resultMap id="udlist" type="com.vmall.pojo.VUserAddress">-->
+        <!--<id property="" column="v_addressId"/>-->
+        <!--<result property="" column="v_address"/>-->
+        <!--<result property="" column="v_isDefault"/>-->
+        <!--<result property="" column="v_reciveName"/>-->
+        <!--<result property="" column="v_recivePhone"/>-->
+        <!--<result property="" column="v_distributionArea"/>-->
+        <!--<result property="" column="v_postCode"/>-->
+    <!--</resultMap>-->
+    <insert id="addAddress">
+        insert into v_user_address(v_userId,v_address,v_createDate,v_modifyDate,v_isDefault,v_reciveName,v_recivePhone,v_distributionArea,v_postCode)
+        values (#{vUserId},#{vAddress},#{vCreateDate},#{vModifyDate},#{vIsDefault},#{vReciveName},#{vRecivePhone},#{vDistributionArea},#{vPostCode})
+    </insert>
+    <update id="updAddress">
+        update v_user_address set v_address=#{vAddress},
+        v_modifyDate=#{vModifyDate},
+        v_isDefault=#{vIsDefault},
+        v_reciveName=#{vReciveName},
+        v_recivePhone=#{vRecivePhone},
+        v_distributionArea=#{vDistributionArea},
+        v_postCode=#{vPostCode}
+        where v_addressId=#{vAddressId}
+    </update>
+    <delete id="delAddress">
+        delete from v_user_address where v_addressId=#{vAddressId};
+    </delete>
+</mapper>
