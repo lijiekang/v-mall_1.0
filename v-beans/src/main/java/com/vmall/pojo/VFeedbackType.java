@@ -6,8 +6,8 @@ package com.vmall.pojo;
  */
 public class VFeedbackType {
 
-  private long vFeedbackTypeId;
-  private String vFeedbackTypeName;
+  private long vFeedbackTypeId;//反馈类型id
+  private String vFeedbackTypeName;//反馈类型名称
 
 
   public long getVFeedbackTypeId() {

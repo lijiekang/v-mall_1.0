@@ -25,20 +25,10 @@ import java.util.*;
  */
 
 @Controller
-@Api(tags = "评论接口")
 public class CommonsController {
 
     @Autowired
     CommonsService commonsService;
-
-    @GetMapping("/index")
-    public String getAllCommonsById(Model model){
-  /*      List<VCommons>commonsList=commonsService.getAllCommonsById(0);
-        List<VCategory>level1=commonsService.getVCategoryLevel1();
-        model.addAttribute("commonsList",commonsList);
-        model.addAttribute("level1",level1);*/
-        return "indextest";
-    }
     @RequestMapping("/incommons")
     public String getCommonsTest(Model model,@RequestParam(value = "id",required = false)String id,@RequestParam(value = "pageno",required = false)String pageno){
         int pagen=0;
@@ -47,12 +37,12 @@ public class CommonsController {
         System.out.println(pageC);
         Pagezhang page=new Pagezhang();
         page.setRecordCount(pageC);
-        if(pageno!=null){
+        if(pageno!=null&&pageno!=""){
             pagen=Integer.parseInt(pageno);
             page.setPageno(pagen);
         }
         int index=pagen*10;
-        if(id!=null){
+        if(id!=null&&id!=""){
             pid=Integer.parseInt(id);
         }
         List<VCategory>level1=commonsService.getVCategoryLevel1();
@@ -60,11 +50,9 @@ public class CommonsController {
         model.addAttribute("page",page);
         model.addAttribute("level1",level1);
         model.addAttribute("commonsList",commonsList);
-        return "tables.html";
+        return "tables";
     }
 
-    @ApiOperation(value = "标题内容查询",notes = "根据标题查找下级标题")
-    @ApiImplicitParam(paramType = "path",name = "lv",value = "标题ID")
     @GetMapping(value = "/tlevel/{lv}",produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object getTitleLevel(@PathVariable String lv){
@@ -112,7 +100,7 @@ public class CommonsController {
         List<VCommons>commonsList=commonsService.getAllCommonsById(0,0);
         model.addAttribute("level1",level1);
         model.addAttribute("commonsList",commonsList);
-        return "tables.html";
+        return "tables";
     }
     @PostMapping(value = "/updateCommons")
     public String getUpdateCommons(Model model,@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vContent")String vContent){
@@ -126,12 +114,12 @@ public class CommonsController {
         int pid=Integer.parseInt(vCommonsId);
         VCommons vCommons=commonsService.getMoCommons(pid);
         model.addAttribute("vCommons",vCommons);
-        return "update.html";
+        return "update";
     }
     @GetMapping(value = "add/{vOrderId}")
     public String addCommons(@PathVariable String vOrderId){
         int oid=Integer.parseInt(vOrderId);
-        return "add.html";
+        return "add";
     }
 
     @GetMapping("/addCommons")
@@ -165,7 +153,7 @@ public class CommonsController {
         int pid=Integer.parseInt(vCommonsId);
         VCommons vCommons=commonsService.getMoCommons(pid);
         model.addAttribute("vCommons",vCommons);
-        return "huifucommons.html";
+        return "huifucommons";
     }
     @PostMapping(value = "/updateHuiCommons")
     public String getUpdateHuiCommons(Model model,@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vReply")String vReply){

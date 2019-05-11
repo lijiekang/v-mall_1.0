@@ -10,8 +10,28 @@
 
 
 <div id="addContent">
-
-    <h1>秒杀</h1>
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>商品</th>
+            <th>规格</th>
+            <th>订单号</th>
+            <th>下单时间</th>
+            <th>状态</th>
+            <th>付款金额</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="seckill:${list}">
+            <td th:text="${seckill.vSeckillProduct.vSku.VProduct.vProductName}"/>
+            <td th:text="${seckill.vSeckillProduct.vSku.VSkuName}"/>
+            <td th:text="${seckill.vSeckillSerialNumber}"/>
+            <td th:text="${seckill.vSeckillCreateDate}"/>
+            <td th:text="${seckill.vOrderStatus.vStatusName}"/>
+            <td th:text="${seckill.vSeckillProduct.vSeckillPrice}"/>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 

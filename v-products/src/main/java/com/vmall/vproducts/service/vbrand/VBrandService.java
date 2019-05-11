@@ -34,4 +34,10 @@ public class VBrandService {
     public int vbrandupd(VBrand vBrand){
         return vBrandMapper.vbrandupd(vBrand);
     }
+    public List<VBrand>chabrand(){
+        return vBrandMapper.chabrand();
+    }
+    public  int putawayupd(VBrand vBrand){
+        return vBrandMapper.putawayupd(vBrand);
+    }
 }

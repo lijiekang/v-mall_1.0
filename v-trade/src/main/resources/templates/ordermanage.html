@@ -16,6 +16,7 @@
   <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link th:href="@{/css/sb-admin.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-1.12.4.js}"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -39,12 +40,29 @@
             <span class="nav-link-text">系统设置</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/vorder/toIndex">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">订单管理</span>
-          </a>
-        </li>
+        <!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">-->
+          <!--<a class="nav-link" href="/vorder/toIndex">-->
+            <!--<i class="fa fa-fw fa-table"></i>-->
+            <!--<span class="nav-link-text">订单管理</span>-->
+          <!--</a>-->
+        <!--</li>-->
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponenta" data-parent="#exampleAccordion">
+                  <i class="fa fa-fw fa-area-chart"></i>
+                  <span class="nav-link-texts">订单管理</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseComponenta">
+                  <li>
+                      <a href="/vorder/toIndex">订单列表</a>
+                  </li>
+                  <li>
+                      <a href="cards.html">退款处理</a>
+                  </li>
+                  <li>
+                      <a href="cards.html">补单处理</a>
+                  </li>
+              </ul>
+          </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
@@ -52,10 +70,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.html">Navbar</a>
+              <a href="navbar.html">会员管理</a>
             </li>
             <li>
-              <a href="cards.html">Cards</a>
+              <a href="cards.html">积分管理</a>
             </li>
           </ul>
         </li>
@@ -66,16 +84,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
-              <a href="login.html">Login Page</a>
+              <a href="login.html">评论列表</a>
             </li>
             <li>
-              <a href="register.html">Registration Page</a>
-            </li>
-            <li>
-              <a href="forgot-password.html">Forgot Password Page</a>
-            </li>
-            <li>
-              <a href="addorder.html">Blank Page</a>
+              <a href="register.html">评论回复</a>
             </li>
           </ul>
         </li>
@@ -86,36 +98,49 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="#">分类管理</a>
             </li>
+
             <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
+              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">商品管理</a>
               <ul class="sidenav-third-level collapse" id="collapseMulti2">
                 <li>
-                  <a href="#">Third Level Item</a>
+                  <a href="#">品牌管理</a>
                 </li>
                 <li>
-                  <a href="#">Third Level Item</a>
+                    <a href="#">规格管理</a>
                 </li>
                 <li>
-                  <a href="#">Third Level Item</a>
+                  <a href="#">预警货品</a>
+                </li>
+                <li>
+                  <a href="#">库存管理</a>
                 </li>
               </ul>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">秒杀管理</span>
-          </a>
-        </li>
+        <!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">-->
+          <!--<a class="nav-link" href="#">-->
+            <!--<i class="fa fa-fw fa-link"></i>-->
+            <!--<span class="nav-link-text">促销管理</span>-->
+          <!--</a>-->
+        <!--</li>-->
+
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentks" data-parent="#exampleAccordion">
+                  <i class="fa fa-fw fa-link"></i>
+                  <span class="nav-link-texts">促销管理</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseComponentks">
+                  <li>
+                      <a href="ordermanage.html">优惠券管理</a>
+                  </li>
+                  <li>
+                      <a href="cards.html">秒杀管理</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -123,6 +148,7 @@
             <i class="fa fa-fw fa-angle-left"></i>
           </a>
         </li>
+
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
@@ -245,14 +271,17 @@
               </select>
               <input type="text" name="usernames">
               <input type="submit" value="查询">
+              <a th:href="@{/vorder/toAdd}" style="background-color: deepskyblue;color: crimson">添加订单</a>
             </form>
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <tr>
                 <th>订单编号</th>
                 <th>购买人</th>
                 <th>商品</th>
-                <th>金额</th>
+                <th>数量</th>
+                <th>规格</th>
+                <th>价格</th>
                 <th>收件人</th>
                 <th>收件人地址</th>
                 <th>交易号</th>
@@ -261,31 +290,40 @@
                 <th>操作</th>
               </tr>
 
-
               <tr th:each="li:${session.vOrderList}">
                 <td th:text="${li.vSerialNumber}"></td>
-                <td th:text="${li.vUesr.vUsername}"></td>
+                <td th:text="${li.vUser.vUsername}"></td>
                 <td th:text="${li.vProduct.vProductName}"></td>
+                <td th:text="${li.vOrderDetails.vQuantity}"></td>
+                <td th:text="${li.vSku.vSkuName}"></td>
                 <td th:text="${li.vCost}"></td>
                 <td th:text="${li.vUsername}"></td>
                 <td th:text="${li.vUserAddress}"></td>
                 <td th:text="${li.vPayNum}"></td>
                 <td th:text="${li.vOrderStatus.vStatusName}"></td>
                 <td th:text="${li.vCreateTime}"></td>
-                <td><a href="">修改</a></td>
+                <td>
+                    <a th:href="@{'/vorder/toUpdate?vOrderId='+${li.vOrderId}}">修改</a>
+                    <a th:onclick="sc($(this))" name="del" th:value="${li.vOrderId}">删除</a>
+                </td>
+                  <script>
+                     function sc(node) {
+                         var id=(node).attr("value");
+                         var jie=$("[name=del]");
+                         if(confirm("确认要删除嘛？")){
+                             $.getJSON("/vorder/delOrder","id="+id,function (data){
+                                if(data.status=="success"){
+                                    jie.parents("tr").remove();
+                                    alert("删除成功!");
+                                }else if(data.status=="fail"){
+                                    alert("删除失败!");
+                                }
+                             });
+                         }
+                     }
+                  </script>
               </tr>
-              <!--<tr>-->
-                <!--<td th:class="${session.page.currPage==1}?'disabled' : ''"><a href="#">上一页</a></td>-->
-                <!--<td th:if="${session.page.currPage-3 >=1}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage-3}}" th:text="${session.page.currPage -3}" >1</a></td>-->
-                <!--<td th:if="${session.page.currPage-2 >=1}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage-2}}" th:text="${session.page.currPage -2}" >1</a></td>-->
-                <!--<td th:if="${session.page.currPage-1 >=1}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage-1}}" th:text="${session.page.currPage -1}" >1</a></td>-->
-                <!--<td class="active"><a href="#" th:text="${session.page.currPage}" >1</a></td>-->
-                <!--<td th:if="${session.page.currPage+1 <=session.page.sumPage}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage+1}}" th:text="${session.page.currPage +1}" >1</a></td>-->
-                <!--<td th:if="${session.page.currPage+2 <=session.page.sumPage}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage+2}}" th:text="${session.page.currPage +2}" >1</a></td>-->
-                <!--<td th:if="${session.page.currPage+3 <=session.page.sumPage}" ><a th:href="@{'toIndex?no=' + ${session.page.currPage+3}}" th:text="${session.page.currPage +3}" >1</a></td>-->
 
-                <!--<td th:class="${session.page.currPage==session.page.sumPage}?'disabled' : ''" ><a href="#">下一页</a></td>-->
-              <!--</tr><br>-->
             </table>
             <a th:href="@{'/vorder/toIndex?no='+1}">首页</a>
             <a th:href="@{'/vorder/toIndex?no='+${session.page.currentPageNo-1}}">上一页</a>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.avctivitymapper.VActivityMapper">
+    <select id="listvActivity" resultType="com.vmall.pojo.VActivity">
+            SELECT * FROM v_activity where 1=1
+             LIMIT #{PageNo},#{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM v_activity
+    </select>
+    <insert id="addvActivity">
+        INSERT INTO v_activity (v_type,v_categoryId)
+        VALUES(#{vType},#{vCategoryId})
+    </insert>
+    <select id="vActivityid" resultType="com.vmall.pojo.VActivity">
+        SELECT * FROM v_activity WHERE v_activityId=#{id}
+    </select>
+    <update id="updvActivity">
+        UPDATE v_activity
+        <trim prefix="set" suffixOverrides="," suffix="where v_activityId=#{vActivityId}">
+            <if test="vType!=null">v_type=#{vType}</if>
+        </trim>
+    </update>
+    <delete id="delvActivity">
+        DELETE FROM v_activity WHERE v_activityId = #{id}
+    </delete>
+</mapper>

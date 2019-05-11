@@ -22,5 +22,6 @@ public interface VCategoryMapper {
     int add(VCategory vCategory);
     //查询一级
     List<VCategory>getcategorylist();
+    //二级
     List<VCategory>getcategoryName(Integer vParentCategoryId);
 }

@@ -10,6 +10,7 @@ public class VBrand implements Serializable {
 
   private long vBrandId;
   private String vBrandName;
+  private long vPutaway;
 
 
   public long getvBrandId() {
@@ -26,5 +27,13 @@ public class VBrand implements Serializable {
 
   public void setvBrandName(String vBrandName) {
     this.vBrandName = vBrandName;
+  }
+
+  public long getvPutaway() {
+    return vPutaway;
+  }
+
+  public void setvPutaway(long vPutaway) {
+    this.vPutaway = vPutaway;
   }
 }

@@ -1,6 +1,7 @@
 package com.vmall.vproducts.service.vcategory;
 
 import com.vmall.mapper.vcategorymapper.VCategoryMapper;
+import com.vmall.pojo.Page;
 import com.vmall.pojo.Pages;
 import com.vmall.pojo.VCategory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -16,9 +16,9 @@ public class VSeckillOrder implements Serializable {
   private String vSeckillPayNum;
   private VSeckillProduct vSeckillProduct;
   private long vSeckillStatus;
-
   private VOrderStatus vOrderStatus;
 
+  public VSeckillOrder(){}
   public VOrderStatus getvOrderStatus() {
     return vOrderStatus;
   }

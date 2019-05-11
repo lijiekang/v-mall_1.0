@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -111,6 +112,11 @@ public class LoginController {
 //        }
 //        return "验证码已发送";
 //    }
-
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request){
+        String token=request.getHeader("token");
+        tokenService.del(token);
+        return "login";
+    }
 
 }

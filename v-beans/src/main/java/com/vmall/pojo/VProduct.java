@@ -1,6 +1,9 @@
 package com.vmall.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
@@ -176,4 +179,7 @@ public class VProduct implements Serializable {
   public void setvBrandId(long vBrandId) {
     this.vBrandId = vBrandId;
   }
+
+
+
 }

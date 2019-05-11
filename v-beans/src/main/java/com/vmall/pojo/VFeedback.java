@@ -6,10 +6,10 @@ package com.vmall.pojo;
  */
 public class VFeedback {
 
-  private long vFeedbackId;
-  private String vFeedbackDescribe;
-  private long vFeedbackTypeId;
-  private long vFeedbackUserId;
+  private long vFeedbackId;//反馈id
+  private String vFeedbackDescribe;//反馈描述
+  private long vFeedbackTypeId;//反馈类型
+  private long vFeedbackUserId;//反馈用户
 
 
   public long getVFeedbackId() {

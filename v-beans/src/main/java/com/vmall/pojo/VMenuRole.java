@@ -6,9 +6,9 @@ package com.vmall.pojo;
  */
 public class VMenuRole {
 
-  private long vMrId;
-  private long vRoleId;
-  private long vMenuId;
+  private long vMrId;//菜单角色id
+  private long vRoleId;//菜单角色id
+  private long vMenuId;//菜单id
 
 
   public long getVMrId() {

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+  <link rel="stylesheet" href="../jquery-ui.min.css">
+  <script src="../jquery-1.11.2.min.js"></script>
+  <script src="../jquery-ui.min.js"></script>
+  <script src="../demo.js"></script>
+  <script>
+  	$(function() {
+	    setApiDemoTabs("#tabs-purchase");
+	    setApiDemoTabs("#tabs-preauth");
+	    $("#btn").click(function(){
+	    	$.ajax({
+	    		type:"post",
+	    		url:"http://localhost:8080/pay",
+	    		data:{
+	    			txnAmt:$("#txnAmt").val(),
+	    			orderNumber:$("#orderId").val()
+	    		},
+	    		success:function(res){
+	    			console.log(res);
+	    			$("#res").html(res);
+	    		}
+	    	})
+	    })
+	  });
+  </script>
+  <link rel="stylesheet" href="../demo.css">
+</head>
+
+<body>
+		<p>
+			<label>交易金额：</label>
+			<input id="txnAmt" type="text" name="txnAmt" placeholder="交易金额" value="1000" title="单位为分,不能带小数点 " required="required"/>
+		</p>
+		<p>
+			<label>商户订单号：</label>
+			<input id="orderId" type="text" name="orderId" placeholder="商户订单号"required="required"/>
+		</p>
+		<p>
+			<label>&nbsp;</label>
+			<button id="btn">提交</button>
+		</p>
+		<div id="res"></div>
+</body>
+</html>

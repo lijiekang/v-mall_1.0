@@ -19,4 +19,8 @@ public interface VBrandMapper {
     int vbrandadd(VBrand vBrand);
     //删除品牌
     int vbranddel(@Param("id") Integer id);
+    //查询所有的品牌
+    List<VBrand>chabrand();
+    //上架下架
+    int putawayupd(VBrand vBrand);
 }

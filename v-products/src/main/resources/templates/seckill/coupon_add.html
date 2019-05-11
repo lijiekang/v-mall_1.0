@@ -1,0 +1,77 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content">
+
+
+</div>
+
+<div class="card card-register mx-auto mt-5" id="addContent">
+    <!--<div class="card-header">Register an Account</div>-->
+    <div class="card-body">
+        <form action="/addConpon" method="post">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputName">优惠券名称</label>
+                        <input class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Quantity" name="couponName">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName2">优惠券面额</label>
+                        <input class="form-control" id="exampleInputLastName2" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Price" name="couponAccount">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName3">卖家需消费</label>
+                        <input class="form-control" id="exampleInputLastName3" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Price" name="couponNeed">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName4">发行量</label>
+                        <input class="form-control" id="exampleInputLastName4" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Price" name="couponNum">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName5">每人限领</label>
+                        <input class="form-control" id="exampleInputLastName5" type="text" aria-describedby="nameHelp" placeholder="Enter The Product Price" name="couponLimit">
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label for="exampleInputEmail1">Email address</label>-->
+            <!--<input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">-->
+            <!--</div>-->
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputPassword1">开始日期</label>
+                        <input class="form-control" id="exampleInputPassword1" type="date" placeholder="BeginDate" name="couponStart">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleConfirmPassword">结束日期</label>
+                        <input class="form-control" id="exampleConfirmPassword" type="date" placeholder="EndDate" name="couponEnd">
+                    </div>
+                </div>
+            </div>
+            <input class="btn btn-primary btn-block" type="submit" value="确认"/>
+        </form>
+        <!--<div class="text-center">-->
+        <!--<a class="d-block small mt-3" href="login.html">Login Page</a>-->
+        <!--<a class="d-block small" href="forgot-password.html">Forgot Password?</a>-->
+        <!--</div>-->
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("优惠券新增").append("<a class=\"btn btn-primary\" href=\"/conponList\" id=\"toggleNavPosition\" style='float: right'>返回</a>")
+        $(".table-responsive").html($("#addContent"));
+    })
+</script>
+</body>
+</html>
