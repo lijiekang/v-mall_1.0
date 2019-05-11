@@ -2,6 +2,7 @@ package com.vmall.vproducts.service.vproduct;
 
 import com.vmall.mapper.productmapper.VProductMapper;
 import com.vmall.pojo.Pages;
+import com.vmall.pojo.VCategory;
 import com.vmall.pojo.VProduct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,8 @@ public class  VProductService {
     }
     public List<VProduct> solrvProduct(String vProductName, Pages page){
         return vProductMapper.solrvProduct(vProductName,(page.getPageNo()-1)*page.getPageSize(),page.getPageSize());
+    }
+    public List<VCategory>vcategoryid(Integer id){
+        return vProductMapper.vcategoryid(id);
     }
 }

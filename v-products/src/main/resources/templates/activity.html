@@ -22,7 +22,7 @@
           $("[name=del]").click(function () {
               var id=$(this).attr("value");
               var jie=$(this);
-              $.getJSON("delete","vProductId="+id,function (data) {
+              $.getJSON("delActivity","vActivityId="+id,function (data) {
 
                   if(data=="true"){
                       alert("删除成功!");
@@ -33,7 +33,6 @@
               })
           })
       })
-
   </script>
 </head>
 
@@ -274,12 +273,13 @@
                 <th>商品分类（id）</th>
                 <th>操作</th>
               </tr>
-              <tr th:each="vactivitie:${vActivitielist}">
-                <td th:text="${vactivitie.vActivityId}"></td>
-                <td th:text="${vactivitie.vType}"></td>
-                <td th:text="${vactivitie.vCategoryId}"></td>
+              <tr th:each="va:${vActivitielist}">
+                <td th:text="${va.vActivityId}"></td>
+                <td th:text="${va.vType}"></td>
+                <td th:text="${va.vCategoryId}"></td>
                 <td>
-
+                  <a th:href="@{toactivityupd(vActivityId=${va.vActivityId})}">修改</a>
+                  <a href="javascript:;" th:value="${va.vActivityId}" name="del">删除</a>
                 </td>
               </tr>
             </table>

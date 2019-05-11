@@ -185,5 +185,7 @@
     <select id="listSkuByProductId" parameterType="int" resultType="VSku">
         select * from v_sku where v_product_id=#{_parameter}
     </select>
-
+    <select id="vcategoryid" resultType="com.vmall.pojo.VCategory">
+        SELECT * FROM `v_category` WHERE `v_categoryId`=#{id}
+    </select>
 </mapper>

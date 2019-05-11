@@ -15,4 +15,7 @@
     <select id="findProductIdBySkuId" resultType="com.vmall.pojo.VSku">
         select * from v_sku where v_sku_id=#{Skuid}
     </select>
+    <select id="getVSkuBySkuCode" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_code=#{skuCode};
+    </select>
 </mapper>
