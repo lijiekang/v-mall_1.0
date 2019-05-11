@@ -1,6 +1,6 @@
 package com.vmall.vtrade.service.skuservice;
 
-import com.vmall.mapper.skumapper.SkuMapper;
+import com.vmall.mapper.skumapper.VSkuMapper;
 import com.vmall.pojo.VSku;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class SkuService {
     @Autowired
-    SkuMapper skuMapper;
+    VSkuMapper skuMapper;
 
     public List<VSku> findAllSku(){
         return skuMapper.findAllSku();

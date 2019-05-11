@@ -39,11 +39,11 @@ public class BackUserController {
             int totalCount1=backUserService.getTotalPageCount(vUserCode);
             page.setTotalCount(totalCount1);
             List<VUser> userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
-            page.setvUserList(userList);
+            page.setDatas(userList);
         }catch (Exception e){
             e.printStackTrace();
         }
-        String json= JSONArray.toJSONString(page.getvUserList());
+        String json= JSONArray.toJSONString(page.getDatas());
         return  json;
     }
 

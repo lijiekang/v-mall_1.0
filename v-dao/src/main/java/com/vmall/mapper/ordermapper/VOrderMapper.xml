@@ -50,33 +50,6 @@
         </if>
         limit #{no},#{size}
     </select>
-    <!--<select id="getAllVOrderByUserName" resultMap="BaseResult">-->
-        <!--SELECT-->
-        <!--o.*,s.v_statusName AS v_statusNames,u.`v_username` AS v_usernames,pr.v_properties_name AS guige,pt.v_properties_value AS propervalue,-->
-        <!--k.v_sku_name AS skuname,k.v_sku_price AS skuprice,p.v_productName AS v_productNames-->
-        <!--FROM v_order o-->
-        <!--INNER JOIN v_sku k-->
-        <!--ON k.v_sku_id=o.`v_skuid`-->
-        <!--INNER JOIN v_user u-->
-        <!--ON u.v_userId=o.`v_userId`-->
-        <!--INNER JOIN v_order_status s-->
-        <!--ON s.v_statusId=o.v_statusId-->
-        <!--INNER JOIN v_product p-->
-        <!--ON p.v_productId=k.v_product_id-->
-        <!--INNER JOIN v_properties_sku sku-->
-        <!--ON k.v_sku_id=sku.v_sku_id-->
-        <!--INNER JOIN v_properties pr-->
-        <!--ON pr.v_properties_id=sku.v_properties_id-->
-        <!--INNER JOIN v_property pt-->
-        <!--ON pt.v_parent_id=pr.v_properties_id AND pt.v_properties_id=o.v_properties_id-->
-        <!--WHERE 1=1-->
-        <!--<if test="usernames!=null and usernames!=''">-->
-            <!--and o.v_userId=(SELECT v_userId FROM v_user WHERE v_username like concat ('%',#{usernames},'%'))-->
-        <!--</if>-->
-        <!--limit #{no},#{size}-->
-    <!--</select>-->
-
-
     <select id="allCount" resultType="Integer">
         select count(*) from v_order
     </select>

@@ -1,6 +1,7 @@
 package com.vmall.vproducts.controller.vcategory;
 
 import com.alibaba.fastjson.JSONArray;
+import com.vmall.pojo.Page;
 import com.vmall.pojo.Pages;
 import com.vmall.pojo.VCategory;
 import com.vmall.vproducts.service.vcategory.VCategoryService;
@@ -38,7 +39,7 @@ public class VCategoryController {
         model.addAttribute("page",page.getPageNo());
         model.addAttribute("listcategory",listcategory);
         model.addAttribute("categorylist",categorylist);
-        model.addAttribute("totalCount",page.getPageye());
+        model.addAttribute("totalCount",page.getPagetiao());
         return "commodity";
     }
     @RequestMapping("/tochakancategory")

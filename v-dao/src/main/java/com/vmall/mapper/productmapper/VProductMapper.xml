@@ -185,7 +185,12 @@
     <select id="listSkuByProductId" parameterType="int" resultType="VSku">
         select * from v_sku where v_product_id=#{_parameter}
     </select>
-    <select id="vcategoryid" resultType="com.vmall.pojo.VCategory">
-        SELECT * FROM `v_category` WHERE `v_categoryId`=#{id}
+    <select id="getVProductNameByProductId" resultType="com.vmall.pojo.VProduct">
+        select v_productName from v_product where v_productId=#{productId}
     </select>
+
+    <update id="shuStore">
+        update v_product set v_store=v_store+#{num}
+          where v_productId=#{productId}
+    </update>
 </mapper>

@@ -12,7 +12,9 @@
             <result property="vParentId" column="v_parent_id"></result>
         </association>
     </resultMap>
-
+    <select id="getVSkuBySkuCode" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_code=#{skuCode};
+    </select>
     <select id="getAllSku" resultMap="getProperties">
         SELECT v_property.`v_properties_id` AS pid,v_property.`v_properties_value`,v_property.`v_parent_id`,v_properties.`v_properties_id`,v_properties.`v_properties_name`
         FROM `v_properties` LEFT JOIN `v_property` ON v_properties.`v_properties_id`=v_property.`v_parent_id`
@@ -48,4 +50,16 @@
     <insert id="getAddSkuGui">
         insert into v_property(v_properties_value,v_parent_id) values (#{vPropertiesName},#{vPropertiesId})
     </insert>
+    <select id="findAllSku" resultType="com.vmall.pojo.VSku">
+        select * from v_sku
+    </select>
+    <select id="findskuId" resultType="Integer">
+        select v_sku_id from v_sku where v_product_id=#{productId}
+    </select>
+    <select id="findskuIdBySkuName" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_name=#{skuName}
+    </select>
+    <select id="findProductIdBySkuId" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_id=#{Skuid}
+    </select>
 </mapper>
