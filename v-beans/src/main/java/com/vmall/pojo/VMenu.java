@@ -1,6 +1,8 @@
 package com.vmall.pojo;
 
 
+import java.util.List;
+
 /**
  * 菜单信息表
  */
@@ -10,6 +12,16 @@ public class VMenu {
   private String vUrl;
   private String vRemark;
 
+  //Role
+  private List<VRole> roles;
+
+  public List<VRole> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<VRole> roles) {
+    this.roles = roles;
+  }
 
   public long getVMenuId() {
     return vMenuId;

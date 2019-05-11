@@ -4,22 +4,30 @@ import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.Page;
 import com.vmall.pojo.VUser;
 import com.vmall.vauth.service.BackUserService;
+import com.vmall.vauth.utils.HttpUtils;
+import com.vmall.vauth.utils.PoiUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/auth")
 public class BackUserController {
 
     @Autowired
@@ -28,7 +36,9 @@ public class BackUserController {
     @ApiOperation(value = "用户列表",notes = "根据姓名模糊查询",
             protocols = "HTTP", produces = "application/json")
     @GetMapping(value = "/user",produces = {"application/json;charset=utf-8"})
-    public Object getUserByAll(@RequestParam(value = "vUserCode",required = false) String vUserCode,@RequestParam(value = "currentPage",required = false) String currentPage){
+    public ModelAndView getUserByAll(@RequestParam(value = "vUsername",required = false) String vUsername,
+                                     @RequestParam(value = "currentPage",required = false) String currentPage){
+        ModelAndView modelAndView=new ModelAndView();
         Page page=new Page();
         try {
             if(currentPage==null){
@@ -36,25 +46,30 @@ public class BackUserController {
             }else{
                 page.setCurrentPageNo(Integer.valueOf(currentPage));
             }
-            int totalCount1=backUserService.getTotalPageCount(vUserCode);
+            int totalCount1=backUserService.getTotalPageCount(vUsername);
             page.setTotalCount(totalCount1);
-            List<VUser> userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
+            List<VUser> userList=backUserService.getAllUser(vUsername,(page.getCurrentPageNo()-1)*3,1000);
             page.setvUserList(userList);
         }catch (Exception e){
             e.printStackTrace();
         }
-        String json= JSONArray.toJSONString(page.getvUserList());
-        return  json;
+        //String json= JSONArray.toJSONString(page.getvUserList());
+        modelAndView.setViewName("usertables");
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("user",page.getvUserList());
+        return modelAndView;
     }
-
 
 
     @ApiOperation(value = "根据Id查询用户",notes = "id")
     @GetMapping("/user/{id}")
-    public Object getUserById(int id){
+    public ModelAndView getUserById(int id){
+        ModelAndView modelAndView=new ModelAndView();
         VUser vUser=backUserService.getUserById(id);
+        modelAndView.addObject("vUser",vUser);
+        modelAndView.setViewName("userupdate");
         String json=JSONArray.toJSONString(vUser);
-        return json;
+        return modelAndView;
     }
 
 
@@ -74,8 +89,9 @@ public class BackUserController {
     }
 
     @ApiOperation(value = "修改用户")
-    @PutMapping(value = "/user/{id}",consumes = "multipart/*",headers = "content-type=multipart/form-date")
-    public Object getUpdate(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request,VUser vUesr){
+    @PostMapping(value = "/userxiu",consumes = "multipart/*",headers = "content-type=multipart/form-date")
+    public ModelAndView getUpdate(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile,VUser vUesr){
+        ModelAndView modelAndView=new ModelAndView();
         HashMap<String,String> map=new HashMap<>();
         File file=new File("E:\\img");
         try {
@@ -89,24 +105,34 @@ public class BackUserController {
                 //上传文件
                 vUesr.setvHeadPath(fileKey + suffix);
             } else {
-                return "文件格式错误";
+                return modelAndView.addObject("error","文件格式错误");
             }
             int result=backUserService.getUpdate(vUesr);
             if (result>0){
-                map.put("error","修改成功");
+                //map.put("error","修改成功");
+                modelAndView.setViewName("usertables");
             }else {
-                map.put("error","修改失败");
+                //map.put("error","修改失败");
+                modelAndView.setViewName("userupdate");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return map;
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/useradd",method = RequestMethod.GET)
+    public ModelAndView useradd(){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("useradd");
+        return modelAndView;
     }
 
     @ApiOperation(value="添加用户", notes="文件上传")
     @PostMapping(value = "/user",consumes = "multipart/*",headers = "content-type=multipart/form-date")
-    public Object upload(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request, VUser vUesr) {
-        HashMap<String,String> map=new HashMap<String, String>();
+    public ModelAndView upload(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request, VUser vUesr) {
+        ModelAndView modelAndView = new ModelAndView();
+        //HashMap<String,String> map=new HashMap<String, String>();
         File file=new File("E:\\img");
         if(!file.isDirectory()){
             file.mkdirs();
@@ -124,17 +150,105 @@ public class BackUserController {
         if (".png".equals(suffix) || ".jpg".equals(suffix)) {
             //上传文件
             vUesr.setvHeadPath(fileKey + suffix);
-
         } else {
-            return "文件格式错误";
+            return modelAndView.addObject("error","文件格式错误");
         }
         int result=backUserService.addUser(vUesr);
         if (result>0){
-            map.put("error","新增成功");
-
+            //map.put("error","新增成功");
+            modelAndView.setViewName("usertables");
         }else {
-            map.put("error","新增失败");
+            //map.put("error","新增失败");
+            modelAndView.setViewName("useradd");
         }
-        return map;
+        return modelAndView;
     }
+
+    @ApiOperation(value="身份证实名", notes="实名")
+    @GetMapping("Verified")
+    @ResponseBody
+    public String Verified(@RequestParam("vUsercode") String vUsercode, @RequestParam("vIdentity") String vIdentity) {
+        String host = "https://idenauthen.market.alicloudapi.com";
+        String path = "/idenAuthentication";
+        String method = "POST";
+        String appcode = "81b8fec2b1514aa3a0a5877c1f686b65";
+        Map<String, String> headers = new HashMap<String, String>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + appcode);
+        //根据API的要求，定义相对应的Content-Type
+        headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        Map<String, String> querys = new HashMap<String, String>();
+        Map<String, String> bodys = new HashMap<String, String>();
+        bodys.put("idNo", vIdentity);
+        bodys.put("name", vUsercode);
+        try {
+            HttpResponse response = HttpUtils.doPost(host, path, method, headers, querys, bodys);
+            System.out.println(response.toString());
+            //获取response的body
+            System.out.println(EntityUtils.toString(response.getEntity()));
+            return EntityUtils.toString(response.getEntity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @ApiOperation(value="手机实名", notes="实名")
+    @GetMapping("phoneVerified")
+    @ResponseBody
+    public String phoneVerified(@RequestParam("vUsercode") String vUsercode, @RequestParam("vIdentity") String vIdentity,@RequestParam("vPhone") String vPhone){
+        String host = "https://phone3.market.alicloudapi.com";
+        String path = "/phonethree";
+        String method = "GET";
+        String appcode = "81b8fec2b1514aa3a0a5877c1f686b65";
+        Map<String, String> headers = new HashMap<String, String>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + appcode);
+        Map<String, String> querys = new HashMap<String, String>();
+        querys.put("idcard", vIdentity);
+        querys.put("phone", vPhone);
+        querys.put("realname", vUsercode);
+
+        try {
+            HttpResponse response = HttpUtils.doGet(host, path, method, headers, querys);
+            System.out.println(response.toString());
+            //获取response的body
+            System.out.println(EntityUtils.toString(response.getEntity()));
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping(value = "wuliu")
+    public String wuliu(@RequestParam("nu") String nu, @RequestParam("com") String com){
+        String host = "https://allexp.market.alicloudapi.com";
+        String path = "/expQuery";
+        String method = "GET";
+        String appcode = "81b8fec2b1514aa3a0a5877c1f686b65";
+        Map<String, String> headers = new HashMap<String, String>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + appcode);
+        Map<String, String> querys = new HashMap<String, String>();
+        querys.put("com", com);
+        querys.put("nu", nu);
+
+        try {
+            HttpResponse response = HttpUtils.doGet(host, path, method, headers, querys);
+            System.out.println(response.toString());
+            //获取response的body
+            //System.out.println(EntityUtils.toString(response.getEntity()));
+            return EntityUtils.toString(response.getEntity());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/hssf",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> vUser(){
+        return PoiUtils.exportEmp2Excel(backUserService.getAllVUser());
+    }
+
 }
