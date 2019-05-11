@@ -31,14 +31,14 @@
         <td th:text="${a.vGrade}"></td>
         <td th:text="${a.vUsercode}"></td>
         <td th:text="${a.vIdentity}"></td>
-        <td><a th:href="@{'/user/{id}?id='+${a.vUserId}}">编辑</a></td>
+        <td><a th:href="@{'/auth/user/{id}?id='+${a.vUserId}}">编辑</a></td>
     </tr>
     </tbody>
 </table>
 
 <script type="text/javascript">
     $(function(){
-        $(".card-header").html("用户管理").append("<a class=\"btn btn-primary\" href=\"/hssf\" id=\"toggleNavPosition\" style='float: right'>导出</a>")
+        $(".card-header").html("用户管理").append("<a class=\"btn btn-primary\" href=\"/auth/hssf\" id=\"toggleNavPosition\" style='float: right'>导出</a>")
         $(".table-responsive").html($("#dataTable"));
     })
 </script>

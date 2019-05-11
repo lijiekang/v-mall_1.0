@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +35,117 @@ public class BackUserController {
     @Autowired
     BackUserService backUserService;
 
-    @ApiOperation(value = "用户列表",notes = "根据姓名模糊查询",
+    //根据Id查询用户
+    @GetMapping("/user/{id}")
+    public void getUserById(int id,HttpServletResponse httpServletResponse) throws IOException {
+        ModelAndView modelAndView=new ModelAndView();
+        VUser vUser=backUserService.getUserById(id);
+        ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
+        os.writeObject(JSONArray.toJSON(vUser));
+        os.close();
+    }
+
+    //删除用户
+    @DeleteMapping("/user/{id}")
+    public void delUser(int id,HttpServletResponse httpServletResponse) throws IOException {
+        HashMap<String,String> map=new HashMap<String, String>();
+        int result=backUserService.delUser(id);
+        ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
+        os.writeObject(JSONArray.toJSON(result));
+        os.close();
+    }
+
+    //修改用户
+    @PostMapping(value = "/userxiu",consumes = "multipart/*",headers = "content-type=multipart/form-date")
+    public void getUpdate(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile,VUser vUesr,HttpServletResponse httpServletResponse){
+        ModelAndView modelAndView=new ModelAndView();
+        HashMap<String,String> map=new HashMap<>();
+        File file=new File("E:\\img");
+        try {
+            //生成随机filekey
+            String fileKey = UUID.randomUUID().toString();
+            //获取后缀
+            String fileName = multipartFile.getOriginalFilename();
+            String suffix = fileName.substring(fileName.indexOf("."));
+            multipartFile.transferTo(new File(file,fileKey+suffix));
+            if (".png".equals(suffix) || ".jpg".equals(suffix)) {
+                //上传文件
+                vUesr.setvHeadPath(fileKey + suffix);
+            } else {
+
+            }
+            int result=backUserService.getUpdate(vUesr);
+            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
+            os.writeObject(JSONArray.toJSON(result));
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //用户列表
+    @GetMapping(value = "/users",produces = {"application/json;charset=utf-8"})
+    public void getUserByAll(HttpServletResponse httpServletResponse,@RequestParam(value = "vUsername",required = false) String vUsername,
+                             @RequestParam(value = "currentPage",required = false) String currentPage){
+        Page page=new Page();
+        try {
+            if(currentPage==null){
+                page.setCurrentPageNo(1);
+            }else{
+                page.setCurrentPageNo(Integer.valueOf(currentPage));
+            }
+            int totalCount1=backUserService.getTotalPageCount(vUsername);
+            page.setTotalCount(totalCount1);
+            List<VUser> userList=backUserService.getAllUser(vUsername,(page.getCurrentPageNo()-1)*3,1000);
+            page.setDatas(userList);
+            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
+            os.writeObject(JSONArray.toJSON(page));
+            os.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //String json= JSONArray.toJSONString(page.getvUserList());
+
+    }
+
+    //新增
+    @PostMapping(value = "/user",consumes = "multipart/*",headers = "content-type=multipart/form-date")
+    public void upload(@ApiParam(value = "上传的文件" ,required = true) MultipartFile multipartFile, HttpServletRequest request, VUser vUesr,HttpServletResponse httpServletResponse) {
+        ModelAndView modelAndView = new ModelAndView();
+        //HashMap<String,String> map=new HashMap<String, String>();
+        File file=new File("E:\\img");
+        if(!file.isDirectory()){
+            file.mkdirs();
+        }
+        //生成随机filekey
+        String fileKey = UUID.randomUUID().toString();
+        //获取后缀
+        String fileName = multipartFile.getOriginalFilename();
+        String suffix = fileName.substring(fileName.indexOf("."));
+        try {
+            multipartFile.transferTo(new File(file,fileKey+suffix));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (".png".equals(suffix) || ".jpg".equals(suffix)) {
+            //上传文件
+            vUesr.setvHeadPath(fileKey + suffix);
+        } else {
+
+        }
+        int result=backUserService.addUser(vUesr);
+        ObjectOutputStream os= null;
+        try {
+            os = new ObjectOutputStream(httpServletResponse.getOutputStream());
+            os.writeObject(JSONArray.toJSON(result));
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /*@ApiOperation(value = "用户列表",notes = "根据姓名模糊查询",
             protocols = "HTTP", produces = "application/json")
     @GetMapping(value = "/user",produces = {"application/json;charset=utf-8"})
     public ModelAndView getUserByAll(@RequestParam(value = "vUsername",required = false) String vUsername,
@@ -49,17 +161,16 @@ public class BackUserController {
             int totalCount1=backUserService.getTotalPageCount(vUsername);
             page.setTotalCount(totalCount1);
             List<VUser> userList=backUserService.getAllUser(vUsername,(page.getCurrentPageNo()-1)*3,1000);
-            page.setvUserList(userList);
+            page.setDatas(userList);
         }catch (Exception e){
             e.printStackTrace();
         }
         //String json= JSONArray.toJSONString(page.getvUserList());
         modelAndView.setViewName("usertables");
         modelAndView.addObject("page",page);
-        modelAndView.addObject("user",page.getvUserList());
+        modelAndView.addObject("user",page.getDatas());
         return modelAndView;
     }
-
 
     @ApiOperation(value = "根据Id查询用户",notes = "id")
     @GetMapping("/user/{id}")
@@ -68,12 +179,10 @@ public class BackUserController {
         VUser vUser=backUserService.getUserById(id);
         modelAndView.addObject("vUser",vUser);
         modelAndView.setViewName("userupdate");
-        String json=JSONArray.toJSONString(vUser);
         return modelAndView;
-    }
+    }*/
 
-
-
+/*
     @ApiResponses({@ApiResponse(code = 200,message = "删除成功！"), @ApiResponse(code = 500,message = "删除失败！")})
     @ApiOperation(value = "删除用户",notes = "根据id删除用户")
     @DeleteMapping("/user/{id}")
@@ -162,7 +271,7 @@ public class BackUserController {
             modelAndView.setViewName("useradd");
         }
         return modelAndView;
-    }
+    }*/
 
     @ApiOperation(value="身份证实名", notes="实名")
     @GetMapping("Verified")
