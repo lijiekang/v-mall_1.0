@@ -31,7 +31,6 @@ public class VClassification {
             model.addAttribute("lv1",lv1);
             model.addAttribute("lv2",lv2);
             model.addAttribute("lv3",lv3);
-
         return "fenlei";
     }
 

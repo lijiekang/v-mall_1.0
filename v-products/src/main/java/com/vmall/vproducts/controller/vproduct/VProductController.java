@@ -32,6 +32,7 @@ import java.util.UUID;
 
 @Controller
 //@Api(tags = "商品")
+
 public class VProductController {
     @Autowired
     VProductService vProductService;
@@ -39,16 +40,9 @@ public class VProductController {
     VCategoryService vCategoryService;
     @Autowired
     VBrandService vBrandService;
-    @RequestMapping("/index")
-    public String toindex(){
-        return "index";
-    }
-    @RequestMapping("/chakan")
-    public String tochakan(){
-        return "chakan";
-    }
 
-    @RequestMapping("/tables")
+
+    @RequestMapping(value = "/tables")
     public String totables(){
         return "redirect:/getproduct";
     }
