@@ -1,10 +1,17 @@
 package com.vmall.pojo;
 
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class VUser implements Serializable {
+public class VUser implements Serializable,UserDetails {
 
   private long vUserId; //用户id
   private String vUsername; //用户名
@@ -27,6 +34,16 @@ public class VUser implements Serializable {
   private String vIDcardBehind; //背面照
   private java.sql.Timestamp vLastLogin; //最后一次登录时间
 
+  //Role
+  private List<VRole> roles;
+
+  public List<VRole> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<VRole> roles) {
+    this.roles = roles;
+  }
 
   public long getvUserId() {
     return vUserId;
@@ -186,5 +203,37 @@ public class VUser implements Serializable {
 
   public void setvLastLogin(Timestamp vLastLogin) {
     this.vLastLogin = vLastLogin;
+  }
+
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<SimpleGrantedAuthority> authorities=new ArrayList<SimpleGrantedAuthority>();
+    for (VRole role:roles){
+      authorities.add(new SimpleGrantedAuthority(role.getvName()));
+    }
+    return authorities;
+  }
+
+  public String getPassword() {
+    return vPassword;
+  }
+
+  public String getUsername() {
+    return vUsername;
+  }
+
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  public boolean isEnabled() {
+    return true;
   }
 }

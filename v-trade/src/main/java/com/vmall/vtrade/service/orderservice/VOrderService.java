@@ -1,5 +1,6 @@
 package com.vmall.vtrade.service.orderservice;
 
+import com.vmall.mapper.orderdetailsmapper.VOrderDetailsMapper;
 import com.vmall.mapper.ordermapper.VOrderMapper;
 import com.vmall.pojo.VOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import java.util.List;
 public class VOrderService {
     @Autowired
     VOrderMapper vOrderMapper;
+    @Autowired
+    VOrderDetailsMapper vOrderDetailsMapper;
 
     public VOrder getVOrderByvSerialNumber(String vSerialNumber){
         return vOrderMapper.getVOrderByvSerialNumber(vSerialNumber);
@@ -36,8 +39,14 @@ public class VOrderService {
         return vOrderMapper.getVOrderByorderId(vOrderId);
     }//根据订单id获取订单详细信息
 
+    @Transactional
     public Integer deleteOrder(Integer vOrderId){
-        return vOrderMapper.deleteOrder(vOrderId);
+        vOrderMapper.delCommonsByOrderId(vOrderId);//删除订单的评论
+        vOrderMapper.delAfterSale(vOrderId);//删除订单售后
+        vOrderDetailsMapper.delOrderDetails(vOrderId);//删除订单详情
+        vOrderMapper.orderStatus(vOrderId);//修改订单状态
+        vOrderMapper.deleteOrder(vOrderId);//删除订单
+        return 1 ;
     }//删除订单
 
     public Integer delCommonsByOrderId(Integer vOrderId){

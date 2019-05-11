@@ -86,16 +86,16 @@ public class VOrderController {
     public String toIndex(@RequestParam(value = "no",required = false)String no, @RequestParam(value = "size",required = false)String size,
                           @RequestParam(value = "usernames",required = false)String usernames, HttpSession session){
         Integer curr=1;
-        Integer pageSize=1;
+        Integer pageSize=10;
         Page page=new Page();
         Integer count=vOrderService.allCount();
         page.setTotalCount(count);
         if(no!=null) {
             curr=Integer.parseInt(no);
-            if(curr>page.getTotalPageCount()){
+            if(curr>=page.getTotalPageCount()){
                 curr=page.getTotalPageCount();
             }
-            if(curr<1){
+            if(curr<=1){
                 curr=1;
             }
         }
@@ -271,23 +271,11 @@ public class VOrderController {
     @ResponseBody
     public Object todelOrder(@RequestParam("id")String id){
         Map<String,String> map=new HashMap<String, String>();
-        Integer res=vOrderService.delCommonsByOrderId(Integer.parseInt(id));//删除订单的评论
-        if(res>0){
-            Integer res2=vOrderService.delAfterSale(Integer.parseInt(id));//删除订单售后
-            if(res2>0){
-                Integer res3=vOrderDetailsService.delOrderDetails(Integer.parseInt(id));//删除订单详情
-                if(res3>0){
-                    Integer result=vOrderService.orderStatus(Integer.parseInt(id));//修改订单状态
-                    if(result>0){
-                        Integer result2=vOrderService.deleteOrder(Integer.parseInt(id));//删除订单
-                        if(result2>0){
-                            map.put("status","success");
-                        }else {
-                            map.put("status","fail");
-                        }
-                    }
-                }
-            }
+        Integer result=vOrderService.deleteOrder(Integer.parseInt(id));//删除订单
+        if(result>0){
+            map.put("status","success");
+        }else {
+            map.put("status","fail");
         }
         return JSONArray.toJSONString(map);
     }
@@ -327,7 +315,6 @@ public class VOrderController {
             String subject = vProduct.getvProductName();
             //商品描述，可空
             String body = "";
-            //Integer result2 = vOrderStatusService.updateVorderStatus(vOrder.getvOrderId());//修改订单状态
             alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                     + "\"total_amount\":\""+ total_amount +"\","
                     + "\"subject\":\""+ subject +"\","
@@ -348,14 +335,11 @@ public class VOrderController {
      * @param request 获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
      * @param out_trade_no 商户订单号
      * @param trade_no 交易号
-     * @param trade_status 交易状态
      * @return
      */
     @RequestMapping(value = "/complete")
-    public String upStu(HttpServletRequest request,String out_trade_no,String trade_no,String trade_status){
-
+    public String upStu(HttpServletRequest request,String out_trade_no,String trade_no){
         System.out.println(trade_no);
-
         //获取支付宝POST过来反馈信息
         Map<String,String> params = new HashMap<String,String>();
         Map requestParams = request.getParameterMap();
@@ -376,43 +360,23 @@ public class VOrderController {
         //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
         boolean verify_result = false;
         try {
-            verify_result = AlipaySignature.rsaCheckV1(params, alipayConfig.getAlipayPublicKey(), alipayConfig.getCharset(), "RSA2");
+            verify_result = AlipaySignature.rsaCheckV1(params, alipayConfig.getZhifuPublicKey(), alipayConfig.getCharset(), "RSA2");
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
         if(verify_result){//验证成功
             //请在这里加上商户的业务逻辑程序代码
-
-            //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-
-            if(trade_status.equals("TRADE_FINISHED")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //如果签约的是可退款协议，退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-                //如果没有签约可退款协议，那么付款完成后，支付宝系统发送该交易状态通知。
-            } else if (trade_status.equals("TRADE_SUCCESS")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //如果签约的是可退款协议，那么付款完成后，支付宝系统发送该交易状态通知。
+            VOrder vOrder=new VOrder();
+            vOrder=vOrderService.getVOrderByvSerialNumber(out_trade_no);
+            vOrder.setvPayNum(trade_no);
+            Integer result = vOrderStatusService.updateVorderStatus(vOrder.getvOrderId(),vOrder.getvPayNum());//修改订单状态
+            if(result>0){
+                System.out.println("成功");
+            }else{
+                System.out.println("失败");
             }
-
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-//            Writer out=null;
-//            out.clear();
-//            out.println("success");	//请不要修改或删除
-          //  Integer result2 = vOrderStatusService.updateVorderStatus(vOrder.getvOrderId());//修改订单状态
-            System.out.println("success");
         }else{//验证失败
-//            out.println("fail");
-            System.out.println("fail");
+            System.out.println("验证失败");
         }
         return "redirect:toIndex";
     }
@@ -420,25 +384,24 @@ public class VOrderController {
     /**
      * 支付宝退款
      * @param out_trade_no 订单号
-     * @param trade_no 交易号
-     * @param refund_amount 退款金额
      * @return
      */
     @RequestMapping(value = "/tui")
-    public String tuikuan(String out_trade_no,String trade_no,String refund_amount){
+    public String tuikuan(String out_trade_no){
+        VOrder vOrder=vOrderService.getVOrderByvSerialNumber(out_trade_no);
         String returnStr = null;
         AlipayClient alipayClient = new DefaultAlipayClient(alipayConfig.getGatewayUrl(),
                 alipayConfig.getAppid(),
                 alipayConfig.getAppPrivateKey(),
                 alipayConfig.getFORMAT(),
                 alipayConfig.getCharset(),
-                alipayConfig.getAlipayPublicKey(),
+                alipayConfig.getZhifuPublicKey(),
                 alipayConfig.getSign_type());
         AlipayTradeRefundRequest request=new AlipayTradeRefundRequest();
         request.setBizContent("{" +
                 "\"out_trade_no\":\""+out_trade_no+"\","+
-                "\"trade_no\":\"" + trade_no + "\"," +
-                "\"refund_amount\":\"" + refund_amount + "\"," +
+                "\"trade_no\":\"" + vOrder.getvPayNum() + "\"," +
+                "\"refund_amount\":\"" + vOrder.getvCost() + "\"," +
                 "\"refund_reason\":\"正常退款\"" +
                 " }");
         AlipayTradeRefundResponse response;
@@ -452,7 +415,7 @@ public class VOrderController {
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return returnStr;
+        return "redirect:toIndex";
     }
 
     /**
