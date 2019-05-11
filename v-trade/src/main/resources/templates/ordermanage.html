@@ -265,8 +265,8 @@
             <form action="/vorder/toIndex" method="post">
                 显示页数
               <select name="size">
-                  <option th:selected="${session.page.pageSize==1}" value="1" >1</option>
-                  <option th:selected="${session.page.pageSize==2}" value="2">2</option>
+                  <option th:selected="${session.page.pageSize==10}" value="10" >10</option>
+                  <option th:selected="${session.page.pageSize==20}" value="20">20</option>
                   <option th:selected="${session.page.pageSize==50}" value="50">50</option>
               </select>
               <input type="text" name="usernames">
@@ -315,7 +315,7 @@
                                 if(data.status=="success"){
                                     jie.parents("tr").remove();
                                     alert("删除成功!");
-                                }else if(data.status=="fail"){
+                                }else{
                                     alert("删除失败!");
                                 }
                              });
@@ -330,6 +330,7 @@
 
             <a th:href="@{'/vorder/toIndex?no='+${session.page.currentPageNo+1}}">下一页</a>
             <a th:href="@{'/vorder/toIndex?no='+${session.page.totalPageCount}}">尾页</a>
+            <!--第${session.page.currentPageNo}页/共${session.page.totalPageCount}页-->
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

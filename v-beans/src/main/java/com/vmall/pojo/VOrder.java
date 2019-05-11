@@ -168,7 +168,7 @@ public class VOrder implements Serializable {
   }
 
   public String getvPayNum() {
-    return vPayNum;
+    return this.vPayNum;
   }
 
   public void setvPayNum(String vPayNum) {
