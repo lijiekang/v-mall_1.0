@@ -10,13 +10,13 @@
   <title>SB Admin - Start Bootstrap Template</title>
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom fonts for this templates-->
+  <!-- Custom fonts for this template-->
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Pagezhang level plugin CSS-->
+  <!-- Page level plugin CSS-->
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-  <!-- Custom styles for this templates-->
+  <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-
+</head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -33,35 +33,26 @@
       <!-- Example DataTables Card-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> 修改商品活动</div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <!--<thead>-->
+            <form action="/activityupd" method="post">
+              <input type="hidden" name="vActivityId" th:value="${vActivity.vActivityId}">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <tr>
-                  <th></th>
-                  <th>规格值名称</th>
-                  <th>操作</th>
+                  <td>商品活动id</td>
+                  <td><input readonly="readonly" name="vActivityId" th:value="${vActivity.vActivityId}"></td>
                 </tr>
-
-              <br/>
-
-              <!--<tr th:each="commons:${commonsList}">
-                <td th:text="${commons.vUser.vUsername}"></td>
-                <td th:text="${commons.vContent}"></td>
-                <td th:text="${commons.vReply}"></td>
-                <td th:text="${commons.vIsOk}"></td>
-                <td th:text="${commons.vGrade}"></td>
-                <td th:text="${commons.vCreateDate}"></td>
-                <td><a th:href="@{'delCommons/'+${commons.vCommonsId}}" name="del">删除</a>  <a th:href="@{'upCommons/'+${commons.vCommonsId}}">修改</a> <a th:href="@{'upHuiCommons/'+${commons.vCommonsId}}">回复</a></td><a>启动</a>
-              </tr>-->
-              <tr th:each="aprogui:${allprogui}">
-                <td></td>
-                <td th:text="${aprogui.vPropertiesValue}"></td>
-                <td><a th:href="@{'/delSkuGui?pid='+${aprogui.vPropertiesId}}">删除</a></td>
-              </tr>
-            </table>
-            <a th:href="@{'addSkuGuiZhi?pid='+${pids}}"><input type="button" value="添加规格"/></a>
+                <tr>
+                  <td>商品活动名称</td>
+                  <td><input type="text" name="vType" th:value="${vActivity.vType}"></td>
+                </tr>
+                <tr>
+                  <td><input type="submit" value="修改"></td>
+                  <td> <a href="activity">返回</a></td>
+                </tr>
+              </table>
+            </form>
           </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
@@ -103,21 +94,13 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Pagezhang level plugin JavaScript-->
+    <!-- Page level plugin JavaScript-->
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
-
-    <script src="static/js/jquery-1.8.3.min.js"></script>
-    <script type="text/javascript">
-      $(function () {
-          
-      });
-    </script>
-    </head>
   </div>
 </body>
 
