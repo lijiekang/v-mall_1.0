@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.vmall.mapper")
-@EnableScheduling
+//@EnableScheduling
 public class VTradeApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

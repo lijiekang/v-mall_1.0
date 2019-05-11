@@ -6,7 +6,7 @@ public class Page<T> {
     private int totalCount;//总条数
     private int currentPageNo;//当前页数
     private int totalPageCount;//总页数
-    private int pageSize=1;//页面大小
+    private int pageSize=10;//页面大小
     private List<T> datas;
 
     public List<T> getDatas() {

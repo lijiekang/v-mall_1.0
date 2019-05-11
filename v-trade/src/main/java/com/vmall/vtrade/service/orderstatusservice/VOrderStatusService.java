@@ -10,7 +10,7 @@ public class VOrderStatusService {
     @Autowired
     VOrderStatusMapper vOrderStatusMapper;
 
-    public Integer updateVorderStatus(long v_orderId){
-        return vOrderStatusMapper.updateVorderStatus(v_orderId);
+    public Integer updateVorderStatus(long v_orderId,String trade_no){
+        return vOrderStatusMapper.updateVorderStatus(v_orderId,trade_no);
     }//修改订单状态
 }
