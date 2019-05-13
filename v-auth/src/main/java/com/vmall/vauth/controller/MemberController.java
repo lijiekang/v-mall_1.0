@@ -48,6 +48,8 @@ public class MemberController {
     MailService mailService;
     @Resource
     AfterSaleService afterSaleService;
+    @Resource
+    goodCouponService goodCouponService;
 
     @GetMapping("currentVuser")
     @ApiOperation("用户个人资料数据")
@@ -373,5 +375,22 @@ public class MemberController {
         String token=request.getHeader("token");
         VAftersale vAftersale=afterSaleService.getAfterSale(token,Integer.valueOf(aftersaleId));
         return JSONArray.toJSONString(vAftersale);
+    }
+    @GetMapping("goodCoupon")
+    @ApiOperation("精选好券")
+    public String afterSale(){
+        List<VConpon> conpons=goodCouponService.goodCoupon();
+        return JSONArray.toJSONString(conpons);
+    }
+    @GetMapping("ReceiveCoupon")
+    @ApiOperation("领取优惠券")
+    @ApiImplicitParam(value = "token",name = "token",paramType = "header")
+    public String ReceiveCoupon(HttpServletRequest request,@RequestParam("couponId")String couponId,@RequestParam(value = "num",defaultValue = "1")String num){
+        String flag="";
+        String token=request.getHeader("token");
+        if(goodCouponService.ReceiveCoupon(token,Integer.valueOf(couponId),Integer.valueOf(num))>0){
+            return "true";
+        }
+        return "false";
     }
 }

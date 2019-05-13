@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.skumapper.SkuMapper">
+
+    <select id="getVSkuBySkuCode" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_code=#{skuCode};
+    </select>
     <select id="findAllSku" resultType="com.vmall.pojo.VSku">
         select * from v_sku
     </select>

@@ -30,7 +30,7 @@
             <td th:text="${#dates.format(conpon.couponStart,'yyyy-MM-dd')}+'~'+${#dates.format(conpon.couponEnd,'yyyy-MM-dd')}"/>
             <td th:text="${conpon.couponNum}"/>
             <td th:text="${conpon.couponAlready}"/>
-            <td><a href="javascript:;">修改</a>&nbsp;<a href="javascript:;">删除</a></td>
+            <td><a th:href="@{updCon(id=${conpon.couponId})}">修改</a>&nbsp;<a href="javascript:;" class="del" th:id="${conpon.couponId}">删除</a></td>
 
         </tr>
         </tbody>
@@ -46,6 +46,15 @@
     $(function(){
         $(".card-header").html("优惠券列表").append("<a class=\"btn btn-primary\" href=\"addcon\" id=\"toggleNavPosition\" style='float: right'>新增优惠券</a>")
         $(".table-responsive").html($("#addContent"));
+        $(".del").click(function () {
+            var id=this.id;
+            $.get("delCon","id="+id,function (data) {
+                if(data=="true"){
+                    alert("删除优惠券成功");
+                    location.href="/conponList";
+                }
+            })
+        })
     })
 </script>
 </body>

@@ -30,6 +30,7 @@ public class BackUserController {
     @GetMapping(value = "/user",produces = {"application/json;charset=utf-8"})
     public Object getUserByAll(@RequestParam(value = "vUserCode",required = false) String vUserCode,@RequestParam(value = "currentPage",required = false) String currentPage){
         Page page=new Page();
+        List<VUser> userList=null;
         try {
             if(currentPage==null){
                 page.setCurrentPageNo(1);
@@ -38,12 +39,11 @@ public class BackUserController {
             }
             int totalCount1=backUserService.getTotalPageCount(vUserCode);
             page.setTotalCount(totalCount1);
-            List<VUser> userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
-            page.setvUserList(userList);
+            userList=backUserService.getAllUser(vUserCode,(page.getCurrentPageNo()-1)*3,3);
         }catch (Exception e){
             e.printStackTrace();
         }
-        String json= JSONArray.toJSONString(page.getvUserList());
+        String json= JSONArray.toJSONString(userList);
         return  json;
     }
 
