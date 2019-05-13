@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Controller
+//@Controller
 //@Api(tags = "商品")
 /**
  * 商品管理

@@ -3,6 +3,7 @@ package com.vmall.vproducts.controller.vclassification;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.VCategory;
+import com.vmall.pojo.vo.ClassificationVO;
 import com.vmall.vproducts.service.vclassification.VClassificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -26,10 +27,9 @@ public class VClassificationJieController {
      * lv1一级标题
      * lv2二级标题
      * lv3三级标题
-     * @param httpServletResponse
      */
     @GetMapping("/infen")
-    public void getinClassificaton(HttpServletResponse httpServletResponse){
+    public String getinClassificaton(){
         List<VCategory> lv1=vClassificationService.getVCategoryLevel1();
         List<VCategory> lv2=vClassificationService.getVCategoryLevel2(1);
         List<VCategory> lv3=vClassificationService.getVCategoryLevel2(18);
@@ -37,23 +37,16 @@ public class VClassificationJieController {
         map.put("lv1",lv1);
         map.put("lv2",lv2);
         map.put("lv3",lv3);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return JSON.toJSONString(map);
     }
 
     /**
      * 通过传入ID判断当前分类等级
      * @param lvl1 判断是否为一级标题
      * @param lvl2 通过传入标题父级ID，判断为几级标签，进行新增处理
-     * @param httpServletResponse
      */
     @GetMapping(value = "/moClassification",produces = "application/json")
-    public void getMoClassification( @RequestParam(value = "lvl1",required = false) String lvl1, @RequestParam(value = "lvl2",required = false)String lvl2,HttpServletResponse httpServletResponse){
+    public String getMoClassification( @RequestParam(value = "lvl1",required = false) String lvl1, @RequestParam(value = "lvl2",required = false)String lvl2){
         Map<String,Object>map=new HashMap<>();
         if(lvl1!=null){
             int lv1=Integer.parseInt(lvl1);
@@ -69,13 +62,7 @@ public class VClassificationJieController {
             List<VCategory> lv3=vClassificationService.getVCategoryLevel2(lvs2);
             map.put("level3",lv3);
         }
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -85,9 +72,9 @@ public class VClassificationJieController {
      * @return
      */
     @GetMapping("/delClassification")
-    public void getDelClassification(@RequestParam(value = "lvl1",required = false) String lvl1, HttpServletResponse response){
+    public String getDelClassification(@RequestParam(value = "lvl1",required = false) String lvl1, HttpServletResponse response){
         response.setContentType("text/html;charset=gb2312");
-        try {
+
             /*PrintWriter out=response.getWriter();*/
             Map<String,Object>allCategory=new HashMap<>();
             if(lvl1!=null){
@@ -115,12 +102,7 @@ public class VClassificationJieController {
                     /*out.print("<script language=\"javascript\">alert('删除成功！！');</script>");*/
                 }
             }
-            ObjectOutputStream os=new ObjectOutputStream(response.getOutputStream());
-            os.writeObject(JSONArray.toJSON(allCategory));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+           return JSON.toJSONString(allCategory);
     }
 
     /**
@@ -162,10 +144,10 @@ public class VClassificationJieController {
     /**
      * 查看不同等级的分类
      * @param vtype 传入等级信息，判断等级
-     * @param httpServletResponse
      */
     @GetMapping("/inAddFenleiLevel")
-    public void inAddFenleiLevel(@RequestParam(value = "vtype")String vtype,HttpServletResponse httpServletResponse){
+    public String inAddFenleiLevel(@RequestParam(value = "vtype")String vtype){
+        ClassificationVO classificationVO=new ClassificationVO();
         int vtp=Integer.parseInt(vtype);
         List<VCategory>allLevel=null;
         Map<String,Object>map=new HashMap<>();
@@ -181,14 +163,10 @@ public class VClassificationJieController {
             parentId=vtp-1;
             allLevel=vClassificationService.getVCategoryLevelfen(parentId);
         }
-        map.put("molevel",allLevel);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        classificationVO.setAllLevel(allLevel);
+        classificationVO.setVtp(vtp);
+//        map.put("molevel",allLevel);
+        return JSON.toJSONString(classificationVO);
         //传递等级下的分类信息
 //        model.addAttribute("molevel",allLevel);
         //返回分类界面

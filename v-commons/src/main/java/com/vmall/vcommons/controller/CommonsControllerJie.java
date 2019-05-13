@@ -6,6 +6,7 @@ import com.vmall.pojo.Pagezhang;
 import com.vmall.pojo.VCategory;
 import com.vmall.pojo.VCommons;
 import com.vmall.pojo.VProduct;
+import com.vmall.pojo.vo.CommonsVO;
 import com.vmall.vcommons.service.CommonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ import java.util.*;
  * 评论接口
  * 张振宇
  */
-@RestController
+//@RestController
 public class CommonsControllerJie {
     @Autowired
     CommonsService commonsService;
@@ -29,10 +30,9 @@ public class CommonsControllerJie {
      * 进入评论界面
      * @param id
      * @param pageno 传递页数
-     * @param httpServletResponse
      */
     @RequestMapping("/incommons")
-    public void getCommonsTest( @RequestParam(value = "id",required = false)String id, @RequestParam(value = "pageno",required = false)String pageno,HttpServletResponse httpServletResponse){
+    public String getCommonsTest( @RequestParam(value = "id",required = false)String id, @RequestParam(value = "pageno",required = false)String pageno){
         int pagen=0;
         int pid=0;
         /**
@@ -58,16 +58,13 @@ public class CommonsControllerJie {
          * 评论集合
          */
         List<VCommons>commonsList=commonsService.getAllCommonsById(pid,index);
-        map.put("page",page);
-        map.put("level1",level1);
-        map.put("commonsList",commonsList);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CommonsVO commonsVO=new CommonsVO();
+        commonsVO.setPage(page);
+        commonsVO.setLevel1(level1);
+        commonsVO.setCommonsList(commonsList);
+
+
+        return JSON.toJSONString(commonsVO);
         /**
          * 返回页面
          */
@@ -77,10 +74,9 @@ public class CommonsControllerJie {
     /**
      * 返回二三级分类集合
      * @param lv
-     * @param httpServletResponse
      */
     @GetMapping(value = "/tlevel/{lv}",produces = "application/json;charset=UTF-8")
-    public void getTitleLevel(@PathVariable String lv,HttpServletResponse httpServletResponse){
+    public String getTitleLevel(@PathVariable String lv){
         /**
          * 分类ID
          */
@@ -90,13 +86,7 @@ public class CommonsControllerJie {
          */
         List<VCategory>level2=commonsService.getVCategoryLevel2(lv2);
 //        String str= JSONArray.toJSONString(level2);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(level2));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       return JSON.toJSONString(level2);
 //        return str;
     }
     //tproduct
@@ -104,50 +94,35 @@ public class CommonsControllerJie {
     /**
      * 三级分类下的商品列表
      * @param lv 三级分类的ID
-     * @param httpServletResponse
      */
     @GetMapping(value = "/tproduct/{lv}",produces = "application/json;charset=UTF-8")
-    public void getProductList(@PathVariable String lv,HttpServletResponse httpServletResponse){
+    public String getProductList(@PathVariable String lv){
         int pid=Integer.parseInt(lv);
         List<VProduct>productList=commonsService.getProductById(pid);
-//        String str= JSONArray.toJSONString(productList);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(productList));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        return str;
+        String str= JSONArray.toJSONString(productList);
+
+        return str;
     }
 
     /**
      *
      * @param lv
-     * @param httpServletResponse
      */
     @GetMapping(value = "/tcommons/{lv}",produces = "application/json;charset=UTF-8")
-    public void getCommonsList(@PathVariable String lv,HttpServletResponse httpServletResponse){
+    public String getCommonsList(@PathVariable String lv){
         int pid=Integer.parseInt(lv);
         List<VCommons>commonsList=commonsService.getAllCommonsById(pid,0);
         String str= JSONArray.toJSONString(commonsList);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(commonsList));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       return str;
     }
 
     /**
      * 删除评论
      * @param vCommonsId 评论ID
-     * @param httpServletResponse
      * @return
      */
     @GetMapping(value = "/delCommons/{vCommonsId}",produces = "application/json;charset=UTF-8")
-    public void getDelCommons(@PathVariable String vCommonsId,HttpServletResponse httpServletResponse){
+    public String getDelCommons(@PathVariable String vCommonsId){
        Map<String,Object>map=new HashMap<>();
         List<VCategory>level1=commonsService.getVCategoryLevel1();
         List<VCommons>commonsList=commonsService.getAllCommonsById(0,0);
@@ -159,17 +134,10 @@ public class CommonsControllerJie {
         if(vCommon>0){
             commonsService.getUpdateCommonsCount(vCommon-1,(int)vCommons.getvProductId());
         }
-        System.out.println(result);
-        map.put("level1",level1);
-        map.put("commonsList",commonsList);
-
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CommonsVO commonsVO=new CommonsVO();
+        commonsVO.setLevel1(level1);
+        commonsVO.setCommonsList(commonsList);
+        return JSON.toJSONString(commonsVO);
         /**
          * 返回页面
          */
@@ -179,26 +147,20 @@ public class CommonsControllerJie {
     /**
      * 新增评论
      * @param vCommons 评论信息
-     * @param httpServletResponse
      */
     @PostMapping(value = "/addCommons")
-    public void getAddCommons(@ModelAttribute VCommons vCommons,HttpServletResponse httpServletResponse){
-        Map<String,Object>map=new HashMap<>();
+    public String getAddCommons(@ModelAttribute VCommons vCommons){
         int result=0;
         result=commonsService.getAddCommons(vCommons);
         List<VCategory>level1=commonsService.getVCategoryLevel1();
         List<VCommons>commonsList=commonsService.getAllCommonsById(0,0);
 //        model.addAttribute("level1",level1);
 //        model.addAttribute("commonsList",commonsList);
-        map.put("level1",level1);
-        map.put("commonsList",commonsList);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }/**
+        CommonsVO commonsVO=new CommonsVO();
+        commonsVO.setLevel1(level1);
+        commonsVO.setCommonsList(commonsList);
+        return JSON.toJSONString(commonsVO);
+        /**
          * 返回页面
          */
         //return "tables";
@@ -208,45 +170,31 @@ public class CommonsControllerJie {
      * 修改页面
      * @param vCommonsId 评论ID
      * @param vContent 评论信息
-     * @param httpServletResponse
      */
     @PostMapping(value = "/updateCommons")
-    public void getUpdateCommons(@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vContent")String vContent,HttpServletResponse httpServletResponse){
+    public String getUpdateCommons(@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vContent")String vContent){
         int pid=Integer.parseInt(vCommonsId);
         int result=commonsService.getUpdateCommons(pid,vContent);
-//        try {
-//            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-//            os.writeObject(JSONArray.toJSON(productList));
-//            os.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
         /**
          * 返回页面
          */
-//        return "redirect:/incommons";
+       return "redirect:/incommons";
     }
 
     /**
      * 进入某条评论的修改页面
      * @param vCommonsId 评论ID
-     * @param httpServletResponse
      * @return
      */
     @GetMapping(value = "/upCommons/{vCommonsId}")
-    public void upCommons(@PathVariable String vCommonsId,HttpServletResponse httpServletResponse){
+    public String upCommons(@PathVariable String vCommonsId){
         int pid=Integer.parseInt(vCommonsId);
-        Map<String,Object>map=new HashMap<>();
+//        Map<String,Object>map=new HashMap<>();
         VCommons vCommons=commonsService.getMoCommons(pid);
 //        model.addAttribute("vCommons",vCommons);
-        map.put("vCommons",vCommons);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        map.put("vCommons",vCommons);
+        return JSON.toJSONString(vCommons);
         /**
          * 返回页面
          */
@@ -259,25 +207,18 @@ public class CommonsControllerJie {
      * @param httpServletResponse
      */
     @GetMapping(value = "add/{vOrderId}")
-    public void addCommons(@PathVariable String vOrderId,HttpServletResponse httpServletResponse){
+    public String addCommons(@PathVariable String vOrderId,HttpServletResponse httpServletResponse){
         Map<String,Object>map=new HashMap<>();
         int oid=Integer.parseInt(vOrderId);
-        /*try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(productList));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         /**
          * 返回页面
          */
-       // return "add";
+        return "add";
     }
 
     @GetMapping("/addCommons")
 //    @ResponseBody
-    public void addCommonsList(String vProductId,String vContent,String vOrderId,String vUserId,String vGrade,String vIsOK,HttpServletResponse httpServletResponse){
+    public String addCommonsList(String vProductId,String vContent,String vOrderId,String vUserId,String vGrade,String vIsOK){
         Map<String,Object> molist=new HashMap<>();
 
         int vpid=Integer.parseInt(vProductId);
@@ -307,57 +248,38 @@ public class CommonsControllerJie {
             molist.put("mm","nosucces");
         }
         String str=JSONArray.toJSONString(molist);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(molist));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         /**
          * 返回数据
          */
-        //return str;
+        return str;
     }
 
     /**
      * 进入回复评论页面
      * @param vCommonsId 评论ID
-     * @param httpServletResponse
      * @return
      */
     @GetMapping(value = "/upHuiCommons/{vCommonsId}")
-    public String upHuiCommons(@PathVariable String vCommonsId,HttpServletResponse httpServletResponse){
+    public String upHuiCommons(@PathVariable String vCommonsId){
         int pid=Integer.parseInt(vCommonsId);
         Map<String,Object>map=new HashMap<>();
         VCommons vCommons=commonsService.getMoCommons(pid);
         map.put("vCommons",vCommons);
 //        model.addAttribute("vCommons",vCommons);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "huifucommons";
+        return JSON.toJSONString(map);
+//        return "huifucommons";
     }
     @PostMapping(value = "/updateHuiCommons")
-    public void getUpdateHuiCommons(Model model,@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vReply")String vReply,HttpServletResponse httpServletResponse){
+    public String getUpdateHuiCommons(Model model,@RequestParam("vCommonsId")String vCommonsId,@RequestParam("vReply")String vReply){
         int pid=Integer.parseInt(vCommonsId);
         Map<String,Object>map=new HashMap<>();
         int result=commonsService.getUpdateHuiCommons(pid,vReply);
-        /*try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(productList));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         /**
          * 返回页面
          */
-        //return "redirect:/incommons";
+        return "redirect:/incommons";
     }
     //某件商品下某位用户和商家的全部评论
 //    @ResponseBody
@@ -367,11 +289,10 @@ public class CommonsControllerJie {
      * @param userId
      * @param OrderId
      * @param productId
-     * @param httpServletResponse
      * @return
      */
     @GetMapping("/getZhui")
-    public void getVcommZhui(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId,HttpServletResponse httpServletResponse){
+    public String getVcommZhui(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId){
         Map<String,Object>map=new HashMap<>();
         int uid=0;
         int oid=0;
@@ -387,15 +308,9 @@ public class CommonsControllerJie {
             pid=Integer.parseInt(productId);
         }
         getVcomm=commonsService.getVcommZhui(uid,oid,pid);
-//        String str= JSON.toJSONString(getVcomm);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(getVcomm));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        return str;
+        String str= JSON.toJSONString(getVcomm);
+
+        return str;
     }
 
     //删除某件商品下的某个商品模块
@@ -406,11 +321,10 @@ public class CommonsControllerJie {
      * @param userId 用户ID
      * @param OrderId 订单ID
      * @param productId 商品ID
-     * @param httpServletResponse
      * @return
      */
     @GetMapping("/getDelMoping")
-    public void getDelMoping(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId,HttpServletResponse httpServletResponse){
+    public String getDelMoping(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId){
         Map<String,Object>map=new HashMap<>();
         int uid=0;
         int oid=0;
@@ -431,17 +345,10 @@ public class CommonsControllerJie {
         }else {
             map.put("shan","删除失败");
         }
-//        String str= JSON.toJSONString(map);
-        try {
-            ObjectOutputStream os=new ObjectOutputStream(httpServletResponse.getOutputStream());
-            os.writeObject(JSONArray.toJSON(map));
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       String str= JSON.toJSONString(map);
         /**
          * 返回判断数据
          */
-//        return str;
+        return str;
     }
 }

@@ -25,7 +25,7 @@ import java.util.*;
  *
  */
 
-/*@Controller*/
+@Controller
 public class CommonsController {
 
     @Autowired
