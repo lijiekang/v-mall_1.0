@@ -1,0 +1,141 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/publics/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/publics/nav::nav"></nav>
+
+
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="index.html">微商城</a>
+      </li>
+      <li class="breadcrumb-item active">订单管理</li>
+    </ol>
+    <div class="row">
+      <div class="col-12">
+        <h1>订单补单</h1>
+      </div>
+    </div>
+    <form action="/vorder/order" method="post">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col-md-6">
+            <label for="r">购买人</label>
+            <input class="form-control" id="r" type="text" name="username" aria-describedby="nameHelp" placeholder="购买人">
+          </div>
+          <div class="col-md-6">
+            <label for="a">收件人</label>
+            <input class="form-control" id="a" type="text" name="vUsername" aria-describedby="nameHelp" placeholder="收件人">
+          </div>
+          <div class="col-md-6">
+            <label for="t">电话</label>
+            <input class="form-control" id="t" type="text" name="vPhone" aria-describedby="nameHelp" placeholder="电话">
+          </div>
+          <div class="col-md-6">
+            <label for="e">商品名称</label>
+            <input class="form-control" id="e" type="text" name="productName" aria-describedby="nameHelp" placeholder="商品名称">
+          </div>
+          <script>
+            $(function () {
+              $("[name=productName]").on("blur",function () {
+                var spmc=$(this).val();
+                $("#shuxing").load("/vorder/properties?spmc="+spmc);
+              });
+              $("[name=wen]").hide();
+            });
+            function dj($node) {
+              var id=$node.val();
+              //alert(id);
+              //获取文本框本来的值
+              var value=$("[name=wen]").val();
+              var newValue=$node.next().text();
+              $("[name=wen]").show();
+              var finsh=value+"-"+newValue;
+              var temp;
+              if(finsh.charAt(0)=="-")
+                temp=finsh.substring(1,finsh.length);
+              else
+                temp=finsh;
+              $("[name=wen]").val(temp);
+            }
+          </script>
+          <input type="hidden" name="danName" th:value="${#session.getAttribute('valueName')}"/>
+          <div class="col-md-6" id="shuxing">
+
+          </div>
+          <div class="col-md-6" id="shuxingzhi">
+
+          </div>
+          <input  class="form-control" type="text" name="wen"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col-md-6">
+            <label for="exampleInputPassword1">金额</label>
+            <input class="form-control" id="exampleInputPassword1" name="vCost" type="text" placeholder="金额">
+          </div>
+          <div class="col-md-6">
+            <label for="exampleInputPassword1">数量</label>
+            <input class="form-control" id="shu" type="text" name="num" placeholder="数量">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="k">收件地址</label>
+        <input class="form-control" id="k" type="text" name="vUserAddress" aria-describedby="emailHelp" placeholder="收件地址">
+      </div>
+      <input type="submit" value="保存" class="btn btn-primary btn-block" >
+    </form>
+  </div>
+  <!-- /.container-fluid-->
+  <!-- /.content-wrapper-->
+  <footer class="sticky-footer">
+    <div class="container">
+      <!--<div class="text-center">-->
+      <!--<small>Copyright © Your Website 2017 / More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small>-->
+      <!--</div>-->
+    </div>
+  </footer>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>-->
+        <!--<a class="btn btn-primary" href="login.html">Logout</a>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <!-- Core plugin JavaScript-->
+  <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+  <!-- Custom scripts for all pages-->
+  <script th:src="@{/js/sb-admin.min.js}"></script>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $(".card-header").html("补单管理");
+  })
+</script>
+</body>
+</html>

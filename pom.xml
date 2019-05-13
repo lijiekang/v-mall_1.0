@@ -17,9 +17,12 @@
         <module>v-auth</module>
         <module>v-seckill</module>
         <module>v-trade</module>
+        <module>v-web</module>
     </modules>
 
     <dependencies>
+
+
         <!--数据库-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

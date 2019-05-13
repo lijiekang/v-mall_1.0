@@ -27,6 +27,8 @@ public class VSeckillProductController {
 
     @Autowired
     private ProductService productService;
+
+
     @Autowired
     private VCategoryService vCategoryService;
 

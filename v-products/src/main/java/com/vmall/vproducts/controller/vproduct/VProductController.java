@@ -5,9 +5,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 
 import com.vmall.pojo.*;
+import com.vmall.vproducts.config.SolrUtil;
+import com.vmall.vproducts.service.vbrand.VBrandService;
 import com.vmall.vproducts.service.vcategory.VCategoryService;
 import com.vmall.vproducts.service.vproduct.VProductService;
 import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+//import org.csource.fastdfs.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +47,9 @@ public class VProductController {
         return "chakan";
     }
 
-    @RequestMapping("/tables")
+
+    private Logger log= LoggerFactory.getLogger(this.getClass());
+    @RequestMapping(value = "/tables")
     public String totables(){
         return "redirect:/getproduct";
     }

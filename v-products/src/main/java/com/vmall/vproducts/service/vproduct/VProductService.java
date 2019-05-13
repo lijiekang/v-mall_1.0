@@ -76,4 +76,12 @@ public class  VProductService {
     public List<VProduct>getSelectProductTop(@Param("vSalesVolume")String vSalesVolume,@Param("vCreateDate")String vCreateDate,@Param("vCommonsCount")String vCommonsCount){
         return vProductMapper.getSelectProductTop(vSalesVolume,vCreateDate,vCommonsCount);
     }
+
+
+    /**
+     * 异常：找到到mapper方法，所以我注释了（李秸康）
+     */
+//    public List<VCategory>vcategoryid(Integer id){
+//        return vProductMapper.vcategoryid(id);
+//    }
 }

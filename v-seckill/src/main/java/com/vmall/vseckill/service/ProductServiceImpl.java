@@ -2,6 +2,7 @@ package com.vmall.vseckill.service;
 
 import com.vmall.mapper.seckill.SeckillProductMapper;
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.vo.SeckillProductVO;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService{
 
 
     @Override
-    public boolean addSeckillProduct(VSeckillProduct vSeckillProduct) {
+    public boolean addSeckillProduct(SeckillProductVO vSeckillProduct) {
         return seckillProductMapper.insertSeckillProduct(vSeckillProduct)==1?true:false;
     }
 

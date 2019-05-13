@@ -13,8 +13,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class VTradeApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
+
+        System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(VTradeApplication.class, args);
     }
+
+
 
     @Override
     public void run(String... args) throws Exception {

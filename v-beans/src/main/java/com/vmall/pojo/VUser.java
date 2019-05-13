@@ -1,9 +1,6 @@
 package com.vmall.pojo;
 
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -11,7 +8,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class VUser implements Serializable,UserDetails {
+
+/**
+ * 修改时间：2019-5-11
+ * 修改内容：除去UserDetail，取消安全框架
+ */
+public class VUser implements Serializable {
 
   private long vUserId; //用户id
   private String vUsername; //用户名
@@ -203,14 +205,6 @@ public class VUser implements Serializable,UserDetails {
 
   public void setvLastLogin(Timestamp vLastLogin) {
     this.vLastLogin = vLastLogin;
-  }
-
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<SimpleGrantedAuthority> authorities=new ArrayList<SimpleGrantedAuthority>();
-    for (VRole role:roles){
-      authorities.add(new SimpleGrantedAuthority(role.getvName()));
-    }
-    return authorities;
   }
 
   public String getPassword() {

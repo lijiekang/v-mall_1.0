@@ -1,6 +1,6 @@
 package com.vmall.mapper.user;
-
 import com.vmall.pojo.VRole;
+
 import com.vmall.pojo.VUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,8 +25,6 @@ public interface BackUserMapper {
     //导入导出
     List<VUser> getAllVUser();
 
-    //安全验证
-    VUser loasUserByUsername(String vUsername);
-    List<VRole> getUserRolesByUid(long id);
+
 
 }
