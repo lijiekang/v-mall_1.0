@@ -15,6 +15,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.csource.fastdfs.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,7 @@ public class VProductController {
     VBrandService vBrandService;
 
 
+    private Logger log= LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value = "/tables")
     public String totables(){
         return "redirect:/getproduct";
@@ -348,7 +352,6 @@ public class VProductController {
        }
         return resultMap;
     }*/
-
 
 
 }
