@@ -236,63 +236,30 @@
           <i class="fa fa-table"></i> Data Table Example</div>
         <div class="card-body">
           <div class="table-responsive">
-            一级分类： <select id="lv1">
+            按条件查询推荐： <select id="tiao">
             <option value="1">请选择</option>
-            <option th:each="lv1:${level1}" th:value="${lv1.vCategoryId}" th:text="${lv1.vCategoryName}"></option>
+            <option value="2">按销售数量排序</option>
+            <option value="3">按上架时间排序</option>
+            <option value="4">按评论总数排列</option>
             </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            二级分类：<select id="lv2">
-            <option value="2">标题2</option>
-          </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-            三级分类： <select id="lv3">
-              <option value="3">标题3</option>
-            </select>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-            商品名称： <select id="p4">
-            <option value="4">商品</option>
-          </select>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <!--<thead>-->
                 <tr>
-                  <th>用户名</th>
-                  <th>评论内容</th>
-                  <th>回复内容</th>
-                  <th>评论类型</th>
-                  <th>评分</th>
-                  <th>评论时间</th>
-                  <th>操作</th>
+                  <th>商品名</th>
+                  <th>销售总数</th>
+                  <th>评论总数</th>
+                  <th>上架时间</th>
                 </tr>
 
               <br/>
-             <!-- </thead>
-              <tfoot>
-                <tr>
-                  <th>用户名</th>
-                  <th>评论内容</th>
-                  <th>评论类型</th>
-                  <th>评分</th>
-                  <th>评论时间</th>
-                  <th>操作</th>
-                </tr>
-              </tfoot>-->
-              <!--<tbody>-->
-              <tr th:each="common:${commonsList}">
-                <td th:text="${common.vUser.vUsername}"></td>
-                <td th:text="${common.vContent}"></td>
-                <td th:text="${common.vReply}"></td>
-                <td th:if="${common.vIsOk==1}">好评</td>
-                <td th:if="${common.vIsOk==0}">差评</td>
-                <td th:text="${common.vGrade}"></td>
-                <td th:text="${common.vCreateDate}"></td>
-                <td><a th:href="@{'delCommons/'+${common.vCommonsId}}" name="del">删除</a>  <a th:href="@{'upCommons/'+${common.vCommonsId}}">修改</a> <a th:href="@{'upHuiCommons/'+${common.vCommonsId}}">回复</a></td>
+              <tr th:each="topL:${top}">
+                <td th:text="${topL.vProductName}"></td>
+                <td th:text="${topL.vSalesVolume}"></td>
+                <td th:text="${topL.vCommonsCount}"></td>
+                <td th:text="${#dates.format(topL.vCreateDate,'yyyy-MM-dd HH:mm')}"></td>
               </tr>
-              <!--</tbody>-->
             </table>
-            <a href="incommons?pageno=0">首页</a>  <span th:if="${page.pageno>0}"><a th:href="@{'incommons?pageno='+${page.pageno-1}}">上一页</a></span> <span th:if="${page.pageCount-1>0}"> <a th:href="@{'incommons?pageno='+${page.pageno+1}}">下一页</a></span>   <a th:href="@{'incommons?pageno='+${page.pageCount-1}}">末页</a>
-            共<a th:text="${page.pageCount}"></a>页   第<a th:text="${page.pageno+1}"></a>页
-          </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
       </div>
@@ -343,83 +310,30 @@
 
     <script type="text/javascript">
       $(function () {
-          $("#lv1").change(function () {
-              var lv=$("#lv1").val();
-              $.get("tlevel/"+lv,function (data) {
-                  var options="<option value=\"\">请选择</option>";
-                  for (var i=0;i<data.length;i++){
-                      options+="<option value="+data[i].vCategoryId+">"+data[i].vCategoryName+"</option>";
-                  }
-                  $("#lv2").html(options);
-              });
-          });
-
-          $("#lv2").change(function () {
-              var lv=$("#lv2").val();
-              $.get("tlevel/"+lv,function (data) {
-                  var options="<option value=\"\">请选择</option>";
-                  for (var i=0;i<data.length;i++){
-                      options+="<option value="+data[i].vCategoryId+">"+data[i].vCategoryName+"</option>";
-                  }
-                  $("#lv3").html(options);
-              });
-          });
-
-
-          $("#lv3").change(function () {
-              var lv=$("#lv3").val();
-              $.get("tproduct/"+lv,function (data) {
-                  var options="<option value=\"\">请选择</option>";
-                  for (var i=0;i<data.length;i++){
-                      options+="<option value="+data[i].vProductId+">"+data[i].vProductName+"</option>";
-                  }
-                  $("#p4").html(options);
-              });
-          });
-
-          $("#p4").change(function () {
-              var lv=$("#p4").val();
-
-              $.get("tcommons/"+lv,function (data) {
-                  var options="<tr>\n" +
-                      "                  <th>用户名</th>\n" +
-                      "                  <th>评论内容</th>\n" +
-                      "                  <th>回复内容</th>\n" +
-                      "                  <th>评论类型</th>\n" +
-                      "                  <th>评分</th>\n" +
-                      "                  <th>评论时间</th>\n" +
-                      "                  <th>操作</th>\n" +
+          $("#tiao").change(function () {
+              var ti=$("#tiao").val();
+              alert(ti);
+              $.get("toppai","ti="+ti,function (data) {
+                  var tb="<tr>\n" +
+                      "                  <th>商品名</th>\n" +
+                      "                  <th>销售总数</th>\n" +
+                      "                  <th>评论总数</th>\n" +
+                      "                  <th>上架时间</th>\n" +
                       "                </tr>";
-                  for (var i=0;i<data.length;i++){
-                      options+="<tr><td>"+data[i].vUser.vUsername+"</td>";
-                      options+="<td>"+data[i].vContent+"</td>";
-                      options+="<td>"+data[i].vReply+"</td>";
-                      options+="<td>"+data[i].vIsOk+"</td>";
-                      options+="<td>"+data[i].vGrade+"</td>";
-                      options+="<td>"+data[i].vCreateDate+"</td>";
-                      options+="<td>"+"<a href='upCommons/"+data[i].vCommonsId+"'>修改</a>  <a href='javascript:;' name='"+data[i].vCommonsId+"' onclick='delpan($(this).attr(\"name\"))'>删除</a>"+"  <a href='upHuiCommons/"+data[i].vCommonsId+"'>回复</a>"+"</td>";
-                      options+="</tr>";
-                   /*</tr><tr><td>admin</td><td>这个商品不错aaa</td><td>undefined</td><td>1</td><td>3</td><td>1556182704000</td><td><a href='upCommons/6'>修改</a>  <a href='delCommons/6' name='del'>删除</a>  <a href='upHuiCommons/6'>回复</a></td>*/
+                  for (var i=0;i<data.topp.length;i++){
+                      var dat=new Date(data.topp[i].vCreateDate).getFullYear()+'-'+(new Date(data.topp[i].vCreateDate).getMonth()+1)+"-"+new Date(data.topp[i].vCreateDate).getDate()
+                      +" "+new Date(data.topp[i].vCreateDate).getHours()+":"+new Date(data.topp[i].vCreateDate).getMinutes()+":"+new Date(data.topp[i].vCreateDate).getSeconds();
+                      tb+="<tr>" +
+                              "<td>"+data.topp[i].vProductName+"</td>"+
+                          "<td>"+data.topp[i].vSalesVolume+"</td>"+
+                          "<td>"+data.topp[i].vCommonsCount+"</td>"+
+                          "<td>"+dat+"</td>"+
+                          "</tr>";
                   }
-                  $("#dataTable").html(options);
+                  $("#dataTable").html(tb);
               });
-          });
-          $("[name=del]").click(function () {
-              if(!confirm("是否要删除该条评论")){
-                  return false;
-              }else {
-                  alert("删除成功！")
-              }
           });
       });
-      function delpan(data) {
-          if(!confirm("是否要删除该条评论")){
-              return false;
-          }else {
-              location.href="delCommons/"+data
-              alert("删除成功！")
-          }
-      }
     </script>
     </head>
   </div>

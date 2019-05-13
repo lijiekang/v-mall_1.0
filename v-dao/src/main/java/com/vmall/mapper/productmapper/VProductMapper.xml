@@ -18,6 +18,7 @@
         <result property="cateName2" column="v_categoryName2"/>
         <result property="cateName3" column="v_categoryName3"/>
         <result property="vStore" column="v_store"/>
+        <result property="vPrice" column="v_price"/>
         <result property="vImgUrl" column="v_imgUrl"/>
         <result property="vGrade" column="v_grade"/>
         <result property="vIsDelete" column="v_isDelete"/>
@@ -33,6 +34,7 @@
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel2) v_categoryName2,
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel3) v_categoryName3,
         p.v_store,
+        p.v_price,
         p.v_imgUrl,
         p.v_grade,
         p.v_isDelete,
@@ -62,6 +64,7 @@
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel2) v_categoryName2,
         (SELECT c.v_categoryName FROM v_category AS c WHERE c.v_categoryId=p.v_categoryLevel3) v_categoryName3,
         p.v_store,
+        p.v_price,
         p.v_imgUrl,
         p.v_grade,
         p.v_isDelete,
@@ -85,6 +88,7 @@
             <if test="vCategoryLevel2 != null">v_categoryLevel2=#{vCategoryLevel2},</if>
             <if test="vCategoryLevel3 != null">v_categoryLevel3=#{vCategoryLevel3},</if>
             <if test="vStore != null">v_store=#{vStore},</if>
+            <if test="vPrice != null">v_price=#{vPrice},</if>
             <if test="vImgUrl != null">v_imgUrl=#{vImgUrl},</if>
             <if test="vGrade != null">v_grade=#{vGrade},</if>
             <if test="vIsDelete != null">v_isDelete=#{vIsDelete},</if>
@@ -164,8 +168,37 @@
         </if>
     </insert>
 
+    <select id="allOrder" resultType="com.vmall.pojo.VOrder">
+        select * from `v_order`
+    </select>
 
-    <select id="listProductsByLevels" resultType="VProduct">
+    <select id="allOrderDetails" resultType="com.vmall.pojo.VOrderDetails">
+        select * from v_order_details where  v_orderId=#{vOrderId}
+    </select>
+
+    <update id="updateProductVolume">
+        update v_product set v_sales_volume=#{vSalesVolume} where v_productId=#{vProductId}
+    </update>
+
+    <select id="getSelectProductById" resultType="com.vmall.pojo.VProduct">
+        select * from v_product where v_productId=#{vProductId}
+    </select>
+
+    <select id="getSelectProductTop" resultType="com.vmall.pojo.VProduct">
+        select * from v_product
+        <if test="vSalesVolume!=null and vSalesVolume!=''">
+              order by v_sales_volume desc ,v_createDate desc ,v_commons_count desc
+        </if>
+        <if test="vCreateDate!=null and vCreateDate!=''">
+            order by v_createDate desc ,v_sales_volume desc ,v_commons_count desc
+        </if>
+        <if test="vCommonsCount!=null and vCommonsCount!=''">
+            order by v_commons_count desc, v_createDate desc ,v_sales_volume desc ,v_commons_count desc
+        </if>
+        LIMIT 0,10
+    </select>
+
+    <select id="listProductsByLevels" resultType="com.vmall.pojo.VProduct">
         select * from v_product
         <where>
             <if test="level1!=null">
@@ -181,8 +214,7 @@
         </where>
     </select>
 
-
-    <select id="listSkuByProductId" parameterType="int" resultType="VSku">
+    <select id="listSkuByProductId" parameterType="int" resultType="com.vmall.pojo.VSku">
         select * from v_sku where v_product_id=#{_parameter}
     </select>
 

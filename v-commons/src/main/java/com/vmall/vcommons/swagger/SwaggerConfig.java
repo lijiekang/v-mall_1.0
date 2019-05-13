@@ -1,3 +1,4 @@
+
 package com.vmall.vcommons.swagger;
 
 import org.springframework.context.annotation.Bean;
@@ -27,3 +28,4 @@ public class SwaggerConfig {
                 .licenseUrl("http://apache.org/licenses/LICENESE-2.0").build());
     }
 }
+

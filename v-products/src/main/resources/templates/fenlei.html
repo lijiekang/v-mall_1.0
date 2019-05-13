@@ -126,9 +126,10 @@
         function chus(node){
             var tr2;
             var l2id=node.attr("name");
-            alert(l2id);
             $.get("moClassification","lvl2="+l2id,function (data) {
-                alert(data);
+                if(data.level3.length==0){
+                    tr2 += "<tr><td>  </td></tr>"
+                }
                 for (var j=0;j<data.level3.length;j++){
                     tr2+="<tr><td>"+data.level3[j].vCategoryName+"</td>" +
                         "<td><a href="+"delClassification?lvl1="+ data.level3[j].vCategoryId +"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;删除</a></td>"+
@@ -146,7 +147,6 @@
               var lid = $(this).attr("value");
               var tr;
               var tr2;
-              alert(lid)
               $.get("moClassification", "lvl1=" + lid, function (data) {
                   // for(var i=0;i<data.key("level2").length;i++){
                   //     alert(data.key("level2").get(i).vCategoryId);
@@ -174,7 +174,6 @@
           $("[name=chu3]").click(function () {
               var lid = $(this).attr("value");
               var tr2;
-              alert(lid)
               $.get("moClassification", "lvl2=" + lid, function (data) {
                   // for(var i=0;i<data.key("level2").length;i++){
                   //     alert(data.key("level2").get(i).vCategoryId);

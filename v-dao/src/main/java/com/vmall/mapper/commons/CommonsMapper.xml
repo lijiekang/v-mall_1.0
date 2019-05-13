@@ -32,6 +32,9 @@
         select * from v_category where v_type=1
     </select>
 
+    <select id="getVcommZhui" resultMap="getUserAndCommons">
+        SELECT * FROM `v_commons` WHERE  v_userId=#{vUserId} AND v_orderId=#{vOrderId} AND v_productId=#{vProductId}
+    </select>
 
     <select id="getVCategoryLevel2" resultType="com.vmall.pojo.VCategory">
         select * from v_category where v_parentCategoryId=#{vCategoryId}
@@ -66,5 +69,15 @@
               update `v_commons` set v_reply=#{vReply} where v_commonsId=#{vCommonsId}
     </update>
 
+    <delete id="getDelMoping">
+        DELETE FROM `v_commons` WHERE 1=1 and  v_userId=#{vUserId} AND v_orderId=#{vOrderId} AND v_productId=#{vProductId}
+    </delete>
 
+    <select id="getSelectInProduct" resultType="int">
+         SELECT count(*) FROM `v_commons` WHERE  v_userId=#{vUserId} AND v_orderId=#{vOrderId} AND v_productId=#{vProductId}
+    </select>
+
+    <update id="getUpdateCommonsCount">
+        update v_product set v_commons_count=#{vCommonsCount} where v_productId=#{vProductId}
+    </update>
 </mapper>

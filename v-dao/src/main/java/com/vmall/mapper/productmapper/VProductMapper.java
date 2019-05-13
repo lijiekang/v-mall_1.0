@@ -1,8 +1,6 @@
 package com.vmall.mapper.productmapper;
 
-import com.vmall.pojo.VCategory;
-import com.vmall.pojo.VProduct;
-import com.vmall.pojo.VSku;
+import com.vmall.pojo.*;
 import com.vmall.pojo.vo.CategoryVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,11 +42,19 @@ public interface VProductMapper {
     //二三级分类
     List<VCategory>getVCategoryLevel2(@Param("vCategoryId") int vCategoryId);
     //删除目录
-    int getDelCategoryLv1ById(@Param("vCategoryId") int vCategoryId);
-    //查找不同分级
+   int getDelCategoryLv1ById(@Param("vCategoryId") int vCategoryId);
+   //查找不同分级
     List<VCategory>getVCategoryLevelfen(@Param("vType") int vType);
     //新增分类
     int addClassification(@Param("vType") int vType,@Param("vParentCategoryId") int vParentCategoryId,@Param("vCategoryName") String vCategoryName);
+    //查找所有订单内容
+    List<VOrder>allOrder();
+    //某订单下的订单详情
+    List<VOrderDetails>allOrderDetails(int vOrderId);
+    //修改某商品的销售总量
+    int updateProductVolume(@Param("vSalesVolume") int vSalesVolume,@Param("vProductId")int vProductId);
+    VProduct getSelectProductById(int vProductId);
+    List<VProduct>getSelectProductTop(@Param("vSalesVolume")String vSalesVolume,@Param("vCreateDate")String vCreateDate,@Param("vCommonsCount")String vCommonsCount);
     /**
      * 根据查询指定分类下的所有商品数据
      * @param categoryVO
