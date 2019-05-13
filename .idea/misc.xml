@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/v-commons/pom.xml" />
         <option value="$PROJECT_DIR$/v-seckill/pom.xml" />
         <option value="$PROJECT_DIR$/v-trade/pom.xml" />
+        <option value="$PROJECT_DIR$/v-web/pom.xml" />
       </list>
     </option>
   </component>

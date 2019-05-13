@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface VProductMapper {
+
     //库存减少
     Integer updateVProductStoreByProductId(@Param("productId") long productId, @Param("num") long num);
     //根据商品名称查询商品id

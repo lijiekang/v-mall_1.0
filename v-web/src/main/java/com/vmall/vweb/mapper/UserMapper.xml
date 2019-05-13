@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.vweb.mapper.UserMapper">
+
+    <select id="loasUserByUsername" resultType="com.vmall.vweb.beans.VUser" parameterType="com.vmall.pojo.VUser">
+        select * from v_user where v_usercode=#{vUsername}
+    </select>
+    <select id="getUserRolesByUid" resultType="com.vmall.pojo.VRole">
+        SELECT * FROM v_role r,v_user_role ur WHERE r.v_role_id=ur.v_role_id AND ur.v_user_id=#{id}
+    </select>
+</mapper>

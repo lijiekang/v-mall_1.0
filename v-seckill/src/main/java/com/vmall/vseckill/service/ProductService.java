@@ -2,6 +2,7 @@ package com.vmall.vseckill.service;
 
 
 import com.vmall.pojo.VSeckillProduct;
+import com.vmall.pojo.vo.SeckillProductVO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ProductService {
      * @param vSeckillProduct
      * @return
      */
-    boolean addSeckillProduct(VSeckillProduct vSeckillProduct);
+    boolean addSeckillProduct(SeckillProductVO vSeckillProduct);
 
     /**
      * 加载所有秒杀商品

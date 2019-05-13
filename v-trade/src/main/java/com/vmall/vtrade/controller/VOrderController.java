@@ -190,8 +190,9 @@ public class VOrderController {
     ){
         VUser vUser=userService.getUserIdByUserName(username);//根据用户名查询用户id
         VProduct vProduct=vProductService.getVProductIdByProductName(productName);//根据商品名称查询商品id,商品积分
-        VSku vSku=skuService.findskuIdBySkuName(wen);//根据skuname查询SKU对象
+            VSku vSku=skuService.findskuIdBySkuName(wen);//根据skuname查询SKU对象
         VOrder vOrder=new VOrder();
+
         if(vProduct!=null && vProduct!=null){
                 vOrder.setvUserId(vUser.getvUserId());
                 vOrder.setvUsername(vUsername);

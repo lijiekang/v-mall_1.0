@@ -45,7 +45,12 @@ public class  VProductService {
     public List<VProduct> solrvProduct(String vProductName, Pages page){
         return vProductMapper.solrvProduct(vProductName,(page.getPageNo()-1)*page.getPageSize(),page.getPageSize());
     }
-    public List<VCategory>vcategoryid(Integer id){
-        return vProductMapper.vcategoryid(id);
-    }
+
+
+    /**
+     * 异常：找到到mapper方法，所以我注释了（李秸康）
+     */
+//    public List<VCategory>vcategoryid(Integer id){
+//        return vProductMapper.vcategoryid(id);
+//    }
 }

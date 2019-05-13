@@ -1,10 +1,12 @@
 package com.vmall.pojo;
 
 
+import java.io.Serializable;
+
 /**
  * SKU类
  */
-public class VSku {
+public class VSku implements Serializable {
 
   private long vSkuId;
   private String vSkuName;

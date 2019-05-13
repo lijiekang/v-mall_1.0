@@ -1,0 +1,149 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/publics/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/publics/nav::nav"></nav>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">微商城</a>
+            </li>
+            <li class="breadcrumb-item active">订单管理</li>
+        </ol>
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> 订单信息</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form action="/vorder/orders" method="post">
+                        显示页数
+                        <select name="size">
+                            <option th:selected="${page.pageSize==1}" value="1" >1</option>
+                            <option th:selected="${page.pageSize==2}" value="2">2</option>
+                            <option th:selected="${page.pageSize==50}" value="50">50</option>
+                        </select>
+                        <input type="text" name="usernames">
+                        <input type="submit" value="查询">
+                        <a th:href="@{/vorder/order}" style="background-color: deepskyblue;color: crimson">添加订单</a>
+                    </form>
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <tr>
+                            <th>订单编号</th>
+                            <th>购买人</th>
+                            <th>商品</th>
+                            <th>数量</th>
+                            <th>规格</th>
+                            <th>价格</th>
+                            <th>收件人</th>
+                            <th>收件人地址</th>
+                            <th>交易号</th>
+                            <th>订单状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+
+                        <tr th:each="li:${page.datas}">
+                            <td th:text="${li.vSerialNumber}"></td>
+                            <td th:text="${li.vUser.vUsername}"></td>
+                            <td th:text="${li.vProduct.vProductName}"></td>
+                            <td th:text="${li.vOrderDetails.vQuantity}"></td>
+                            <td th:text="${li.vSku.vSkuName}"></td>
+                            <td th:text="${li.vCost}"></td>
+                            <td th:text="${li.vUsername}"></td>
+                            <td th:text="${li.vUserAddress}"></td>
+                            <td th:text="${li.vPayNum}"></td>
+                            <td th:text="${li.vOrderStatus.vStatusName}"></td>
+                            <td th:text="${li.vCreateTime}"></td>
+                            <td>
+                                <a th:href="@{'/vorder/toUpdate?vOrderId='+${li.vOrderId}}">修改</a>
+                                <a th:onclick="sc($(this))" name="del" th:value="${li.vOrderId}">删除</a>
+                            </td>
+                            <script>
+                                function sc(node) {
+                                    var id=(node).attr("value");
+                                    var jie=$("[name=del]");
+                                    if(confirm("确认要删除嘛？")){
+                                        $.getJSON("/vorder/delOrder","id="+id,function (data){
+                                            if(data.status=="success"){
+                                                jie.parents("tr").remove();
+                                                alert("删除成功!");
+                                            }else if(data.status=="fail"){
+                                                alert("删除失败!");
+                                            }
+                                        });
+                                    }
+                                }
+                            </script>
+                        </tr>
+
+                    </table>
+                    <a th:href="@{'/vorder/toIndex?no='+1}">首页</a>
+                    <a th:href="@{'/vorder/toIndex?no='+${page.currentPageNo-1}}">上一页</a>
+
+                    <a th:href="@{'/vorder/toIndex?no='+${page.currentPageNo+1}}">下一页</a>
+                    <a th:href="@{'/vorder/toIndex?no='+${page.totalPageCount}}">尾页</a>
+                </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2017 / More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <!-- Page level plugin JavaScript-->
+    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin.min.js}"></script>
+    <!-- Custom scripts for this page-->
+    <script th:src="@{/js/sb-admin-datatables.min.js}"></script>
+</div>
+
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("订单管理");
+        // $(".table-responsive").html($("#thirdContent"));
+    })
+</script>
+</body>
+</html>
