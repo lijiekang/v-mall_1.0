@@ -15,8 +15,10 @@ public class AlipayConfig {
     public String gatewayUrl;
     //应用私钥
     public String appPrivateKey;
-    //支付宝公钥
+    //应用公钥
     public String alipayPublicKey;
+    //支付宝公钥
+    public String zhifuPublicKey;
     //同步地址
     public String returnUrl;
     //异步地址
@@ -50,6 +52,14 @@ public class AlipayConfig {
                 }
             }
         }
+    }
+
+    public String getZhifuPublicKey() {
+        return zhifuPublicKey;
+    }
+
+    public void setZhifuPublicKey(String zhifuPublicKey) {
+        this.zhifuPublicKey = zhifuPublicKey;
     }
 
     public String getAppid() {

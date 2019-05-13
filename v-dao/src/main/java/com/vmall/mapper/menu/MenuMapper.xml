@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vmall.mapper.menu.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.vmall.pojo.VMenu">
+        <id property="vMenuId" column="v_menu_id"/>
+        <result property="vUrl" column="v_url"/>
+        <result property="vRemark" column="v_remark"/>
+        <collection property="roles" ofType="com.vmall.pojo.VRole">
+            <id property="vRoleId" column="vRoleId"/>
+            <result property="vRoleName" column="vRoleName"/>
+            <result property="vName" column="vName"/>
+        </collection>
+    </resultMap>
+    <select id="getAllMenus" resultMap="BaseResultMap">
+        SELECT m.*,r.v_role_id AS vRoleId,r.v_name AS vName,r.v_role_name AS vRoleName FROM v_menu m LEFT
+            JOIN v_menu_role mr ON m.v_menu_id=mr.v_menu_id LEFT JOIN v_role r ON mr.v_role_id=r.v_role_id
+    </select>
+
+</mapper>

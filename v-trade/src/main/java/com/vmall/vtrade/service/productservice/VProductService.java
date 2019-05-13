@@ -19,10 +19,6 @@ public class VProductService {
         return vProductMapper.getVProductIdByProductName(vProductName);
     }//根据商品名称查询商品id
 
-    public VProduct getVProductNameByProductId(String productId){
-        return vProductMapper.getVProductNameByProductId(productId);
-    }//根据商品id查询商品名称
-
     public VProduct chakanvproduct(Integer id){
         return vProductMapper.chakanvproduct(id);
     }
@@ -30,4 +26,8 @@ public class VProductService {
     public Integer shuStore(Integer productId,Integer num){
         return vProductMapper.shuStore(productId,num);
     }//根据商品id修改库存
+    public VProduct getVProductNameByProductId(String productId){
+        return vProductMapper.getVProductNameByProductId(productId);
+    }//根据商品id查询商品名称
+
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/seckill/commons/header::header">
+
+</head>
+
+
+<nav th:replace="/seckill/commons/nav::nav"></nav>
+<div th:replace="/seckill/commons/content::content">
+</div>
+<!--商品活动-->
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
+        <div class="card-body">
+
+            <form action="/activityupd" method="post">
+              <input type="hidden" name="vActivityId" th:value="${vActivity.vActivityId}">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <tr>
+                  <td>商品活动id</td>
+                  <td><input readonly="readonly" name="vActivityId" th:value="${vActivity.vActivityId}"></td>
+                </tr>
+                <tr>
+                  <td>商品活动名称</td>
+                  <td><input type="text" name="vType" th:value="${vActivity.vType}"></td>
+                </tr>
+                <tr>
+                  <td><input type="submit" value="修改"></td>
+                  <td> <a href="activity">返回</a></td>
+                </tr>
+              </table>
+            </form>
+          </div>
+
+</body>
+
+</html>

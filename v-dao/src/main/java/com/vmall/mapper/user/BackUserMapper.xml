@@ -3,19 +3,27 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmall.mapper.user.BackUserMapper">
+    <resultMap id="BaseResultMap" type="com.vmall.pojo.VUser">
+        <id property="vUserId" column="v_userId"/>
+        <collection property="roles" ofType="com.vmall.pojo.VRole">
+            <id property="vRoleId" column="vRoleId"/>
+            <result property="vRoleName" column="vRoleName"/>
+            <result property="vName" column="vName"/>
+        </collection>
+    </resultMap>
     <select id="getUserByAll" resultType="com.vmall.pojo.VUser">
-        SELECT * FROM v_user WHERE v_usercode like  concat('%',#{vUserCode},'%') LIMIT #{currentPage},3
+        SELECT * FROM v_user WHERE v_username like  concat('%',#{vUsername},'%') LIMIT #{currentPage},3
     </select>
-    <select id="getUserById" parameterType="com.vmall.pojo.VUser">
-        select * from v_user where id=#{id}
+    <select id="getUserById" resultType="com.vmall.pojo.VUser">
+        select * from v_user where v_userId=#{id}
     </select>
     <select id="getTotalPageCount" resultType="int">
-        select count(*) from v_user where v_usercode like concat('%',#{vUserCode},'%')
+        select count(*) from v_user where v_username like concat('%',#{vUsername},'%')
     </select>
-    <select id="getAllUser" resultType="com.vmall.pojo.VUser">
-        SELECT * FROM v_user where 1=1
-        <if test="vUserCode!=null and vUserCode!=''">
-            and v_usercode like concat('%',#{vUserCode},'%')
+    <select id="getAllUser" resultMap="BaseResultMap">
+        SELECT u.*,r.* FROM v_user u,v_role r where 1=1
+        <if test="vUsername!=null and vUsername!=''">
+            and v_username like concat('%',#{vUsername},'%')
         </if>
         LIMIT #{currentPage},#{pageSize}
     </select>
@@ -27,18 +35,27 @@
         delete from v_user where v_userId = #{id}
     </delete>
     <update id="getUpdate" parameterType="com.vmall.pojo.VUser">
-        UPDATE v_user SET
-          v_username=#{vUsername},
-          v_password=#{vPassword},
-          v_mail=#{vMail},
-          v_phone=#{vPhone},
-          v_headPath=#{vHeadPath},
-          v_isActive=#{vIsActive},
-          v_type=#{vType},
-          v_grade=#{vGrade},
-          v_sex=#{vSex},
-          v_identity=#{vIdentity},
-          v_usercode=#{vUsercode}
+        UPDATE v_user
+        <set>
+            <if test="vUsername!=null">v_username=#{vUsername},</if>
+            <if test="vPassword!=null">v_password=#{vPassword},</if>
+            <if test="vMail!=null">v_mail=#{vMail},</if>
+            <if test="vPhone!=null">v_phone=#{vPhone},</if>
+            <if test="vType!=null">v_type=#{vType},</if>
+            <if test="vHeadPath!=null">v_headPath=#{vHeadPath},</if>
+            <if test="vUsercode!=null">v_usercode=#{vUsercode}</if>
+        </set>
         where v_userId=#{vUserId}
     </update>
+
+    <select id="getAllVUser" resultType="com.vmall.pojo.VUser">
+        select * from v_user
+    </select>
+
+    <select id="loasUserByUsername" resultType="com.vmall.pojo.VUser" parameterType="com.vmall.pojo.VUser">
+        select * from v_user where v_usercode=#{vUsername}
+    </select>
+    <select id="getUserRolesByUid" resultType="com.vmall.pojo.VRole">
+        SELECT * FROM v_role r,v_user_role ur WHERE r.v_role_id=ur.v_role_id AND ur.v_user_id=#{id}
+    </select>
 </mapper>

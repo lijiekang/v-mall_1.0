@@ -28,6 +28,8 @@ public interface VProductMapper {
     //删除商品
     int del(@Param("id") Integer id);
 
+    public VProduct getVProductNameByProductId(String productId);//根据商品id查询商品名称
+
     //修改预警货品
     int updearly(VProduct product);
     //修改库存
@@ -47,8 +49,6 @@ public interface VProductMapper {
     List<VCategory>getVCategoryLevelfen(@Param("vType") int vType);
     //新增分类
     int addClassification(@Param("vType") int vType,@Param("vParentCategoryId") int vParentCategoryId,@Param("vCategoryName") String vCategoryName);
-
-
     /**
      * 根据查询指定分类下的所有商品数据
      * @param categoryVO
@@ -63,4 +63,12 @@ public interface VProductMapper {
      * @return
      */
     List<VSku> listSkuByProductId(Integer productId);
+
+    //查询查询分类id
+    List<VCategory>vcategoryid(Integer id);
+
+    //Product getVProductNameByProductId(String productId);//根据商品id查询商品名称
+
+    Integer shuStore(@Param("productId") Integer productId,@Param("num")Integer num);//根据商品id修改库存
+
 }

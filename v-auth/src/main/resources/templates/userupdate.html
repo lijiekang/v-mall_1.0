@@ -1,0 +1,67 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/back/commons/header::header">
+
+</head>
+<body>
+
+<nav th:replace="/back/commons/nav::nav"></nav>
+<div th:replace="/back/commons/content::content"></div>
+
+<div class="card card-register mx-auto mt-5" id="addContent">
+    <!--<div class="card-header">Register an Account</div>-->
+    <div class="card-body">
+        <form action="/userxiu" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Id</label>
+                    <input class="form-control" name="vUserId" type="text" aria-describedby="emailHelp" placeholder="email" th:value="${vUser.vUserId}" readonly="readonly">
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputName">用户名</label>
+                        <input class="form-control" id="exampleInputName" name="vUsercode" type="text" aria-describedby="nameHelp" placeholder="用户名" th:value="${vUser.vUsercode}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleInputLastName">用户昵称</label>
+                        <input class="form-control" id="exampleInputLastName" name="vUsername" type="text" aria-describedby="nameHelp" placeholder="昵称" th:value="${vUser.vUsername}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input class="form-control" id="exampleInputEmail1" name="vMail" type="email" aria-describedby="emailHelp" placeholder="email" th:value="${vUser.vMail}">
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="exampleInputPassword1">手机</label>
+                        <input class="form-control" id="exampleInputPassword1" name="vPhone" type="text" placeholder="手机" th:value="${vUser.vPhone}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="exampleConfirmPassword">密码</label>
+                        <input class="form-control" id="exampleConfirmPassword" name="vPassword" type="password" placeholder="密码" th:value="${vUser.vPassword}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">头像</label>
+                <input class="form-control" type="file" name="multipartFile" aria-describedby="emailHelp">
+            </div>
+
+            <input class="btn btn-primary btn-block" type="submit" value="提交">
+        </form>
+        <div class="text-center">
+            <a class="d-block small mt-3" href="login.html">Login Page</a>
+            <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $(".card-header").html("用户管理").append("<a class=\"btn btn-primary\" href=\"/hssf\" id=\"toggleNavPosition\" style='float: right'>导出</a>")
+        $(".table-responsive").html($("#addContent"));
+    })
+</script>
+</body>
+</html>

@@ -24,4 +24,9 @@ public interface VSkuMapper {
     List<VProperty>getmoSku(int vParentId);
     //添加规格值
     int getAddSkuGui(@Param("vPropertiesName")String vPropertiesName,@Param("vPropertiesId")int vPropertiesId );
+
+    List<VSku> findAllSku();//查询所有sku
+    List<Integer> findskuId(Integer productId);//根据商品id查询skuid
+    VSku findskuIdBySkuName(String skuName);//根据shuname查询skuid
+    VSku findProductIdBySkuId(Integer Skuid);//根据skuid查询商品id
 }

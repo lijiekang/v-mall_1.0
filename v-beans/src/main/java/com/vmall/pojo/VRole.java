@@ -5,7 +5,15 @@ public class VRole {
 
   private long vRoleId;
   private String vRoleName;
+  private String vName;
 
+  public String getvName() {
+    return vName;
+  }
+
+  public void setvName(String vName) {
+    this.vName = vName;
+  }
 
   public long getVRoleId() {
     return vRoleId;
