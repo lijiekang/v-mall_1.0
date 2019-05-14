@@ -18,9 +18,9 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build().apiInfo(new ApiInfoBuilder().description("v-mall商城后台测试文档")
+                .build().apiInfo(new ApiInfoBuilder().description("v-mall商城后台api文档")
                 .version("1.0")
-                .title("API测试文档")
+                .title("API文档")
                 .license("Apache")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0").build());
     }

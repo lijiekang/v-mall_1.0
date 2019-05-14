@@ -3,15 +3,12 @@ package com.vmall.vauth.service;
 import com.vmall.mapper.user.BackUserMapper;
 import com.vmall.pojo.VUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BackUserService implements UserDetailsService {
+public class BackUserService {
     @Autowired
     BackUserMapper backUserMapper;
 
@@ -47,13 +44,13 @@ public class BackUserService implements UserDetailsService {
         return backUserMapper.getAllVUser();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String vUsername) throws UsernameNotFoundException {
-        VUser user=backUserMapper.loasUserByUsername(vUsername);
-        if(user==null){
-            throw new UsernameNotFoundException("账户不存在!");
-        }
-        user.setRoles(backUserMapper.getUserRolesByUid(user.getvUserId()));
-        return user;
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String vUsername) throws UsernameNotFoundException {
+//        VUser user=backUserMapper.loasUserByUsername(vUsername);
+//        if(user==null){
+//            throw new UsernameNotFoundException("账户不存在!");
+//        }
+//        user.setRoles(backUserMapper.getUserRolesByUid(user.getvUserId()));
+//        return user;
+//    }
 }

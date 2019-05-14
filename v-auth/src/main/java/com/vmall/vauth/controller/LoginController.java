@@ -30,33 +30,31 @@ public class LoginController {
     TokenService tokenService;
 //    @ApiOperation(value = "会员登录")
     @GetMapping("/login")
-    public String login(HttpSession session){
-        session.setAttribute("error",null);
+    public String login(){
         return "back/login";
     }
     @PostMapping("/dologin")
-    @ResponseBody
     public String dologin(@RequestParam(value = "userCode")String userCode, @RequestParam("password")String password,HttpServletResponse response){
         String token=loginService.login(userCode,password);
         if(token!="false"){
             Cookie cookie=new Cookie("token",token.toString());
             cookie.setMaxAge(15*60);
             response.addCookie(cookie);
-            return JSONArray.toJSONString("true");
+            return "back/index";
         }
-        return JSONArray.toJSONString("用户名或密码错误");
+        return "back/login";
     }
     @GetMapping("/forgotPwd")
     public String forgotPwd(){
         return "back/forgot-password";
     }
-//    @GetMapping("/getCode")//发送邮箱验证码
-//    @ResponseBody
-//    public String getCode(@RequestParam("email")String email){
-//        Integer code1= new Random().nextInt(1000000);
-//        mailService.sendMail(email,"验证码","您收到的验证码为:",code1);
-//        return "验证码已发送";
-//    }
+    @GetMapping("/getCode")//发送邮箱验证码
+    @ResponseBody
+    public String getCode(@RequestParam("email")String email){
+        Integer code1= new Random().nextInt(1000000);
+        mailService.sendMail(email,"验证码","您收到的验证码为:",code1);
+        return "验证码已发送";
+    }
     @GetMapping("/getEmail")
     @ResponseBody
     public String getEmail(@RequestParam("email")String email){
@@ -100,18 +98,18 @@ public class LoginController {
     /*
     * 获取手机验证码
     * */
-//    @PostMapping("/getPhoneCode")
-//    @ResponseBody
-//    public String getPhoneCode(@RequestParam("phone")String phone){
-//        Integer code1= new Random().nextInt(1000000);
-//        try {
-//            SMSCode.sendCode(phone,code1.toString());
-//            tokenService.setCode(phone,code1);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "验证码已发送";
-//    }
+    @PostMapping("/getPhoneCode")
+    @ResponseBody
+    public String getPhoneCode(@RequestParam("phone")String phone){
+        Integer code1= new Random().nextInt(1000000);
+        try {
+            SMSCode.sendCode(phone,code1.toString());
+            tokenService.setCode(phone,code1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "验证码已发送";
+    }
     @GetMapping("logout")
     public String logout(HttpServletRequest request){
         String token=request.getHeader("token");

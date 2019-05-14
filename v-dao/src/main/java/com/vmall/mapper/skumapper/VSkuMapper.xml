@@ -12,6 +12,9 @@
             <result property="vParentId" column="v_parent_id"></result>
         </association>
     </resultMap>
+    <select id="getVSkuBySkuCode" resultType="com.vmall.pojo.VSku">
+        select * from v_sku where v_sku_code=#{skuCode};
+    </select>
     <select id="getAllSku" resultMap="getProperties">
         SELECT v_property.`v_properties_id` AS pid,v_property.`v_properties_value`,v_property.`v_parent_id`,v_properties.`v_properties_id`,v_properties.`v_properties_name`
         FROM `v_properties` LEFT JOIN `v_property` ON v_properties.`v_properties_id`=v_property.`v_parent_id`

@@ -2,7 +2,6 @@ package com.vmall.vauth.service.dev;
 
 import com.vmall.mapper.shoppingcart.CartMapper;
 import com.vmall.mapper.shoppingcart.ShoppingMapper;
-import com.vmall.mapper.skumapper.SkuMapper;
 import com.vmall.mapper.skumapper.VSkuMapper;
 import com.vmall.pojo.*;
 import com.vmall.vauth.service.tool.TokenService;
@@ -18,7 +17,7 @@ public class ShoppingService {
     @Resource
     CartMapper cartMapper;
     @Resource
-    SkuMapper skuMapper;
+    VSkuMapper skuMapper;
     @Resource
     TokenService tokenService;
     public int count(String token){

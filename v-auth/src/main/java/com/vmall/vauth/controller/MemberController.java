@@ -346,7 +346,7 @@ public class MemberController {
         }
         return JSONArray.toJSONString("绑定失败");
     }
-    @GetMapping("/getCode")//发送邮箱验证码
+    @GetMapping("/getEmailCode")//发送邮箱验证码
     @ApiOperation("邮箱验证码")
     public String getCode(@RequestParam("email")String email){
         Integer code1= new Random().nextInt(1000000);

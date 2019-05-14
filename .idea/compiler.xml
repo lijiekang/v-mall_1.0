@@ -23,12 +23,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="v-auth" options="" />
-      <module name="v-commons" options="" />
-      <module name="v-products" options="" />
-      <module name="v-seckill" options="" />
-      <module name="v-trade" options="" />
-      <module name="v-web" options="" />
+      <module name="v-auth" options="-parameters" />
+      <module name="v-commons" options="-parameters" />
+      <module name="v-products" options="-parameters" />
+      <module name="v-seckill" options="-parameters" />
+      <module name="v-trade" options="-parameters" />
+      <module name="v-web" options="-parameters" />
     </option>
   </component>
 </project>
