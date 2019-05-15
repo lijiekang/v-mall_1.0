@@ -52,6 +52,8 @@ public class SeckillController {
      */
     @GetMapping(value="/seckill")
     public Dto seckillProduct(String token, Integer productId){
+
+
         //获取当前登录的用户
         VUser user=getUser(token);
         try {
@@ -61,32 +63,7 @@ public class SeckillController {
             return Dto.failure(new Status("30001","服务器内部异常:"+e.getMessage()));
 
         }
-
-
-//        //判断是否还有库存(使用redis预减库存)
-//        if(!productService.haveRemain(productId))
-//            return Dto.failure(Status.NOT_ENOUGH);
-//
-//        //判断是否秒杀到
-//        if(orderService.isSeckilled(user.getvUserId(),productId))
-//            return Dto.failure(Status.REPEAT_SECKILL);
-//
-//        //调用下单业务
-//        try {
-//            orderService.SeckillProduct((int)user.getvUserId(),productId);
-//        }catch(StoreNotEnoughException e){
-//            return Dto.failure(new Status("19132",e.getMessage()));
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            return Dto.failure(new Status("xxx",e.getMessage()));
-//        }
-
-//
-//        //直接判断是否售完
-//        if(MQReceiver.flag==true)
-//            return Dto.success(-1);
-
-            //直接消息入队
+        //直接消息入队
         mqSender.send(new MQMessage(user,productId));
 
         return Dto.success(0);

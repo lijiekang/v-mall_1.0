@@ -5,6 +5,7 @@ import org.csource.common.MyException;
 import org.csource.fastdfs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
  * @Date created in 9:44 2019-05-13
  * @Modifyied By:
  */
+@Service
 public class UploadService {
 
     static Logger log= LoggerFactory.getLogger(UploadService.class);
@@ -25,7 +27,6 @@ public class UploadService {
         try {
             // 初始化文件资源
             ClientGlobal.initByProperties("application.properties");
-
             // 链接FastDFS服务器，创建tracker和Stroage
             TrackerClient trackerClient = new TrackerClient();
             TrackerServer trackerServer = trackerClient.getConnection();
@@ -40,7 +41,7 @@ public class UploadService {
             String[] strings = storageClient.upload_file(byteFile, ext_file, null);
 
             sbPath.append(StringUtils.join(strings,"/"));
-            log.debug("上传路径=" + sbPath.toString());
+            log.info("上传路径=" + sbPath.toString());
 
         } catch (IOException | MyException e) {
             e.printStackTrace();
@@ -50,7 +51,6 @@ public class UploadService {
 
     /**
      * 得到Storage服务
-     *
      * @param storageIp
      * @return 返回Storage服务
      */

@@ -12,5 +12,4 @@ public class VWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(VWebApplication.class, args);
     }
-
 }

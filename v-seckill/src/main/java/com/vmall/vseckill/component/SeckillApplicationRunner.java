@@ -34,8 +34,8 @@ public class SeckillApplicationRunner implements ApplicationRunner {
         for (VSeckillProduct product:
              allProducts) {
             logger.info("----加载秒杀商品："+product.getvSkuName()+"\n数量:"+product.getvSeckillQuantity());
-            valueOperations.set("seckill_product_"+product.getvSkuName(),String.valueOf(product.getvSeckillQuantity()));
-            logger.info("秒杀商品key值:seckill_product_"+product.getvSkuName());
+            valueOperations.set("seckill_product_"+product.getvSeckillId(),String.valueOf(product.getvSeckillQuantity()));
+            logger.info("秒杀商品key值:seckill_product_"+product.getvSeckillId());
         }
     }
 }

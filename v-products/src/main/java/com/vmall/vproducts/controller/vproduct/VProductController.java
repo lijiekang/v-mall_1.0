@@ -10,7 +10,9 @@ import com.vmall.pojo.VProduct;
 import com.vmall.vproducts.config.SolrUtil;
 import com.vmall.vproducts.service.vbrand.VBrandService;
 import com.vmall.vproducts.service.vcategory.VCategoryService;
+import com.vmall.vproducts.service.vproduct.UploadService;
 import com.vmall.vproducts.service.vproduct.VProductService;
+import com.vmall.vutil.FastDFS;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -134,11 +136,19 @@ public class VProductController {
         try {
             String filekey=UUID.randomUUID().toString();
             String fileName=multipartFile.getOriginalFilename();
+            //修改：李秸康 将图片上传至文件服务器
+
+
+            //获取文件后缀
             String suffix=fileName.substring(fileName.indexOf("."));
-            multipartFile.transferTo(new File(file1,filekey+suffix));
+
+            FastDFS fastDFS=new FastDFS();
+
+            String result=fastDFS.uploadFile(multipartFile.getBytes(),suffix);
+            log.info("文件上传路径成功，访问路径:middle-frist.cn/"+result);
             if(".png".equals(suffix)||".jpg".equals(suffix)){
                 //上传文件
-                vProduct.setvImgUrl(filekey+suffix);
+                vProduct.setvImgUrl(result);
             }else{
                 return "文件格式错误";
             }
@@ -147,6 +157,8 @@ public class VProductController {
                 return "redirect:/getproduct";
             }
         }catch (IOException e){
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
         return "add";
@@ -353,5 +365,16 @@ public class VProductController {
         return resultMap;
     }*/
 
+
+    @Autowired
+    UploadService uploadService;
+
+
+    @RequestMapping(value="/upload",method=RequestMethod.POST)
+    public void fastDFS(MultipartFile file) throws Exception{
+        FastDFS fastDFS=new FastDFS();
+        String filePath=fastDFS.uploadFile(file.getBytes(),"jpg");
+        System.out.println("文件访问路径:"+filePath);
+    }
 
 }

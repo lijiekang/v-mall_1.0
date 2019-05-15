@@ -27,7 +27,7 @@ public class MQReceiver {
 
     private Logger log= LoggerFactory.getLogger(this.getClass());
 
-    //标识：是否售完 false 为未售完
+    // ：是否售完 false 为未售完
     public static boolean flag=false;
 
     @RabbitListener(queues = MQConfig.QUEUE_NAME)
