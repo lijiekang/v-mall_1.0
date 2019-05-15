@@ -282,14 +282,15 @@
                 <td th:text="${common.vUser.vUsername}"></td>
                 <td th:text="${common.vContent}"></td>
                 <td th:text="${common.vReply}"></td>
-                <td th:text="${common.vIsOk}"></td>
+                <td th:if="${common.vIsOk==1}">好评</td>
+                <td th:if="${common.vIsOk==0}">差评</td>
                 <td th:text="${common.vGrade}"></td>
                 <td th:text="${common.vCreateDate}"></td>
                 <td><a th:href="@{'delCommons/'+${common.vCommonsId}}" name="del">删除</a>  <a th:href="@{'upCommons/'+${common.vCommonsId}}">修改</a> <a th:href="@{'upHuiCommons/'+${common.vCommonsId}}">回复</a></td>
               </tr>
               <!--</tbody>-->
             </table>
-            <a href="incommons?pageno=0">首页</a>   <a th:href="@{'incommons?pageno='+${page.pageno-1}}">上一页</a>  <a th:href="@{'incommons?pageno='+${page.pageno+1}}">下一页</a>  <a th:href="@{'incommons?pageno='+${page.pageCount-1}}">末页</a>
+            <a href="incommons?pageno=0">首页</a>  <span th:if="${page.pageno>0}"><a th:href="@{'incommons?pageno='+${page.pageno-1}}">上一页</a></span> <span th:if="${page.pageCount-1>0}"> <a th:href="@{'incommons?pageno='+${page.pageno+1}}">下一页</a></span>   <a th:href="@{'incommons?pageno='+${page.pageCount-1}}">末页</a>
             共<a th:text="${page.pageCount}"></a>页   第<a th:text="${page.pageno+1}"></a>页
           </div>
         </div>

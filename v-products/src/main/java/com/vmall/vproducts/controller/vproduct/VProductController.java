@@ -10,9 +10,9 @@ import com.vmall.pojo.VProduct;
 import com.vmall.vproducts.config.SolrUtil;
 import com.vmall.vproducts.service.vbrand.VBrandService;
 import com.vmall.vproducts.service.vcategory.VCategoryService;
-import com.vmall.vproducts.service.vproduct.UploadService;
 import com.vmall.vproducts.service.vproduct.VProductService;
 import com.vmall.vutil.FastDFS;
+import io.swagger.annotations.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -136,19 +136,11 @@ public class VProductController {
         try {
             String filekey=UUID.randomUUID().toString();
             String fileName=multipartFile.getOriginalFilename();
-            //修改：李秸康 将图片上传至文件服务器
-
-
-            //获取文件后缀
             String suffix=fileName.substring(fileName.indexOf("."));
-
-            FastDFS fastDFS=new FastDFS();
-
-            String result=fastDFS.uploadFile(multipartFile.getBytes(),suffix);
-            log.info("文件上传路径成功，访问路径:middle-frist.cn/"+result);
+            multipartFile.transferTo(new File(file1,filekey+suffix));
             if(".png".equals(suffix)||".jpg".equals(suffix)){
                 //上传文件
-                vProduct.setvImgUrl(result);
+                vProduct.setvImgUrl(filekey+suffix);
             }else{
                 return "文件格式错误";
             }
@@ -157,8 +149,6 @@ public class VProductController {
                 return "redirect:/getproduct";
             }
         }catch (IOException e){
-            e.printStackTrace();
-        }catch (Exception e){
             e.printStackTrace();
         }
         return "add";
@@ -366,6 +356,83 @@ public class VProductController {
     }*/
 
 
+    @ResponseBody
+    @GetMapping("/tuijian")
+    public Object getTuiJianProduct(@RequestParam(value = "vSalesVolume",required = false) String vSalesVolume,@RequestParam(value = "vCreateDate",required = false)String vCreateDate,@RequestParam(value = "vCommonsCount",required = false)String vCommonsCount){
+        Map<String,Object>map=new HashMap<>();
+        List<VOrder>allOrder=vProductService.allOrder();
+        List<VProduct>tuiProduct=new ArrayList<>();
+        for (int i=0;i<allOrder.size();i++){
+            List<VOrderDetails>allDetails=vProductService.allOrderDetails((int)allOrder.get(i).getvOrderId());
+            for(int z=0;z<allDetails.size();z++){
+                VProduct vProduct=new VProduct();
+                vProduct=vProductService.getSelectProductById((int)allDetails.get(z).getvProductId());
+                vProductService.updateProductVolume(0,(int)vProduct.getvProductId());
+            }
+        }
+
+        for (int i=0;i<allOrder.size();i++){
+            int vsum=0;
+            int vcount=0;
+            List<VOrderDetails>allDetails=vProductService.allOrderDetails((int)allOrder.get(i).getvOrderId());
+            for (int j=0;j<allDetails.size();j++){
+                VProduct vProduct=new VProduct();
+                vProduct=vProductService.getSelectProductById((int)allDetails.get(j).getvProductId());
+                vsum+=allDetails.get(j).getvQuantity()+vProduct.getvSalesVolume();
+                int result=vProductService.updateProductVolume(vsum,(int)vProduct.getvProductId());
+            }
+        }
+        tuiProduct=vProductService.getSelectProductTop(vSalesVolume,vCreateDate,vCommonsCount);
+        map.put("tuiProduct",tuiProduct);
+        String str= JSON.toJSONString(map);
+        return str;
+    }
+
+    @GetMapping("/inTop")
+    public String inTuiTop(Model model,@RequestParam(value = "tiao",required = false) String tiao){
+        int tiaopan=1;
+        if(tiao!=null&&tiao!=""){
+            tiaopan=Integer.parseInt(tiao);
+        }
+
+        Map<String,Object>map=new HashMap<>();
+        List<VProduct>topProduct=new ArrayList<>();
+        if(tiaopan==1){
+            topProduct=vProductService.getSelectProductTop(tiao,null,null);
+        }
+        if(tiaopan==2){
+            topProduct=vProductService.getSelectProductTop(tiao,null,null);
+        }
+        if(tiaopan==3){
+            topProduct=vProductService.getSelectProductTop(null,tiao,null);
+        }
+        if(tiaopan==4){
+            topProduct=vProductService.getSelectProductTop(null,null,tiao);
+        }
+        model.addAttribute("top",topProduct);
+        return "tuijianTop.html";
+    }
+    @ResponseBody
+    @RequestMapping("/toppai")
+    public Object toppai(String ti){
+        Map<String,Object>map=new HashMap<>();
+       int tis=Integer.parseInt(ti);
+        List<VProduct>topProduct=new ArrayList<>();
+        if(tis==1){
+            topProduct=vProductService.getSelectProductTop(ti,null,null);
+        }
+        if(tis==2){
+            topProduct=vProductService.getSelectProductTop(ti,null,null);
+        }
+        if(tis==3){
+            topProduct=vProductService.getSelectProductTop(null,ti,null);
+        }
+        if(tis==4){
+            topProduct=vProductService.getSelectProductTop(null,null,ti);
+        }
+        map.put("topp",topProduct);
+        return map;
+    }
     @Autowired
     UploadService uploadService;
 

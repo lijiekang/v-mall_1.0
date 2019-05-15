@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface VSkuMapper {
+    public VSku getVSkuBySkuCode(@Param("skuCode")String skuCode);
     //根据条件查询所有的参数规格
     List<VProperties>getAllSku(@Param("vPropertiesId") int vPropertiesId);
     //根据ID删除某个规格
@@ -29,4 +30,5 @@ public interface VSkuMapper {
     List<Integer> findskuId(Integer productId);//根据商品id查询skuid
     VSku findskuIdBySkuName(String skuName);//根据shuname查询skuid
     VSku findProductIdBySkuId(Integer Skuid);//根据skuid查询商品id
+
 }

@@ -1,5 +1,6 @@
 package com.vmall.vcommons.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.Pagezhang;
 import com.vmall.pojo.VCategory;
@@ -34,7 +35,6 @@ public class CommonsController {
         int pagen=0;
         int pid=0;
         int pageC=commonsService.getPageCount();
-        System.out.println(pageC);
         Pagezhang page=new Pagezhang();
         page.setRecordCount(pageC);
         if(pageno!=null&&pageno!=""){
@@ -85,8 +85,13 @@ public class CommonsController {
     List<VCategory>level1=commonsService.getVCategoryLevel1();
     List<VCommons>commonsList=commonsService.getAllCommonsById(0,0);
     int vComm=Integer.parseInt(vCommonsId);
+        VCommons vCommons=commonsService.getMoCommons(vComm);
+       int vCommon= commonsService.getSelectInProduct((int)vCommons.getvUserId(),(int)vCommons.getvOrderId(),(int)vCommons.getvProductId());
     int result=0;
         result=commonsService.getDelCommonts(vComm);
+        if(vCommon>0){
+            commonsService.getUpdateCommonsCount(vCommon-1,(int)vCommons.getvProductId());
+        }
         System.out.println(result);
         model.addAttribute("level1",level1);
         model.addAttribute("commonsList",commonsList);
@@ -126,6 +131,7 @@ public class CommonsController {
     @ResponseBody
     public Object addCommonsList(String vProductId,String vContent,String vOrderId,String vUserId,String vGrade,String vIsOK){
         Map<String,Object> molist=new HashMap<>();
+
         int vpid=Integer.parseInt(vProductId);
         int vorderid=Integer.parseInt(vOrderId);
         int vuid=Integer.parseInt(vUserId);
@@ -139,7 +145,14 @@ public class CommonsController {
         vCommons.setvGrade(vgrade);
         vCommons.setvIsOk(visok);
         vCommons.setvCreateDate(new Timestamp(new Date().getTime()));
+       int resultss=commonsService.getSelectInProduct(vuid,vorderid,vpid);
+
         int result=commonsService.getAddCommons(vCommons);
+        if(resultss>0){
+            int re=commonsService.getUpdateCommonsCount(resultss+1,vpid);
+        }else {
+            int re=commonsService.getUpdateCommonsCount(1,vpid);
+        }
         if(result>0){
             molist.put("mm","succes");
         }else {
@@ -161,5 +174,54 @@ public class CommonsController {
         int result=commonsService.getUpdateHuiCommons(pid,vReply);
         System.out.println(result);
         return "redirect:/incommons";
+    }
+    //某件商品下某位用户和商家的全部评论
+    @ResponseBody
+    @GetMapping("/getZhui")
+    public Object getVcommZhui(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId){
+        int uid=0;
+        int oid=0;
+        int pid=0;
+        List<VCommons>getVcomm=new ArrayList<>();
+        if(userId!=null){
+           uid=Integer.parseInt(userId);
+        }
+        if(OrderId!=null){
+            oid=Integer.parseInt(OrderId);
+        }
+        if(productId!=null){
+            pid=Integer.parseInt(productId);
+        }
+        getVcomm=commonsService.getVcommZhui(uid,oid,pid);
+        String str= JSON.toJSONString(getVcomm);
+        return str;
+    }
+
+    //删除某件商品下的某个商品模块
+    @ResponseBody
+    @GetMapping("/getDelMoping")
+    public Object getDelMoping(@RequestParam("userId") String userId,@RequestParam("OrderId")String OrderId,@RequestParam("productId")String productId){
+        int uid=0;
+        int oid=0;
+        int pid=0;
+        int result=0;
+        Map<String,Object>map=new HashMap<>();
+        if(userId!=null){
+            uid=Integer.parseInt(userId);
+        }
+        if(OrderId!=null){
+            oid=Integer.parseInt(OrderId);
+        }
+        if(productId!=null){
+            pid=Integer.parseInt(productId);
+        }
+        result=commonsService.getDelMoping(uid,oid,pid);
+        if(result>0){
+            map.put("shan","删除成功");
+        }else {
+            map.put("shan","删除失败");
+        }
+        String str= JSON.toJSONString(map);
+        return str;
     }
 }

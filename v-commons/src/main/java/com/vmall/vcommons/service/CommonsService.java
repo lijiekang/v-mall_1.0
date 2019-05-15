@@ -56,4 +56,21 @@ public class CommonsService {
    public int getUpdateHuiCommons(@Param("vCommonsId")int vCommonsId,@Param("vReply")String vReply){
        return commonsMapper.getUpdateHuiCommons(vCommonsId,vReply);
     }
+    //某件商品下某位用户和商家的全部评论
+   public List<VCommons>getVcommZhui(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId){
+       return commonsMapper.getVcommZhui(vUserId,vOrderId,vProductId);
+    }
+    //删除某件商品下的某个商品模块
+   public int getDelMoping(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId){
+       return commonsMapper.getDelMoping(vUserId,vOrderId,vProductId);
+    }
+
+    //查询某件商品下某位用户的评论总数
+   public int getSelectInProduct(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId){
+       return commonsMapper.getSelectInProduct(vUserId,vOrderId,vProductId);
+    }
+    //更新评论下的评论总数
+   public int getUpdateCommonsCount(@Param("vCommonsCount")int vCommonsCount,@Param("vProductId")int vProductId){
+       return commonsMapper.getUpdateCommonsCount(vCommonsCount,vProductId);
+    }
 }

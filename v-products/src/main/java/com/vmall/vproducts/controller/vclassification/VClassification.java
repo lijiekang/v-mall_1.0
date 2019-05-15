@@ -1,6 +1,7 @@
 package com.vmall.vproducts.controller.vclassification;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.vmall.pojo.VCategory;
 import com.vmall.vproducts.service.vclassification.VClassificationService;
 import org.apache.ibatis.annotations.Param;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+/*@Controller*/
 public class VClassification {
     @Autowired
     VClassificationService vClassificationService;
@@ -33,6 +36,8 @@ public class VClassification {
             model.addAttribute("lv3",lv3);
         return "fenlei";
     }
+
+
 
     @GetMapping(value = "/moClassification",produces = "application/json")
     @ResponseBody
@@ -93,7 +98,7 @@ public class VClassification {
     }
 
     @PostMapping("/addFenleiLevel")
-    public String addFenleiLevel(Model model,@RequestParam(value = "vtype")String vtype,@RequestParam(value = "vpid",required = false)String vpid,@RequestParam(value = "vCategoryName")String vCategoryName){
+        public String addFenleiLevel(Model model,@RequestParam(value = "vtype")String vtype,@RequestParam(value = "vpid",required = false)String vpid,@RequestParam(value = "vCategoryName")String vCategoryName){
         int vtp=Integer.parseInt(vtype);
         int vpids=0;
         int result=0;

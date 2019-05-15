@@ -2,7 +2,6 @@ package com.vmall.vtrade.service.userservice;
 
 import com.vmall.mapper.user.UserMapper;
 import com.vmall.pojo.VUser;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,4 @@ public class UserService {
     public VUser getUserIdByUserName(String userName){
         return userMapper.getUserIdByUserName(userName);
     }//根据用户名称查询用户id
-
-    public VUser getVUesrById(@Param("userId") long id){
-        return userMapper.getVUesrById(id);
-    }
 }

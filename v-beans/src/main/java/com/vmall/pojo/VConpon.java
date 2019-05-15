@@ -1,6 +1,8 @@
 package com.vmall.pojo;
 
 
+import java.util.Date;
+
 public class VConpon {
 
   private long couponId;
@@ -9,9 +11,17 @@ public class VConpon {
   private double couponNeed;
   private long couponNum;
   private long couponLimit;
-  private java.sql.Timestamp couponStart;
-  private java.sql.Timestamp couponEnd;
+  private Date couponStart;
+  private Date couponEnd;
+  private long couponAlready;
 
+  public long getCouponAlready() {
+    return couponAlready;
+  }
+
+  public void setCouponAlready(long couponAlready) {
+    this.couponAlready = couponAlready;
+  }
 
   public long getCouponId() {
     return couponId;
@@ -66,22 +76,19 @@ public class VConpon {
     this.couponLimit = couponLimit;
   }
 
-
-  public java.sql.Timestamp getCouponStart() {
+  public Date getCouponStart() {
     return couponStart;
   }
 
-  public void setCouponStart(java.sql.Timestamp couponStart) {
+  public void setCouponStart(Date couponStart) {
     this.couponStart = couponStart;
   }
 
-
-  public java.sql.Timestamp getCouponEnd() {
+  public Date getCouponEnd() {
     return couponEnd;
   }
 
-  public void setCouponEnd(java.sql.Timestamp couponEnd) {
+  public void setCouponEnd(Date couponEnd) {
     this.couponEnd = couponEnd;
   }
-
 }

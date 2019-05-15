@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 public class ScheduConfig {
     @Resource
     UserMapper userMapper;
-    @Scheduled(cron="0 0 1 * * ?")
+    @Scheduled(cron="*/5 * * * * ?")
     public void delFootHistory(){
         userMapper.delFootHistory();
         System.out.println("删除成功");

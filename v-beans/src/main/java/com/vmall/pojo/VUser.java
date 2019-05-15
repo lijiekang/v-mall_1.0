@@ -207,6 +207,14 @@ public class VUser implements Serializable {
     this.vLastLogin = vLastLogin;
   }
 
+//  public Collection<? extends GrantedAuthority> getAuthorities() {
+//    List<SimpleGrantedAuthority> authorities=new ArrayList<SimpleGrantedAuthority>();
+//    for (VRole role:roles){
+//      authorities.add(new SimpleGrantedAuthority(role.getvName()));
+//    }
+//    return authorities;
+//  }
+
   public String getPassword() {
     return vPassword;
   }

@@ -24,7 +24,9 @@ public interface BackUserMapper {
 
     //导入导出
     List<VUser> getAllVUser();
-
+    //安全验证
+    VUser loasUserByUsername(String vUsername);
+    List<VRole> getUserRolesByUid(long id);
 
 
 }

@@ -7,7 +7,7 @@
         select * from v_user where v_usercode=#{userCode};
     </select>
     <select id="findEmail" resultType="com.vmall.pojo.VUser">
-        select count(1) from v_user where v_mail=#{email};
+        select * from v_user where v_mail=#{email};
     </select>
     <update id="findPassword">
         update v_user set v_password=#{password},v_salt=#{salt} where v_userId=#{id}

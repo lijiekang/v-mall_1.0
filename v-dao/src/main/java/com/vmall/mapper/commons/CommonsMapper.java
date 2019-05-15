@@ -30,4 +30,12 @@ public interface CommonsMapper {
      VCommons getMoCommons(@Param("vCommonsId")int vCommonsId);
      //回复某条评论
      int getUpdateHuiCommons(@Param("vCommonsId")int vCommonsId,@Param("vReply")String vReply);
+     //某件商品下某位用户和商家的全部评论
+     List<VCommons>getVcommZhui(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId);
+     //删除某件商品下的某个商品模块
+     int getDelMoping(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId);
+     //查询某件商品下某位用户的评论总数
+     int getSelectInProduct(@Param("vUserId")int vUserId,@Param("vOrderId")int vOrderId,@Param("vProductId")int vProductId);
+     //更新评论下的评论总数
+     int getUpdateCommonsCount(@Param("vCommonsCount")int vCommonsCount,@Param("vProductId")int vProductId);
 }
